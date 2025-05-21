@@ -80,7 +80,7 @@ class FileDownload(KaggleObject):
     return self._content_length or 0
 
   @content_length.setter
-  def content_length(self, content_length: int):
+  def content_length(self, content_length: Optional[int]):
     if content_length is None:
       del self.content_length
       return

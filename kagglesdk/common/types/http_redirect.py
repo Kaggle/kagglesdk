@@ -69,7 +69,7 @@ class HttpRedirect(KaggleObject):
     return self._bypass_encoding or False
 
   @bypass_encoding.setter
-  def bypass_encoding(self, bypass_encoding: bool):
+  def bypass_encoding(self, bypass_encoding: Optional[bool]):
     if bypass_encoding is None:
       del self.bypass_encoding
       return

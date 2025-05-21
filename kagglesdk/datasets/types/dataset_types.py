@@ -60,7 +60,7 @@ class DatasetInfo(KaggleObject):
     return self._dataset_slug or ""
 
   @dataset_slug.setter
-  def dataset_slug(self, dataset_slug: str):
+  def dataset_slug(self, dataset_slug: Optional[str]):
     if dataset_slug is None:
       del self.dataset_slug
       return
@@ -73,7 +73,7 @@ class DatasetInfo(KaggleObject):
     return self._owner_user or ""
 
   @owner_user.setter
-  def owner_user(self, owner_user: str):
+  def owner_user(self, owner_user: Optional[str]):
     if owner_user is None:
       del self.owner_user
       return
@@ -86,7 +86,7 @@ class DatasetInfo(KaggleObject):
     return self._usability_rating or 0.0
 
   @usability_rating.setter
-  def usability_rating(self, usability_rating: float):
+  def usability_rating(self, usability_rating: Optional[float]):
     if usability_rating is None:
       del self.usability_rating
       return
@@ -142,7 +142,7 @@ class DatasetInfo(KaggleObject):
     return self._title or ""
 
   @title.setter
-  def title(self, title: str):
+  def title(self, title: Optional[str]):
     if title is None:
       del self.title
       return
@@ -155,7 +155,7 @@ class DatasetInfo(KaggleObject):
     return self._subtitle or ""
 
   @subtitle.setter
-  def subtitle(self, subtitle: str):
+  def subtitle(self, subtitle: Optional[str]):
     if subtitle is None:
       del self.subtitle
       return
@@ -168,7 +168,7 @@ class DatasetInfo(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -279,7 +279,7 @@ class DatasetSettings(KaggleObject):
     return self._title or ""
 
   @title.setter
-  def title(self, title: str):
+  def title(self, title: Optional[str]):
     if title is None:
       del self.title
       return
@@ -292,7 +292,7 @@ class DatasetSettings(KaggleObject):
     return self._subtitle or ""
 
   @subtitle.setter
-  def subtitle(self, subtitle: str):
+  def subtitle(self, subtitle: Optional[str]):
     if subtitle is None:
       del self.subtitle
       return
@@ -305,7 +305,7 @@ class DatasetSettings(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -421,7 +421,7 @@ class DatasetSettingsFile(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -490,7 +490,7 @@ class DatasetSettingsFileColumn(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -503,7 +503,7 @@ class DatasetSettingsFileColumn(KaggleObject):
     return self._type or ""
 
   @type.setter
-  def type(self, type: str):
+  def type(self, type: Optional[str]):
     if type is None:
       del self.type
       return
@@ -527,7 +527,7 @@ class SettingsLicense(KaggleObject):
     return self._name or ""
 
   @name.setter
-  def name(self, name: str):
+  def name(self, name: Optional[str]):
     if name is None:
       del self.name
       return

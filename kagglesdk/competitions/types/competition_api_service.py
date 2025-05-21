@@ -68,7 +68,7 @@ class ApiCreateCodeSubmissionRequest(KaggleObject):
     return self._kernel_version or 0
 
   @kernel_version.setter
-  def kernel_version(self, kernel_version: int):
+  def kernel_version(self, kernel_version: Optional[int]):
     if kernel_version is None:
       del self.kernel_version
       return
@@ -81,7 +81,7 @@ class ApiCreateCodeSubmissionRequest(KaggleObject):
     return self._file_name or ""
 
   @file_name.setter
-  def file_name(self, file_name: str):
+  def file_name(self, file_name: Optional[str]):
     if file_name is None:
       del self.file_name
       return
@@ -94,7 +94,7 @@ class ApiCreateCodeSubmissionRequest(KaggleObject):
     return self._submission_description or ""
 
   @submission_description.setter
-  def submission_description(self, submission_description: str):
+  def submission_description(self, submission_description: Optional[str]):
     if submission_description is None:
       del self.submission_description
       return
@@ -202,7 +202,7 @@ class ApiCreateSubmissionRequest(KaggleObject):
     return self._submission_description or ""
 
   @submission_description.setter
-  def submission_description(self, submission_description: str):
+  def submission_description(self, submission_description: Optional[str]):
     if submission_description is None:
       del self.submission_description
       return
@@ -416,7 +416,7 @@ class ApiGetLeaderboardRequest(KaggleObject):
     return self._override_public or False
 
   @override_public.setter
-  def override_public(self, override_public: bool):
+  def override_public(self, override_public: Optional[bool]):
     if override_public is None:
       del self.override_public
       return
@@ -528,7 +528,7 @@ class ApiLeaderboardSubmission(KaggleObject):
     return self._team_name or ""
 
   @team_name.setter
-  def team_name(self, team_name: str):
+  def team_name(self, team_name: Optional[str]):
     if team_name is None:
       del self.team_name
       return
@@ -554,7 +554,7 @@ class ApiLeaderboardSubmission(KaggleObject):
     return self._score or ""
 
   @score.setter
-  def score(self, score: str):
+  def score(self, score: Optional[str]):
     if score is None:
       del self.score
       return
@@ -600,7 +600,7 @@ class ApiListCompetitionsRequest(KaggleObject):
     return self._group or CompetitionListTab.COMPETITION_LIST_TAB_GENERAL
 
   @group.setter
-  def group(self, group: 'CompetitionListTab'):
+  def group(self, group: Optional['CompetitionListTab']):
     if group is None:
       del self.group
       return
@@ -618,7 +618,7 @@ class ApiListCompetitionsRequest(KaggleObject):
     return self._category or HostSegment.HOST_SEGMENT_UNSPECIFIED
 
   @category.setter
-  def category(self, category: 'HostSegment'):
+  def category(self, category: Optional['HostSegment']):
     if category is None:
       del self.category
       return
@@ -636,7 +636,7 @@ class ApiListCompetitionsRequest(KaggleObject):
     return self._sort_by or CompetitionSortBy.COMPETITION_SORT_BY_GROUPED
 
   @sort_by.setter
-  def sort_by(self, sort_by: 'CompetitionSortBy'):
+  def sort_by(self, sort_by: Optional['CompetitionSortBy']):
     if sort_by is None:
       del self.sort_by
       return
@@ -650,7 +650,7 @@ class ApiListCompetitionsRequest(KaggleObject):
     return self._search or ""
 
   @search.setter
-  def search(self, search: str):
+  def search(self, search: Optional[str]):
     if search is None:
       del self.search
       return
@@ -664,7 +664,7 @@ class ApiListCompetitionsRequest(KaggleObject):
     return self._page or 0
 
   @page.setter
-  def page(self, page: int):
+  def page(self, page: Optional[int]):
     if page is None:
       del self.page
       return
@@ -741,7 +741,7 @@ class ApiListDataFilesRequest(KaggleObject):
     return self._page_size or 0
 
   @page_size.setter
-  def page_size(self, page_size: int):
+  def page_size(self, page_size: Optional[int]):
     if page_size is None:
       del self.page_size
       return
@@ -754,7 +754,7 @@ class ApiListDataFilesRequest(KaggleObject):
     return self._page_token or ""
 
   @page_token.setter
-  def page_token(self, page_token: str):
+  def page_token(self, page_token: Optional[str]):
     if page_token is None:
       del self.page_token
       return
@@ -776,11 +776,13 @@ class ApiListDataFilesResponse(KaggleObject):
   Attributes:
     files (ApiDataFile)
     next_page_token (str)
+    children_fetch_time_ms (int)
   """
 
   def __init__(self):
     self._files = []
     self._next_page_token = ""
+    self._children_fetch_time_ms = 0
     self._freeze()
 
   @property
@@ -812,8 +814,25 @@ class ApiListDataFilesResponse(KaggleObject):
     self._next_page_token = next_page_token
 
   @property
+  def children_fetch_time_ms(self) -> int:
+    return self._children_fetch_time_ms
+
+  @children_fetch_time_ms.setter
+  def children_fetch_time_ms(self, children_fetch_time_ms: int):
+    if children_fetch_time_ms is None:
+      del self.children_fetch_time_ms
+      return
+    if not isinstance(children_fetch_time_ms, int):
+      raise TypeError('children_fetch_time_ms must be of type int')
+    self._children_fetch_time_ms = children_fetch_time_ms
+
+  @property
   def nextPageToken(self):
     return self.next_page_token
+
+  @property
+  def childrenFetchTimeMs(self):
+    return self.children_fetch_time_ms
 
 
 class ApiListSubmissionsRequest(KaggleObject):
@@ -876,7 +895,7 @@ class ApiListSubmissionsRequest(KaggleObject):
     return self._page or 0
 
   @page.setter
-  def page(self, page: int):
+  def page(self, page: Optional[int]):
     if page is None:
       del self.page
       return
@@ -945,7 +964,7 @@ class ApiStartSubmissionUploadRequest(KaggleObject):
     return self._competition_name or ""
 
   @competition_name.setter
-  def competition_name(self, competition_name: str):
+  def competition_name(self, competition_name: Optional[str]):
     if competition_name is None:
       del self.competition_name
       return
@@ -1103,7 +1122,7 @@ class ApiSubmission(KaggleObject):
     return self._total_bytes or 0
 
   @total_bytes.setter
-  def total_bytes(self, total_bytes: int):
+  def total_bytes(self, total_bytes: Optional[int]):
     if total_bytes is None:
       del self.total_bytes
       return
@@ -1129,7 +1148,7 @@ class ApiSubmission(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -1142,7 +1161,7 @@ class ApiSubmission(KaggleObject):
     return self._error_description or ""
 
   @error_description.setter
-  def error_description(self, error_description: str):
+  def error_description(self, error_description: Optional[str]):
     if error_description is None:
       del self.error_description
       return
@@ -1155,7 +1174,7 @@ class ApiSubmission(KaggleObject):
     return self._file_name or ""
 
   @file_name.setter
-  def file_name(self, file_name: str):
+  def file_name(self, file_name: Optional[str]):
     if file_name is None:
       del self.file_name
       return
@@ -1168,7 +1187,7 @@ class ApiSubmission(KaggleObject):
     return self._public_score or ""
 
   @public_score.setter
-  def public_score(self, public_score: str):
+  def public_score(self, public_score: Optional[str]):
     if public_score is None:
       del self.public_score
       return
@@ -1181,7 +1200,7 @@ class ApiSubmission(KaggleObject):
     return self._private_score or ""
 
   @private_score.setter
-  def private_score(self, private_score: str):
+  def private_score(self, private_score: Optional[str]):
     if private_score is None:
       del self.private_score
       return
@@ -1207,7 +1226,7 @@ class ApiSubmission(KaggleObject):
     return self._submitted_by or ""
 
   @submitted_by.setter
-  def submitted_by(self, submitted_by: str):
+  def submitted_by(self, submitted_by: Optional[str]):
     if submitted_by is None:
       del self.submitted_by
       return
@@ -1220,7 +1239,7 @@ class ApiSubmission(KaggleObject):
     return self._submitted_by_ref or ""
 
   @submitted_by_ref.setter
-  def submitted_by_ref(self, submitted_by_ref: str):
+  def submitted_by_ref(self, submitted_by_ref: Optional[str]):
     if submitted_by_ref is None:
       del self.submitted_by_ref
       return
@@ -1233,7 +1252,7 @@ class ApiSubmission(KaggleObject):
     return self._team_name or ""
 
   @team_name.setter
-  def team_name(self, team_name: str):
+  def team_name(self, team_name: Optional[str]):
     if team_name is None:
       del self.team_name
       return
@@ -1250,7 +1269,7 @@ class ApiSubmission(KaggleObject):
     return self._url or ""
 
   @url.setter
-  def url(self, url: str):
+  def url(self, url: Optional[str]):
     if url is None:
       del self.url
       return
@@ -1346,7 +1365,7 @@ class ApiCompetition(KaggleObject):
     return self._title or ""
 
   @title.setter
-  def title(self, title: str):
+  def title(self, title: Optional[str]):
     if title is None:
       del self.title
       return
@@ -1359,7 +1378,7 @@ class ApiCompetition(KaggleObject):
     return self._url or ""
 
   @url.setter
-  def url(self, url: str):
+  def url(self, url: Optional[str]):
     if url is None:
       del self.url
       return
@@ -1372,7 +1391,7 @@ class ApiCompetition(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -1385,7 +1404,7 @@ class ApiCompetition(KaggleObject):
     return self._organization_name or ""
 
   @organization_name.setter
-  def organization_name(self, organization_name: str):
+  def organization_name(self, organization_name: Optional[str]):
     if organization_name is None:
       del self.organization_name
       return
@@ -1398,7 +1417,7 @@ class ApiCompetition(KaggleObject):
     return self._organization_ref or ""
 
   @organization_ref.setter
-  def organization_ref(self, organization_ref: str):
+  def organization_ref(self, organization_ref: Optional[str]):
     if organization_ref is None:
       del self.organization_ref
       return
@@ -1411,7 +1430,7 @@ class ApiCompetition(KaggleObject):
     return self._category or ""
 
   @category.setter
-  def category(self, category: str):
+  def category(self, category: Optional[str]):
     if category is None:
       del self.category
       return
@@ -1424,7 +1443,7 @@ class ApiCompetition(KaggleObject):
     return self._reward or ""
 
   @reward.setter
-  def reward(self, reward: str):
+  def reward(self, reward: Optional[str]):
     if reward is None:
       del self.reward
       return
@@ -1504,7 +1523,7 @@ class ApiCompetition(KaggleObject):
     return self._user_rank or 0
 
   @user_rank.setter
-  def user_rank(self, user_rank: int):
+  def user_rank(self, user_rank: Optional[int]):
     if user_rank is None:
       del self.user_rank
       return
@@ -1569,7 +1588,7 @@ class ApiCompetition(KaggleObject):
     return self._max_team_size or 0
 
   @max_team_size.setter
-  def max_team_size(self, max_team_size: int):
+  def max_team_size(self, max_team_size: Optional[int]):
     if max_team_size is None:
       del self.max_team_size
       return
@@ -1582,7 +1601,7 @@ class ApiCompetition(KaggleObject):
     return self._evaluation_metric or ""
 
   @evaluation_metric.setter
-  def evaluation_metric(self, evaluation_metric: str):
+  def evaluation_metric(self, evaluation_metric: Optional[str]):
     if evaluation_metric is None:
       del self.evaluation_metric
       return
@@ -1668,7 +1687,7 @@ class ApiDataFile(KaggleObject):
     return self._name or ""
 
   @name.setter
-  def name(self, name: str):
+  def name(self, name: Optional[str]):
     if name is None:
       del self.name
       return
@@ -1681,7 +1700,7 @@ class ApiDataFile(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -1707,7 +1726,7 @@ class ApiDataFile(KaggleObject):
     return self._url or ""
 
   @url.setter
-  def url(self, url: str):
+  def url(self, url: Optional[str]):
     if url is None:
       del self.url
       return
@@ -1773,7 +1792,7 @@ class ApiCategory(KaggleObject):
     return self._name or ""
 
   @name.setter
-  def name(self, name: str):
+  def name(self, name: Optional[str]):
     if name is None:
       del self.name
       return
@@ -1786,7 +1805,7 @@ class ApiCategory(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -1799,7 +1818,7 @@ class ApiCategory(KaggleObject):
     return self._full_path or ""
 
   @full_path.setter
-  def full_path(self, full_path: str):
+  def full_path(self, full_path: Optional[str]):
     if full_path is None:
       del self.full_path
       return
@@ -1939,6 +1958,7 @@ ApiListDataFilesRequest._fields = [
 ApiListDataFilesResponse._fields = [
   FieldMetadata("files", "files", "_files", ApiDataFile, [], ListSerializer(KaggleObjectSerializer())),
   FieldMetadata("nextPageToken", "next_page_token", "_next_page_token", str, "", PredefinedSerializer()),
+  FieldMetadata("childrenFetchTimeMs", "children_fetch_time_ms", "_children_fetch_time_ms", int, 0, PredefinedSerializer()),
 ]
 
 ApiListSubmissionsRequest._fields = [

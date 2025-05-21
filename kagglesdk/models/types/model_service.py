@@ -50,7 +50,7 @@ class GetModelMetricsRequest(KaggleObject):
     return self._start_time or None
 
   @start_time.setter
-  def start_time(self, start_time: datetime):
+  def start_time(self, start_time: Optional[datetime]):
     if start_time is None:
       del self.start_time
       return

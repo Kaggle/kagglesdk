@@ -65,7 +65,7 @@ class ApiStartBlobUploadRequest(KaggleObject):
     return self._content_type or ""
 
   @content_type.setter
-  def content_type(self, content_type: str):
+  def content_type(self, content_type: Optional[str]):
     if content_type is None:
       del self.content_type
       return
@@ -93,7 +93,7 @@ class ApiStartBlobUploadRequest(KaggleObject):
     return self._last_modified_epoch_seconds or 0
 
   @last_modified_epoch_seconds.setter
-  def last_modified_epoch_seconds(self, last_modified_epoch_seconds: int):
+  def last_modified_epoch_seconds(self, last_modified_epoch_seconds: Optional[int]):
     if last_modified_epoch_seconds is None:
       del self.last_modified_epoch_seconds
       return

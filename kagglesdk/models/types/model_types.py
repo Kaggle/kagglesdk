@@ -141,6 +141,8 @@ class Owner(KaggleObject):
     profile_url (str)
     slug (str)
     user_tier (UserAchievementTier)
+    user_progression_opt_out (bool)
+      Whether or not the owner is progression opted-out (only for user owners).
     allow_model_gating (bool)
   """
 
@@ -152,6 +154,7 @@ class Owner(KaggleObject):
     self._profile_url = None
     self._slug = ""
     self._user_tier = UserAchievementTier.NOVICE
+    self._user_progression_opt_out = None
     self._allow_model_gating = None
     self._freeze()
 
@@ -173,7 +176,7 @@ class Owner(KaggleObject):
     return self._image_url or ""
 
   @image_url.setter
-  def image_url(self, image_url: str):
+  def image_url(self, image_url: Optional[str]):
     if image_url is None:
       del self.image_url
       return
@@ -212,7 +215,7 @@ class Owner(KaggleObject):
     return self._profile_url or ""
 
   @profile_url.setter
-  def profile_url(self, profile_url: str):
+  def profile_url(self, profile_url: Optional[str]):
     if profile_url is None:
       del self.profile_url
       return
@@ -247,11 +250,25 @@ class Owner(KaggleObject):
     self._user_tier = user_tier
 
   @property
+  def user_progression_opt_out(self) -> bool:
+    """Whether or not the owner is progression opted-out (only for user owners)."""
+    return self._user_progression_opt_out or False
+
+  @user_progression_opt_out.setter
+  def user_progression_opt_out(self, user_progression_opt_out: Optional[bool]):
+    if user_progression_opt_out is None:
+      del self.user_progression_opt_out
+      return
+    if not isinstance(user_progression_opt_out, bool):
+      raise TypeError('user_progression_opt_out must be of type bool')
+    self._user_progression_opt_out = user_progression_opt_out
+
+  @property
   def allow_model_gating(self) -> bool:
     return self._allow_model_gating or False
 
   @allow_model_gating.setter
-  def allow_model_gating(self, allow_model_gating: bool):
+  def allow_model_gating(self, allow_model_gating: Optional[bool]):
     if allow_model_gating is None:
       del self.allow_model_gating
       return
@@ -281,6 +298,7 @@ Owner._fields = [
   FieldMetadata("profileUrl", "profile_url", "_profile_url", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("slug", "slug", "_slug", str, "", PredefinedSerializer()),
   FieldMetadata("userTier", "user_tier", "_user_tier", UserAchievementTier, UserAchievementTier.NOVICE, EnumSerializer()),
+  FieldMetadata("userProgressionOptOut", "user_progression_opt_out", "_user_progression_opt_out", bool, None, PredefinedSerializer(), optional=True),
   FieldMetadata("allowModelGating", "allow_model_gating", "_allow_model_gating", bool, None, PredefinedSerializer(), optional=True),
 ]
 

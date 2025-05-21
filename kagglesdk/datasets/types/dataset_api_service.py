@@ -37,7 +37,7 @@ class ApiCreateDatasetRequest(KaggleObject):
     return self._id or 0
 
   @id.setter
-  def id(self, id: int):
+  def id(self, id: Optional[int]):
     if id is None:
       del self.id
       return
@@ -50,7 +50,7 @@ class ApiCreateDatasetRequest(KaggleObject):
     return self._owner_slug or ""
 
   @owner_slug.setter
-  def owner_slug(self, owner_slug: str):
+  def owner_slug(self, owner_slug: Optional[str]):
     if owner_slug is None:
       del self.owner_slug
       return
@@ -63,7 +63,7 @@ class ApiCreateDatasetRequest(KaggleObject):
     return self._slug or ""
 
   @slug.setter
-  def slug(self, slug: str):
+  def slug(self, slug: Optional[str]):
     if slug is None:
       del self.slug
       return
@@ -76,7 +76,7 @@ class ApiCreateDatasetRequest(KaggleObject):
     return self._title or ""
 
   @title.setter
-  def title(self, title: str):
+  def title(self, title: Optional[str]):
     if title is None:
       del self.title
       return
@@ -89,7 +89,7 @@ class ApiCreateDatasetRequest(KaggleObject):
     return self._license_name or ""
 
   @license_name.setter
-  def license_name(self, license_name: str):
+  def license_name(self, license_name: Optional[str]):
     if license_name is None:
       del self.license_name
       return
@@ -130,7 +130,7 @@ class ApiCreateDatasetRequest(KaggleObject):
     return self._subtitle or ""
 
   @subtitle.setter
-  def subtitle(self, subtitle: str):
+  def subtitle(self, subtitle: Optional[str]):
     if subtitle is None:
       del self.subtitle
       return
@@ -143,7 +143,7 @@ class ApiCreateDatasetRequest(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -203,7 +203,7 @@ class ApiCreateDatasetResponse(KaggleObject):
     return self._ref or ""
 
   @ref.setter
-  def ref(self, ref: str):
+  def ref(self, ref: Optional[str]):
     if ref is None:
       del self.ref
       return
@@ -216,7 +216,7 @@ class ApiCreateDatasetResponse(KaggleObject):
     return self._url or ""
 
   @url.setter
-  def url(self, url: str):
+  def url(self, url: Optional[str]):
     if url is None:
       del self.url
       return
@@ -229,7 +229,7 @@ class ApiCreateDatasetResponse(KaggleObject):
     return self._status or ""
 
   @status.setter
-  def status(self, status: str):
+  def status(self, status: Optional[str]):
     if status is None:
       del self.status
       return
@@ -242,7 +242,7 @@ class ApiCreateDatasetResponse(KaggleObject):
     return self._error or ""
 
   @error.setter
-  def error(self, error: str):
+  def error(self, error: Optional[str]):
     if error is None:
       del self.error
       return
@@ -414,7 +414,7 @@ class ApiCreateDatasetVersionRequestBody(KaggleObject):
     return self._version_notes or ""
 
   @version_notes.setter
-  def version_notes(self, version_notes: str):
+  def version_notes(self, version_notes: Optional[str]):
     if version_notes is None:
       del self.version_notes
       return
@@ -455,7 +455,7 @@ class ApiCreateDatasetVersionRequestBody(KaggleObject):
     return self._subtitle or ""
 
   @subtitle.setter
-  def subtitle(self, subtitle: str):
+  def subtitle(self, subtitle: Optional[str]):
     if subtitle is None:
       del self.subtitle
       return
@@ -468,7 +468,7 @@ class ApiCreateDatasetVersionRequestBody(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -581,7 +581,7 @@ class ApiDataset(KaggleObject):
     return self._subtitle or ""
 
   @subtitle.setter
-  def subtitle(self, subtitle: str):
+  def subtitle(self, subtitle: Optional[str]):
     if subtitle is None:
       del self.subtitle
       return
@@ -594,7 +594,7 @@ class ApiDataset(KaggleObject):
     return self._creator_name or ""
 
   @creator_name.setter
-  def creator_name(self, creator_name: str):
+  def creator_name(self, creator_name: Optional[str]):
     if creator_name is None:
       del self.creator_name
       return
@@ -607,7 +607,7 @@ class ApiDataset(KaggleObject):
     return self._creator_url or ""
 
   @creator_url.setter
-  def creator_url(self, creator_url: str):
+  def creator_url(self, creator_url: Optional[str]):
     if creator_url is None:
       del self.creator_url
       return
@@ -620,7 +620,7 @@ class ApiDataset(KaggleObject):
     return self._total_bytes or 0
 
   @total_bytes.setter
-  def total_bytes(self, total_bytes: int):
+  def total_bytes(self, total_bytes: Optional[int]):
     if total_bytes is None:
       del self.total_bytes
       return
@@ -633,7 +633,7 @@ class ApiDataset(KaggleObject):
     return self._url or ""
 
   @url.setter
-  def url(self, url: str):
+  def url(self, url: Optional[str]):
     if url is None:
       del self.url
       return
@@ -698,7 +698,7 @@ class ApiDataset(KaggleObject):
     return self._license_name or ""
 
   @license_name.setter
-  def license_name(self, license_name: str):
+  def license_name(self, license_name: Optional[str]):
     if license_name is None:
       del self.license_name
       return
@@ -711,7 +711,7 @@ class ApiDataset(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -724,7 +724,7 @@ class ApiDataset(KaggleObject):
     return self._owner_name or ""
 
   @owner_name.setter
-  def owner_name(self, owner_name: str):
+  def owner_name(self, owner_name: Optional[str]):
     if owner_name is None:
       del self.owner_name
       return
@@ -737,7 +737,7 @@ class ApiDataset(KaggleObject):
     return self._owner_ref or ""
 
   @owner_ref.setter
-  def owner_ref(self, owner_ref: str):
+  def owner_ref(self, owner_ref: Optional[str]):
     if owner_ref is None:
       del self.owner_ref
       return
@@ -763,7 +763,7 @@ class ApiDataset(KaggleObject):
     return self._title or ""
 
   @title.setter
-  def title(self, title: str):
+  def title(self, title: Optional[str]):
     if title is None:
       del self.title
       return
@@ -815,7 +815,7 @@ class ApiDataset(KaggleObject):
     return self._current_version_number or 0
 
   @current_version_number.setter
-  def current_version_number(self, current_version_number: int):
+  def current_version_number(self, current_version_number: Optional[int]):
     if current_version_number is None:
       del self.current_version_number
       return
@@ -828,7 +828,7 @@ class ApiDataset(KaggleObject):
     return self._usability_rating or 0.0
 
   @usability_rating.setter
-  def usability_rating(self, usability_rating: float):
+  def usability_rating(self, usability_rating: Optional[float]):
     if usability_rating is None:
       del self.usability_rating
       return
@@ -928,7 +928,7 @@ class ApiDatasetFile(KaggleObject):
     return self._dataset_ref or ""
 
   @dataset_ref.setter
-  def dataset_ref(self, dataset_ref: str):
+  def dataset_ref(self, dataset_ref: Optional[str]):
     if dataset_ref is None:
       del self.dataset_ref
       return
@@ -941,7 +941,7 @@ class ApiDatasetFile(KaggleObject):
     return self._owner_ref or ""
 
   @owner_ref.setter
-  def owner_ref(self, owner_ref: str):
+  def owner_ref(self, owner_ref: Optional[str]):
     if owner_ref is None:
       del self.owner_ref
       return
@@ -954,7 +954,7 @@ class ApiDatasetFile(KaggleObject):
     return self._name or ""
 
   @name.setter
-  def name(self, name: str):
+  def name(self, name: Optional[str]):
     if name is None:
       del self.name
       return
@@ -980,7 +980,7 @@ class ApiDatasetFile(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -993,7 +993,7 @@ class ApiDatasetFile(KaggleObject):
     return self._file_type or ""
 
   @file_type.setter
-  def file_type(self, file_type: str):
+  def file_type(self, file_type: Optional[str]):
     if file_type is None:
       del self.file_type
       return
@@ -1006,7 +1006,7 @@ class ApiDatasetFile(KaggleObject):
     return self._url or ""
 
   @url.setter
-  def url(self, url: str):
+  def url(self, url: Optional[str]):
     if url is None:
       del self.url
       return
@@ -1062,7 +1062,7 @@ class ApiDatasetNewFile(KaggleObject):
     return self._token or ""
 
   @token.setter
-  def token(self, token: str):
+  def token(self, token: Optional[str]):
     if token is None:
       del self.token
       return
@@ -1075,7 +1075,7 @@ class ApiDatasetNewFile(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -1150,7 +1150,7 @@ class ApiDatasetVersion(KaggleObject):
     return self._creator_name or ""
 
   @creator_name.setter
-  def creator_name(self, creator_name: str):
+  def creator_name(self, creator_name: Optional[str]):
     if creator_name is None:
       del self.creator_name
       return
@@ -1163,7 +1163,7 @@ class ApiDatasetVersion(KaggleObject):
     return self._creator_ref or ""
 
   @creator_ref.setter
-  def creator_ref(self, creator_ref: str):
+  def creator_ref(self, creator_ref: Optional[str]):
     if creator_ref is None:
       del self.creator_ref
       return
@@ -1176,7 +1176,7 @@ class ApiDatasetVersion(KaggleObject):
     return self._version_notes or ""
 
   @version_notes.setter
-  def version_notes(self, version_notes: str):
+  def version_notes(self, version_notes: Optional[str]):
     if version_notes is None:
       del self.version_notes
       return
@@ -1189,7 +1189,7 @@ class ApiDatasetVersion(KaggleObject):
     return self._status or ""
 
   @status.setter
-  def status(self, status: str):
+  def status(self, status: Optional[str]):
     if status is None:
       del self.status
       return
@@ -1261,7 +1261,7 @@ class ApiDeleteDatasetResponse(KaggleObject):
     return self._error or ""
 
   @error.setter
-  def error(self, error: str):
+  def error(self, error: Optional[str]):
     if error is None:
       del self.error
       return
@@ -1317,7 +1317,7 @@ class ApiDownloadDatasetRawRequest(KaggleObject):
     return self._file_name or ""
 
   @file_name.setter
-  def file_name(self, file_name: str):
+  def file_name(self, file_name: Optional[str]):
     if file_name is None:
       del self.file_name
       return
@@ -1330,7 +1330,7 @@ class ApiDownloadDatasetRawRequest(KaggleObject):
     return self._dataset_version_number or 0
 
   @dataset_version_number.setter
-  def dataset_version_number(self, dataset_version_number: int):
+  def dataset_version_number(self, dataset_version_number: Optional[int]):
     if dataset_version_number is None:
       del self.dataset_version_number
       return
@@ -1355,6 +1355,7 @@ class ApiDownloadDatasetRequest(KaggleObject):
     file_name (str)
     dataset_version_number (int)
     raw (bool)
+    hash_link (str)
   """
 
   def __init__(self):
@@ -1363,6 +1364,7 @@ class ApiDownloadDatasetRequest(KaggleObject):
     self._file_name = None
     self._dataset_version_number = None
     self._raw = False
+    self._hash_link = None
     self._freeze()
 
   @property
@@ -1396,7 +1398,7 @@ class ApiDownloadDatasetRequest(KaggleObject):
     return self._file_name or ""
 
   @file_name.setter
-  def file_name(self, file_name: str):
+  def file_name(self, file_name: Optional[str]):
     if file_name is None:
       del self.file_name
       return
@@ -1409,7 +1411,7 @@ class ApiDownloadDatasetRequest(KaggleObject):
     return self._dataset_version_number or 0
 
   @dataset_version_number.setter
-  def dataset_version_number(self, dataset_version_number: int):
+  def dataset_version_number(self, dataset_version_number: Optional[int]):
     if dataset_version_number is None:
       del self.dataset_version_number
       return
@@ -1429,6 +1431,19 @@ class ApiDownloadDatasetRequest(KaggleObject):
     if not isinstance(raw, bool):
       raise TypeError('raw must be of type bool')
     self._raw = raw
+
+  @property
+  def hash_link(self) -> str:
+    return self._hash_link or ""
+
+  @hash_link.setter
+  def hash_link(self, hash_link: Optional[str]):
+    if hash_link is None:
+      del self.hash_link
+      return
+    if not isinstance(hash_link, str):
+      raise TypeError('hash_link must be of type str')
+    self._hash_link = hash_link
 
   def endpoint(self):
     if self.file_name:
@@ -1525,7 +1540,7 @@ class ApiGetDatasetMetadataResponse(KaggleObject):
     return self._error_message or ""
 
   @error_message.setter
-  def error_message(self, error_message: str):
+  def error_message(self, error_message: Optional[str]):
     if error_message is None:
       del self.error_message
       return
@@ -1709,7 +1724,7 @@ class ApiListDatasetFilesRequest(KaggleObject):
     return self._dataset_version_number or 0
 
   @dataset_version_number.setter
-  def dataset_version_number(self, dataset_version_number: int):
+  def dataset_version_number(self, dataset_version_number: Optional[int]):
     if dataset_version_number is None:
       del self.dataset_version_number
       return
@@ -1722,7 +1737,7 @@ class ApiListDatasetFilesRequest(KaggleObject):
     return self._page_token or ""
 
   @page_token.setter
-  def page_token(self, page_token: str):
+  def page_token(self, page_token: Optional[str]):
     if page_token is None:
       del self.page_token
       return
@@ -1735,7 +1750,7 @@ class ApiListDatasetFilesRequest(KaggleObject):
     return self._page_size or 0
 
   @page_size.setter
-  def page_size(self, page_size: int):
+  def page_size(self, page_size: Optional[int]):
     if page_size is None:
       del self.page_size
       return
@@ -1786,7 +1801,7 @@ class ApiListDatasetFilesResponse(KaggleObject):
     return self._error_message or ""
 
   @error_message.setter
-  def error_message(self, error_message: str):
+  def error_message(self, error_message: Optional[str]):
     if error_message is None:
       del self.error_message
       return
@@ -1799,7 +1814,7 @@ class ApiListDatasetFilesResponse(KaggleObject):
     return self._next_page_token or ""
 
   @next_page_token.setter
-  def next_page_token(self, next_page_token: str):
+  def next_page_token(self, next_page_token: Optional[str]):
     if next_page_token is None:
       del self.next_page_token
       return
@@ -1939,7 +1954,7 @@ class ApiListDatasetsRequest(KaggleObject):
     return self._tag_ids or ""
 
   @tag_ids.setter
-  def tag_ids(self, tag_ids: str):
+  def tag_ids(self, tag_ids: Optional[str]):
     if tag_ids is None:
       del self.tag_ids
       return
@@ -1952,7 +1967,7 @@ class ApiListDatasetsRequest(KaggleObject):
     return self._search or ""
 
   @search.setter
-  def search(self, search: str):
+  def search(self, search: Optional[str]):
     if search is None:
       del self.search
       return
@@ -1965,7 +1980,7 @@ class ApiListDatasetsRequest(KaggleObject):
     return self._user or ""
 
   @user.setter
-  def user(self, user: str):
+  def user(self, user: Optional[str]):
     if user is None:
       del self.user
       return
@@ -1978,7 +1993,7 @@ class ApiListDatasetsRequest(KaggleObject):
     return self._min_size or 0
 
   @min_size.setter
-  def min_size(self, min_size: int):
+  def min_size(self, min_size: Optional[int]):
     if min_size is None:
       del self.min_size
       return
@@ -1991,7 +2006,7 @@ class ApiListDatasetsRequest(KaggleObject):
     return self._max_size or 0
 
   @max_size.setter
-  def max_size(self, max_size: int):
+  def max_size(self, max_size: Optional[int]):
     if max_size is None:
       del self.max_size
       return
@@ -2004,7 +2019,7 @@ class ApiListDatasetsRequest(KaggleObject):
     return self._page or 0
 
   @page.setter
-  def page(self, page: int):
+  def page(self, page: Optional[int]):
     if page is None:
       del self.page
       return
@@ -2017,7 +2032,7 @@ class ApiListDatasetsRequest(KaggleObject):
     return self._page_token or ""
 
   @page_token.setter
-  def page_token(self, page_token: str):
+  def page_token(self, page_token: Optional[str]):
     if page_token is None:
       del self.page_token
       return
@@ -2030,7 +2045,7 @@ class ApiListDatasetsRequest(KaggleObject):
     return self._page_size or 0
 
   @page_size.setter
-  def page_size(self, page_size: int):
+  def page_size(self, page_size: Optional[int]):
     if page_size is None:
       del self.page_size
       return
@@ -2320,7 +2335,7 @@ class ApiCategory(KaggleObject):
     return self._name or ""
 
   @name.setter
-  def name(self, name: str):
+  def name(self, name: Optional[str]):
     if name is None:
       del self.name
       return
@@ -2333,7 +2348,7 @@ class ApiCategory(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -2346,7 +2361,7 @@ class ApiCategory(KaggleObject):
     return self._full_path or ""
 
   @full_path.setter
-  def full_path(self, full_path: str):
+  def full_path(self, full_path: Optional[str]):
     if full_path is None:
       del self.full_path
       return
@@ -2430,7 +2445,7 @@ class ApiDatasetColumn(KaggleObject):
     return self._order or 0
 
   @order.setter
-  def order(self, order: int):
+  def order(self, order: Optional[int]):
     if order is None:
       del self.order
       return
@@ -2443,7 +2458,7 @@ class ApiDatasetColumn(KaggleObject):
     return self._name or ""
 
   @name.setter
-  def name(self, name: str):
+  def name(self, name: Optional[str]):
     if name is None:
       del self.name
       return
@@ -2456,7 +2471,7 @@ class ApiDatasetColumn(KaggleObject):
     return self._type or ""
 
   @type.setter
-  def type(self, type: str):
+  def type(self, type: Optional[str]):
     if type is None:
       del self.type
       return
@@ -2469,7 +2484,7 @@ class ApiDatasetColumn(KaggleObject):
     return self._original_type or ""
 
   @original_type.setter
-  def original_type(self, original_type: str):
+  def original_type(self, original_type: Optional[str]):
     if original_type is None:
       del self.original_type
       return
@@ -2482,7 +2497,7 @@ class ApiDatasetColumn(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -2668,6 +2683,7 @@ ApiDownloadDatasetRequest._fields = [
   FieldMetadata("fileName", "file_name", "_file_name", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("datasetVersionNumber", "dataset_version_number", "_dataset_version_number", int, None, PredefinedSerializer(), optional=True),
   FieldMetadata("raw", "raw", "_raw", bool, False, PredefinedSerializer()),
+  FieldMetadata("hashLink", "hash_link", "_hash_link", str, None, PredefinedSerializer(), optional=True),
 ]
 
 ApiGetDatasetMetadataRequest._fields = [

@@ -164,7 +164,7 @@ class ApiCreateModelInstanceRequestBody(KaggleObject):
     return self._fine_tunable or False
 
   @fine_tunable.setter
-  def fine_tunable(self, fine_tunable: bool):
+  def fine_tunable(self, fine_tunable: Optional[bool]):
     if fine_tunable is None:
       del self.fine_tunable
       return
@@ -222,7 +222,7 @@ class ApiCreateModelInstanceRequestBody(KaggleObject):
     return self._license_name or ""
 
   @license_name.setter
-  def license_name(self, license_name: str):
+  def license_name(self, license_name: Optional[str]):
     if license_name is None:
       del self.license_name
       return
@@ -235,7 +235,7 @@ class ApiCreateModelInstanceRequestBody(KaggleObject):
     return self._model_instance_type or ModelInstanceType.MODEL_INSTANCE_TYPE_UNSPECIFIED
 
   @model_instance_type.setter
-  def model_instance_type(self, model_instance_type: 'ModelInstanceType'):
+  def model_instance_type(self, model_instance_type: Optional['ModelInstanceType']):
     if model_instance_type is None:
       del self.model_instance_type
       return
@@ -248,7 +248,7 @@ class ApiCreateModelInstanceRequestBody(KaggleObject):
     return self._base_model_instance or ""
 
   @base_model_instance.setter
-  def base_model_instance(self, base_model_instance: str):
+  def base_model_instance(self, base_model_instance: Optional[str]):
     if base_model_instance is None:
       del self.base_model_instance
       return
@@ -261,7 +261,7 @@ class ApiCreateModelInstanceRequestBody(KaggleObject):
     return self._external_base_model_url or ""
 
   @external_base_model_url.setter
-  def external_base_model_url(self, external_base_model_url: str):
+  def external_base_model_url(self, external_base_model_url: Optional[str]):
     if external_base_model_url is None:
       del self.external_base_model_url
       return
@@ -274,7 +274,7 @@ class ApiCreateModelInstanceRequestBody(KaggleObject):
     return self._sigstore or False
 
   @sigstore.setter
-  def sigstore(self, sigstore: bool):
+  def sigstore(self, sigstore: Optional[bool]):
     if sigstore is None:
       del self.sigstore
       return
@@ -401,7 +401,7 @@ class ApiCreateModelInstanceVersionRequestBody(KaggleObject):
     return self._version_notes or ""
 
   @version_notes.setter
-  def version_notes(self, version_notes: str):
+  def version_notes(self, version_notes: Optional[str]):
     if version_notes is None:
       del self.version_notes
       return
@@ -444,7 +444,7 @@ class ApiCreateModelInstanceVersionRequestBody(KaggleObject):
     return self._sigstore or False
 
   @sigstore.setter
-  def sigstore(self, sigstore: bool):
+  def sigstore(self, sigstore: Optional[bool]):
     if sigstore is None:
       del self.sigstore
       return
@@ -521,7 +521,7 @@ class ApiCreateModelRequest(KaggleObject):
     return self._subtitle or ""
 
   @subtitle.setter
-  def subtitle(self, subtitle: str):
+  def subtitle(self, subtitle: Optional[str]):
     if subtitle is None:
       del self.subtitle
       return
@@ -534,7 +534,7 @@ class ApiCreateModelRequest(KaggleObject):
     return self._is_private or False
 
   @is_private.setter
-  def is_private(self, is_private: bool):
+  def is_private(self, is_private: Optional[bool]):
     if is_private is None:
       del self.is_private
       return
@@ -547,7 +547,7 @@ class ApiCreateModelRequest(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -573,7 +573,7 @@ class ApiCreateModelRequest(KaggleObject):
     return self._provenance_sources or ""
 
   @provenance_sources.setter
-  def provenance_sources(self, provenance_sources: str):
+  def provenance_sources(self, provenance_sources: Optional[str]):
     if provenance_sources is None:
       del self.provenance_sources
       return
@@ -618,7 +618,7 @@ class ApiCreateModelResponse(KaggleObject):
     return self._id or 0
 
   @id.setter
-  def id(self, id: int):
+  def id(self, id: Optional[int]):
     if id is None:
       del self.id
       return
@@ -631,7 +631,7 @@ class ApiCreateModelResponse(KaggleObject):
     return self._ref or ""
 
   @ref.setter
-  def ref(self, ref: str):
+  def ref(self, ref: Optional[str]):
     if ref is None:
       del self.ref
       return
@@ -644,7 +644,7 @@ class ApiCreateModelResponse(KaggleObject):
     return self._error or ""
 
   @error.setter
-  def error(self, error: str):
+  def error(self, error: Optional[str]):
     if error is None:
       del self.error
       return
@@ -657,7 +657,7 @@ class ApiCreateModelResponse(KaggleObject):
     return self._error_code or 0
 
   @error_code.setter
-  def error_code(self, error_code: int):
+  def error_code(self, error_code: Optional[int]):
     if error_code is None:
       del self.error_code
       return
@@ -670,7 +670,7 @@ class ApiCreateModelResponse(KaggleObject):
     return self._url or ""
 
   @url.setter
-  def url(self, url: str):
+  def url(self, url: Optional[str]):
     if url is None:
       del self.url
       return
@@ -917,7 +917,7 @@ class ApiDeleteModelResponse(KaggleObject):
     return self._error or ""
 
   @error.setter
-  def error(self, error: str):
+  def error(self, error: Optional[str]):
     if error is None:
       del self.error
       return
@@ -1018,7 +1018,7 @@ class ApiDownloadModelInstanceVersionRequest(KaggleObject):
     return self._path or ""
 
   @path.setter
-  def path(self, path: str):
+  def path(self, path: Optional[str]):
     if path is None:
       del self.path
       return
@@ -1216,7 +1216,7 @@ class ApiListModelGatingUserConsentsRequest(KaggleObject):
     return self._review_status or GatingAgreementRequestsReviewStatus.GATING_AGREEMENT_REQUESTS_REVIEW_STATUS_UNSPECIFIED
 
   @review_status.setter
-  def review_status(self, review_status: 'GatingAgreementRequestsReviewStatus'):
+  def review_status(self, review_status: Optional['GatingAgreementRequestsReviewStatus']):
     if review_status is None:
       del self.review_status
       return
@@ -1229,7 +1229,7 @@ class ApiListModelGatingUserConsentsRequest(KaggleObject):
     return self._is_user_request_data_expired or False
 
   @is_user_request_data_expired.setter
-  def is_user_request_data_expired(self, is_user_request_data_expired: bool):
+  def is_user_request_data_expired(self, is_user_request_data_expired: Optional[bool]):
     if is_user_request_data_expired is None:
       del self.is_user_request_data_expired
       return
@@ -1243,7 +1243,7 @@ class ApiListModelGatingUserConsentsRequest(KaggleObject):
     return self._page_size or 0
 
   @page_size.setter
-  def page_size(self, page_size: int):
+  def page_size(self, page_size: Optional[int]):
     if page_size is None:
       del self.page_size
       return
@@ -1256,7 +1256,7 @@ class ApiListModelGatingUserConsentsRequest(KaggleObject):
     return self._page_token or ""
 
   @page_token.setter
-  def page_token(self, page_token: str):
+  def page_token(self, page_token: Optional[str]):
     if page_token is None:
       del self.page_token
       return
@@ -1420,7 +1420,7 @@ class ApiListModelInstanceVersionFilesRequest(KaggleObject):
     return self._version_number or 0
 
   @version_number.setter
-  def version_number(self, version_number: int):
+  def version_number(self, version_number: Optional[int]):
     if version_number is None:
       del self.version_number
       return
@@ -1433,7 +1433,7 @@ class ApiListModelInstanceVersionFilesRequest(KaggleObject):
     return self._page_size or 0
 
   @page_size.setter
-  def page_size(self, page_size: int):
+  def page_size(self, page_size: Optional[int]):
     if page_size is None:
       del self.page_size
       return
@@ -1446,7 +1446,7 @@ class ApiListModelInstanceVersionFilesRequest(KaggleObject):
     return self._page_token or ""
 
   @page_token.setter
-  def page_token(self, page_token: str):
+  def page_token(self, page_token: Optional[str]):
     if page_token is None:
       del self.page_token
       return
@@ -1544,7 +1544,7 @@ class ApiListModelsRequest(KaggleObject):
     return self._search or ""
 
   @search.setter
-  def search(self, search: str):
+  def search(self, search: Optional[str]):
     if search is None:
       del self.search
       return
@@ -1561,7 +1561,7 @@ class ApiListModelsRequest(KaggleObject):
     return self._sort_by or ListModelsOrderBy.LIST_MODELS_ORDER_BY_UNSPECIFIED
 
   @sort_by.setter
-  def sort_by(self, sort_by: 'ListModelsOrderBy'):
+  def sort_by(self, sort_by: Optional['ListModelsOrderBy']):
     if sort_by is None:
       del self.sort_by
       return
@@ -1575,7 +1575,7 @@ class ApiListModelsRequest(KaggleObject):
     return self._owner or ""
 
   @owner.setter
-  def owner(self, owner: str):
+  def owner(self, owner: Optional[str]):
     if owner is None:
       del self.owner
       return
@@ -1589,7 +1589,7 @@ class ApiListModelsRequest(KaggleObject):
     return self._page_size or 0
 
   @page_size.setter
-  def page_size(self, page_size: int):
+  def page_size(self, page_size: Optional[int]):
     if page_size is None:
       del self.page_size
       return
@@ -1603,7 +1603,7 @@ class ApiListModelsRequest(KaggleObject):
     return self._page_token or ""
 
   @page_token.setter
-  def page_token(self, page_token: str):
+  def page_token(self, page_token: Optional[str]):
     if page_token is None:
       del self.page_token
       return
@@ -1617,7 +1617,7 @@ class ApiListModelsRequest(KaggleObject):
     return self._only_vertex_models or False
 
   @only_vertex_models.setter
-  def only_vertex_models(self, only_vertex_models: bool):
+  def only_vertex_models(self, only_vertex_models: Optional[bool]):
     if only_vertex_models is None:
       del self.only_vertex_models
       return
@@ -1966,7 +1966,7 @@ class ApiModelFile(KaggleObject):
     return self._creation_date or None
 
   @creation_date.setter
-  def creation_date(self, creation_date: datetime):
+  def creation_date(self, creation_date: Optional[datetime]):
     if creation_date is None:
       del self.creation_date
       return
@@ -2191,7 +2191,7 @@ class ApiModelInstance(KaggleObject):
     return self._base_model_instance_information or None
 
   @base_model_instance_information.setter
-  def base_model_instance_information(self, base_model_instance_information: Optional['BaseModelInstanceInformation']):
+  def base_model_instance_information(self, base_model_instance_information: Optional[Optional['BaseModelInstanceInformation']]):
     if base_model_instance_information is None:
       del self.base_model_instance_information
       return
@@ -2226,34 +2226,49 @@ class ApiModelInstance(KaggleObject):
     self._total_uncompressed_bytes = total_uncompressed_bytes
 
 
-class ApiReviewGatingUserConsentRequest(KaggleObject):
+class ApiReviewModelGatingUserConsentRequest(KaggleObject):
   r"""
   Attributes:
-    agreement_id (int)
+    owner_slug (str)
+    model_slug (str)
     user_name (str)
     review_status (GatingAgreementRequestsReviewStatus)
     publisher_notes (str)
   """
 
   def __init__(self):
-    self._agreement_id = 0
+    self._owner_slug = ""
+    self._model_slug = ""
     self._user_name = ""
     self._review_status = GatingAgreementRequestsReviewStatus.GATING_AGREEMENT_REQUESTS_REVIEW_STATUS_UNSPECIFIED
     self._publisher_notes = None
     self._freeze()
 
   @property
-  def agreement_id(self) -> int:
-    return self._agreement_id
+  def owner_slug(self) -> str:
+    return self._owner_slug
 
-  @agreement_id.setter
-  def agreement_id(self, agreement_id: int):
-    if agreement_id is None:
-      del self.agreement_id
+  @owner_slug.setter
+  def owner_slug(self, owner_slug: str):
+    if owner_slug is None:
+      del self.owner_slug
       return
-    if not isinstance(agreement_id, int):
-      raise TypeError('agreement_id must be of type int')
-    self._agreement_id = agreement_id
+    if not isinstance(owner_slug, str):
+      raise TypeError('owner_slug must be of type str')
+    self._owner_slug = owner_slug
+
+  @property
+  def model_slug(self) -> str:
+    return self._model_slug
+
+  @model_slug.setter
+  def model_slug(self, model_slug: str):
+    if model_slug is None:
+      del self.model_slug
+      return
+    if not isinstance(model_slug, str):
+      raise TypeError('model_slug must be of type str')
+    self._model_slug = model_slug
 
   @property
   def user_name(self) -> str:
@@ -2286,7 +2301,7 @@ class ApiReviewGatingUserConsentRequest(KaggleObject):
     return self._publisher_notes or ""
 
   @publisher_notes.setter
-  def publisher_notes(self, publisher_notes: str):
+  def publisher_notes(self, publisher_notes: Optional[str]):
     if publisher_notes is None:
       del self.publisher_notes
       return
@@ -2295,7 +2310,7 @@ class ApiReviewGatingUserConsentRequest(KaggleObject):
     self._publisher_notes = publisher_notes
 
   def endpoint(self):
-    path = '/api/v1/gating/{agreement_id}/user-consent/review'
+    path = '/api/v1/models/{owner_slug}/{model_slug}/user-consents/review'
     return path.format_map(self.to_field_map(self))
 
 
@@ -2425,7 +2440,7 @@ class ApiUpdateModelInstanceRequest(KaggleObject):
     return self._fine_tunable or False
 
   @fine_tunable.setter
-  def fine_tunable(self, fine_tunable: bool):
+  def fine_tunable(self, fine_tunable: Optional[bool]):
     if fine_tunable is None:
       del self.fine_tunable
       return
@@ -2466,7 +2481,7 @@ class ApiUpdateModelInstanceRequest(KaggleObject):
     return self._license_name or ""
 
   @license_name.setter
-  def license_name(self, license_name: str):
+  def license_name(self, license_name: Optional[str]):
     if license_name is None:
       del self.license_name
       return
@@ -2479,7 +2494,7 @@ class ApiUpdateModelInstanceRequest(KaggleObject):
     return self._model_instance_type or ModelInstanceType.MODEL_INSTANCE_TYPE_UNSPECIFIED
 
   @model_instance_type.setter
-  def model_instance_type(self, model_instance_type: 'ModelInstanceType'):
+  def model_instance_type(self, model_instance_type: Optional['ModelInstanceType']):
     if model_instance_type is None:
       del self.model_instance_type
       return
@@ -2492,7 +2507,7 @@ class ApiUpdateModelInstanceRequest(KaggleObject):
     return self._base_model_instance or ""
 
   @base_model_instance.setter
-  def base_model_instance(self, base_model_instance: str):
+  def base_model_instance(self, base_model_instance: Optional[str]):
     if base_model_instance is None:
       del self.base_model_instance
       return
@@ -2505,7 +2520,7 @@ class ApiUpdateModelInstanceRequest(KaggleObject):
     return self._external_base_model_url or ""
 
   @external_base_model_url.setter
-  def external_base_model_url(self, external_base_model_url: str):
+  def external_base_model_url(self, external_base_model_url: Optional[str]):
     if external_base_model_url is None:
       del self.external_base_model_url
       return
@@ -2597,7 +2612,7 @@ class ApiUpdateModelRequest(KaggleObject):
     return self._subtitle or ""
 
   @subtitle.setter
-  def subtitle(self, subtitle: str):
+  def subtitle(self, subtitle: Optional[str]):
     if subtitle is None:
       del self.subtitle
       return
@@ -2623,7 +2638,7 @@ class ApiUpdateModelRequest(KaggleObject):
     return self._description or ""
 
   @description.setter
-  def description(self, description: str):
+  def description(self, description: Optional[str]):
     if description is None:
       del self.description
       return
@@ -2649,7 +2664,7 @@ class ApiUpdateModelRequest(KaggleObject):
     return self._provenance_sources or ""
 
   @provenance_sources.setter
-  def provenance_sources(self, provenance_sources: str):
+  def provenance_sources(self, provenance_sources: Optional[str]):
     if provenance_sources is None:
       del self.provenance_sources
       return
@@ -2705,7 +2720,7 @@ class ApiUpdateModelResponse(KaggleObject):
     return self._id or 0
 
   @id.setter
-  def id(self, id: int):
+  def id(self, id: Optional[int]):
     if id is None:
       del self.id
       return
@@ -2718,7 +2733,7 @@ class ApiUpdateModelResponse(KaggleObject):
     return self._ref or ""
 
   @ref.setter
-  def ref(self, ref: str):
+  def ref(self, ref: Optional[str]):
     if ref is None:
       del self.ref
       return
@@ -2731,7 +2746,7 @@ class ApiUpdateModelResponse(KaggleObject):
     return self._error or ""
 
   @error.setter
-  def error(self, error: str):
+  def error(self, error: Optional[str]):
     if error is None:
       del self.error
       return
@@ -2744,7 +2759,7 @@ class ApiUpdateModelResponse(KaggleObject):
     return self._url or ""
 
   @url.setter
-  def url(self, url: str):
+  def url(self, url: Optional[str]):
     if url is None:
       del self.url
       return
@@ -3221,7 +3236,7 @@ class ApiGatingUserConsent(KaggleObject):
     return self._request_data or ""
 
   @request_data.setter
-  def request_data(self, request_data: str):
+  def request_data(self, request_data: Optional[str]):
     if request_data is None:
       del self.request_data
       return
@@ -3247,7 +3262,7 @@ class ApiGatingUserConsent(KaggleObject):
     return self._review_time or None
 
   @review_time.setter
-  def review_time(self, review_time: datetime):
+  def review_time(self, review_time: Optional[datetime]):
     if review_time is None:
       del self.review_time
       return
@@ -3286,7 +3301,7 @@ class ApiGatingUserConsent(KaggleObject):
     return self._expiry_time or None
 
   @expiry_time.setter
-  def expiry_time(self, expiry_time: datetime):
+  def expiry_time(self, expiry_time: Optional[datetime]):
     if expiry_time is None:
       del self.expiry_time
       return
@@ -3299,7 +3314,7 @@ class ApiGatingUserConsent(KaggleObject):
     return self._publisher_notes or ""
 
   @publisher_notes.setter
-  def publisher_notes(self, publisher_notes: str):
+  def publisher_notes(self, publisher_notes: Optional[str]):
     if publisher_notes is None:
       del self.publisher_notes
       return
@@ -3599,8 +3614,9 @@ ApiModelInstance._fields = [
   FieldMetadata("totalUncompressedBytes", "total_uncompressed_bytes", "_total_uncompressed_bytes", int, 0, PredefinedSerializer()),
 ]
 
-ApiReviewGatingUserConsentRequest._fields = [
-  FieldMetadata("agreementId", "agreement_id", "_agreement_id", int, 0, PredefinedSerializer()),
+ApiReviewModelGatingUserConsentRequest._fields = [
+  FieldMetadata("ownerSlug", "owner_slug", "_owner_slug", str, "", PredefinedSerializer()),
+  FieldMetadata("modelSlug", "model_slug", "_model_slug", str, "", PredefinedSerializer()),
   FieldMetadata("userName", "user_name", "_user_name", str, "", PredefinedSerializer()),
   FieldMetadata("reviewStatus", "review_status", "_review_status", GatingAgreementRequestsReviewStatus, GatingAgreementRequestsReviewStatus.GATING_AGREEMENT_REQUESTS_REVIEW_STATUS_UNSPECIFIED, EnumSerializer()),
   FieldMetadata("publisherNotes", "publisher_notes", "_publisher_notes", str, None, PredefinedSerializer(), optional=True),

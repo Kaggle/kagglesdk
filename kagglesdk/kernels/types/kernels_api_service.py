@@ -1,7 +1,82 @@
 from datetime import datetime
 from kagglesdk.kaggle_object import *
-from kagglesdk.kernels.types.kernels_enums import KernelsListSortType, KernelsListViewType, KernelWorkerStatus
+from kagglesdk.kernels.types.kernels_enums import KernelsListSortType, KernelsListViewType, KernelVersionType, KernelWorkerStatus
 from typing import Optional, List
+
+class ApiDeleteKernelRequest(KaggleObject):
+  r"""
+  Attributes:
+    user_name (str)
+    kernel_slug (str)
+  """
+
+  def __init__(self):
+    self._user_name = ""
+    self._kernel_slug = ""
+    self._freeze()
+
+  @property
+  def user_name(self) -> str:
+    return self._user_name
+
+  @user_name.setter
+  def user_name(self, user_name: str):
+    if user_name is None:
+      del self.user_name
+      return
+    if not isinstance(user_name, str):
+      raise TypeError('user_name must be of type str')
+    self._user_name = user_name
+
+  @property
+  def kernel_slug(self) -> str:
+    return self._kernel_slug
+
+  @kernel_slug.setter
+  def kernel_slug(self, kernel_slug: str):
+    if kernel_slug is None:
+      del self.kernel_slug
+      return
+    if not isinstance(kernel_slug, str):
+      raise TypeError('kernel_slug must be of type str')
+    self._kernel_slug = kernel_slug
+
+  def endpoint(self):
+    path = '/api/v1/kernels/delete/{user_name}/{kernel_slug}'
+    return path.format_map(self.to_field_map(self))
+
+  @staticmethod
+  def endpoint_path():
+    return '/api/v1/kernels/delete/{user_name}/{kernel_slug}'
+
+
+class ApiDeleteKernelResponse(KaggleObject):
+  r"""
+  Attributes:
+    error_message (str)
+  """
+
+  def __init__(self):
+    self._error_message = None
+    self._freeze()
+
+  @property
+  def error_message(self) -> str:
+    return self._error_message or ""
+
+  @error_message.setter
+  def error_message(self, error_message: Optional[str]):
+    if error_message is None:
+      del self.error_message
+      return
+    if not isinstance(error_message, str):
+      raise TypeError('error_message must be of type str')
+    self._error_message = error_message
+
+  @property
+  def errorMessage(self):
+    return self.error_message
+
 
 class ApiDownloadKernelOutputRequest(KaggleObject):
   r"""
@@ -52,7 +127,7 @@ class ApiDownloadKernelOutputRequest(KaggleObject):
     return self._file_path or ""
 
   @file_path.setter
-  def file_path(self, file_path: str):
+  def file_path(self, file_path: Optional[str]):
     if file_path is None:
       del self.file_path
       return
@@ -65,7 +140,7 @@ class ApiDownloadKernelOutputRequest(KaggleObject):
     return self._version_number or 0
 
   @version_number.setter
-  def version_number(self, version_number: int):
+  def version_number(self, version_number: Optional[int]):
     if version_number is None:
       del self.version_number
       return
@@ -272,7 +347,7 @@ class ApiGetKernelSessionStatusResponse(KaggleObject):
     return self._failure_message or ""
 
   @failure_message.setter
-  def failure_message(self, failure_message: str):
+  def failure_message(self, failure_message: Optional[str]):
     if failure_message is None:
       del self.failure_message
       return
@@ -306,7 +381,7 @@ class ApiKernelBlob(KaggleObject):
     return self._source or ""
 
   @source.setter
-  def source(self, source: str):
+  def source(self, source: Optional[str]):
     if source is None:
       del self.source
       return
@@ -319,7 +394,7 @@ class ApiKernelBlob(KaggleObject):
     return self._language or ""
 
   @language.setter
-  def language(self, language: str):
+  def language(self, language: Optional[str]):
     if language is None:
       del self.language
       return
@@ -332,7 +407,7 @@ class ApiKernelBlob(KaggleObject):
     return self._kernel_type or ""
 
   @kernel_type.setter
-  def kernel_type(self, kernel_type: str):
+  def kernel_type(self, kernel_type: Optional[str]):
     if kernel_type is None:
       del self.kernel_type
       return
@@ -345,7 +420,7 @@ class ApiKernelBlob(KaggleObject):
     return self._slug or ""
 
   @slug.setter
-  def slug(self, slug: str):
+  def slug(self, slug: Optional[str]):
     if slug is None:
       del self.slug
       return
@@ -376,6 +451,7 @@ class ApiKernelMetadata(KaggleObject):
     model_data_sources (str)
     total_votes (int)
     current_version_number (int)
+    docker_image (str)
   """
 
   def __init__(self):
@@ -398,6 +474,7 @@ class ApiKernelMetadata(KaggleObject):
     self._model_data_sources = []
     self._total_votes = 0
     self._current_version_number = None
+    self._docker_image = None
     self._freeze()
 
   @property
@@ -483,7 +560,7 @@ class ApiKernelMetadata(KaggleObject):
     return self._language or ""
 
   @language.setter
-  def language(self, language: str):
+  def language(self, language: Optional[str]):
     if language is None:
       del self.language
       return
@@ -496,7 +573,7 @@ class ApiKernelMetadata(KaggleObject):
     return self._kernel_type or ""
 
   @kernel_type.setter
-  def kernel_type(self, kernel_type: str):
+  def kernel_type(self, kernel_type: Optional[str]):
     if kernel_type is None:
       del self.kernel_type
       return
@@ -509,7 +586,7 @@ class ApiKernelMetadata(KaggleObject):
     return self._is_private or False
 
   @is_private.setter
-  def is_private(self, is_private: bool):
+  def is_private(self, is_private: Optional[bool]):
     if is_private is None:
       del self.is_private
       return
@@ -522,7 +599,7 @@ class ApiKernelMetadata(KaggleObject):
     return self._enable_gpu or False
 
   @enable_gpu.setter
-  def enable_gpu(self, enable_gpu: bool):
+  def enable_gpu(self, enable_gpu: Optional[bool]):
     if enable_gpu is None:
       del self.enable_gpu
       return
@@ -535,7 +612,7 @@ class ApiKernelMetadata(KaggleObject):
     return self._enable_tpu or False
 
   @enable_tpu.setter
-  def enable_tpu(self, enable_tpu: bool):
+  def enable_tpu(self, enable_tpu: Optional[bool]):
     if enable_tpu is None:
       del self.enable_tpu
       return
@@ -548,7 +625,7 @@ class ApiKernelMetadata(KaggleObject):
     return self._enable_internet or False
 
   @enable_internet.setter
-  def enable_internet(self, enable_internet: bool):
+  def enable_internet(self, enable_internet: Optional[bool]):
     if enable_internet is None:
       del self.enable_internet
       return
@@ -649,13 +726,26 @@ class ApiKernelMetadata(KaggleObject):
     return self._current_version_number or 0
 
   @current_version_number.setter
-  def current_version_number(self, current_version_number: int):
+  def current_version_number(self, current_version_number: Optional[int]):
     if current_version_number is None:
       del self.current_version_number
       return
     if not isinstance(current_version_number, int):
       raise TypeError('current_version_number must be of type int')
     self._current_version_number = current_version_number
+
+  @property
+  def docker_image(self) -> str:
+    return self._docker_image or ""
+
+  @docker_image.setter
+  def docker_image(self, docker_image: Optional[str]):
+    if docker_image is None:
+      del self.docker_image
+      return
+    if not isinstance(docker_image, str):
+      raise TypeError('docker_image must be of type str')
+    self._docker_image = docker_image
 
 
 class ApiListKernelFilesRequest(KaggleObject):
@@ -705,7 +795,7 @@ class ApiListKernelFilesRequest(KaggleObject):
     return self._page_size or 0
 
   @page_size.setter
-  def page_size(self, page_size: int):
+  def page_size(self, page_size: Optional[int]):
     if page_size is None:
       del self.page_size
       return
@@ -718,7 +808,7 @@ class ApiListKernelFilesRequest(KaggleObject):
     return self._page_token or ""
 
   @page_token.setter
-  def page_token(self, page_token: str):
+  def page_token(self, page_token: Optional[str]):
     if page_token is None:
       del self.page_token
       return
@@ -763,7 +853,7 @@ class ApiListKernelFilesResponse(KaggleObject):
     return self._next_page_token or ""
 
   @next_page_token.setter
-  def next_page_token(self, next_page_token: str):
+  def next_page_token(self, next_page_token: Optional[str]):
     if next_page_token is None:
       del self.next_page_token
       return
@@ -823,7 +913,7 @@ class ApiListKernelSessionOutputRequest(KaggleObject):
     return self._page_size or 0
 
   @page_size.setter
-  def page_size(self, page_size: int):
+  def page_size(self, page_size: Optional[int]):
     if page_size is None:
       del self.page_size
       return
@@ -836,7 +926,7 @@ class ApiListKernelSessionOutputRequest(KaggleObject):
     return self._page_token or ""
 
   @page_token.setter
-  def page_token(self, page_token: str):
+  def page_token(self, page_token: Optional[str]):
     if page_token is None:
       del self.page_token
       return
@@ -883,7 +973,7 @@ class ApiListKernelSessionOutputResponse(KaggleObject):
     return self._log or ""
 
   @log.setter
-  def log(self, log: str):
+  def log(self, log: Optional[str]):
     if log is None:
       del self.log
       return
@@ -896,7 +986,7 @@ class ApiListKernelSessionOutputResponse(KaggleObject):
     return self._next_page_token or ""
 
   @next_page_token.setter
-  def next_page_token(self, next_page_token: str):
+  def next_page_token(self, next_page_token: Optional[str]):
     if next_page_token is None:
       del self.next_page_token
       return
@@ -962,7 +1052,7 @@ class ApiListKernelsRequest(KaggleObject):
     return self._competition or ""
 
   @competition.setter
-  def competition(self, competition: str):
+  def competition(self, competition: Optional[str]):
     if competition is None:
       del self.competition
       return
@@ -976,7 +1066,7 @@ class ApiListKernelsRequest(KaggleObject):
     return self._dataset or ""
 
   @dataset.setter
-  def dataset(self, dataset: str):
+  def dataset(self, dataset: Optional[str]):
     if dataset is None:
       del self.dataset
       return
@@ -990,7 +1080,7 @@ class ApiListKernelsRequest(KaggleObject):
     return self._parent_kernel or ""
 
   @parent_kernel.setter
-  def parent_kernel(self, parent_kernel: str):
+  def parent_kernel(self, parent_kernel: Optional[str]):
     if parent_kernel is None:
       del self.parent_kernel
       return
@@ -1018,7 +1108,7 @@ class ApiListKernelsRequest(KaggleObject):
     return self._kernel_type or ""
 
   @kernel_type.setter
-  def kernel_type(self, kernel_type: str):
+  def kernel_type(self, kernel_type: Optional[str]):
     if kernel_type is None:
       del self.kernel_type
       return
@@ -1035,7 +1125,7 @@ class ApiListKernelsRequest(KaggleObject):
     return self._language or ""
 
   @language.setter
-  def language(self, language: str):
+  def language(self, language: Optional[str]):
     if language is None:
       del self.language
       return
@@ -1052,7 +1142,7 @@ class ApiListKernelsRequest(KaggleObject):
     return self._output_type or ""
 
   @output_type.setter
-  def output_type(self, output_type: str):
+  def output_type(self, output_type: Optional[str]):
     if output_type is None:
       del self.output_type
       return
@@ -1066,7 +1156,7 @@ class ApiListKernelsRequest(KaggleObject):
     return self._search or ""
 
   @search.setter
-  def search(self, search: str):
+  def search(self, search: Optional[str]):
     if search is None:
       del self.search
       return
@@ -1097,7 +1187,7 @@ class ApiListKernelsRequest(KaggleObject):
     return self._user or ""
 
   @user.setter
-  def user(self, user: str):
+  def user(self, user: Optional[str]):
     if user is None:
       del self.user
       return
@@ -1111,7 +1201,7 @@ class ApiListKernelsRequest(KaggleObject):
     return self._page or 0
 
   @page.setter
-  def page(self, page: int):
+  def page(self, page: Optional[int]):
     if page is None:
       del self.page
       return
@@ -1125,7 +1215,7 @@ class ApiListKernelsRequest(KaggleObject):
     return self._page_size or 0
 
   @page_size.setter
-  def page_size(self, page_size: int):
+  def page_size(self, page_size: Optional[int]):
     if page_size is None:
       del self.page_size
       return
@@ -1219,6 +1309,16 @@ class ApiSaveKernelRequest(KaggleObject):
     session_timeout_seconds (int)
       If specified, terminate the kernel session after this many seconds of
       runtime, which must be lower than the global maximum.
+    priority (int)
+      Sets the execution priority of this kernel session request when queued,
+      lower is better (10 will get run before 100).
+      Only allowed or certain clients.
+    docker_image (str)
+      Which docker image to run with. This must be one of the Kaggle-provided,
+      known images. It should look something like:
+      gcr.io/kaggle-images/python@sha256:f4b6dd72d4ac48c76fbb02bce0798b80b284102886ad37e6041e9ab721dc8873
+    kernel_version_type (KernelVersionType)
+      Which kernel version type to use.
   """
 
   def __init__(self):
@@ -1239,6 +1339,9 @@ class ApiSaveKernelRequest(KaggleObject):
     self._docker_image_pinning_type = None
     self._model_data_sources = []
     self._session_timeout_seconds = None
+    self._priority = None
+    self._docker_image = None
+    self._kernel_version_type = None
     self._freeze()
 
   @property
@@ -1250,7 +1353,7 @@ class ApiSaveKernelRequest(KaggleObject):
     return self._id or 0
 
   @id.setter
-  def id(self, id: int):
+  def id(self, id: Optional[int]):
     if id is None:
       del self.id
       return
@@ -1269,7 +1372,7 @@ class ApiSaveKernelRequest(KaggleObject):
     return self._slug or ""
 
   @slug.setter
-  def slug(self, slug: str):
+  def slug(self, slug: Optional[str]):
     if slug is None:
       del self.slug
       return
@@ -1283,7 +1386,7 @@ class ApiSaveKernelRequest(KaggleObject):
     return self._new_title or ""
 
   @new_title.setter
-  def new_title(self, new_title: str):
+  def new_title(self, new_title: Optional[str]):
     if new_title is None:
       del self.new_title
       return
@@ -1297,7 +1400,7 @@ class ApiSaveKernelRequest(KaggleObject):
     return self._text or ""
 
   @text.setter
-  def text(self, text: str):
+  def text(self, text: Optional[str]):
     if text is None:
       del self.text
       return
@@ -1314,7 +1417,7 @@ class ApiSaveKernelRequest(KaggleObject):
     return self._language or ""
 
   @language.setter
-  def language(self, language: str):
+  def language(self, language: Optional[str]):
     if language is None:
       del self.language
       return
@@ -1328,7 +1431,7 @@ class ApiSaveKernelRequest(KaggleObject):
     return self._kernel_type or ""
 
   @kernel_type.setter
-  def kernel_type(self, kernel_type: str):
+  def kernel_type(self, kernel_type: Optional[str]):
     if kernel_type is None:
       del self.kernel_type
       return
@@ -1414,7 +1517,7 @@ class ApiSaveKernelRequest(KaggleObject):
     return self._is_private or False
 
   @is_private.setter
-  def is_private(self, is_private: bool):
+  def is_private(self, is_private: Optional[bool]):
     if is_private is None:
       del self.is_private
       return
@@ -1428,7 +1531,7 @@ class ApiSaveKernelRequest(KaggleObject):
     return self._enable_gpu or False
 
   @enable_gpu.setter
-  def enable_gpu(self, enable_gpu: bool):
+  def enable_gpu(self, enable_gpu: Optional[bool]):
     if enable_gpu is None:
       del self.enable_gpu
       return
@@ -1442,7 +1545,7 @@ class ApiSaveKernelRequest(KaggleObject):
     return self._enable_tpu or False
 
   @enable_tpu.setter
-  def enable_tpu(self, enable_tpu: bool):
+  def enable_tpu(self, enable_tpu: Optional[bool]):
     if enable_tpu is None:
       del self.enable_tpu
       return
@@ -1456,7 +1559,7 @@ class ApiSaveKernelRequest(KaggleObject):
     return self._enable_internet or False
 
   @enable_internet.setter
-  def enable_internet(self, enable_internet: bool):
+  def enable_internet(self, enable_internet: Optional[bool]):
     if enable_internet is None:
       del self.enable_internet
       return
@@ -1470,7 +1573,7 @@ class ApiSaveKernelRequest(KaggleObject):
     return self._docker_image_pinning_type or ""
 
   @docker_image_pinning_type.setter
-  def docker_image_pinning_type(self, docker_image_pinning_type: str):
+  def docker_image_pinning_type(self, docker_image_pinning_type: Optional[str]):
     if docker_image_pinning_type is None:
       del self.docker_image_pinning_type
       return
@@ -1509,13 +1612,63 @@ class ApiSaveKernelRequest(KaggleObject):
     return self._session_timeout_seconds or 0
 
   @session_timeout_seconds.setter
-  def session_timeout_seconds(self, session_timeout_seconds: int):
+  def session_timeout_seconds(self, session_timeout_seconds: Optional[int]):
     if session_timeout_seconds is None:
       del self.session_timeout_seconds
       return
     if not isinstance(session_timeout_seconds, int):
       raise TypeError('session_timeout_seconds must be of type int')
     self._session_timeout_seconds = session_timeout_seconds
+
+  @property
+  def priority(self) -> int:
+    r"""
+    Sets the execution priority of this kernel session request when queued,
+    lower is better (10 will get run before 100).
+    Only allowed or certain clients.
+    """
+    return self._priority or 0
+
+  @priority.setter
+  def priority(self, priority: Optional[int]):
+    if priority is None:
+      del self.priority
+      return
+    if not isinstance(priority, int):
+      raise TypeError('priority must be of type int')
+    self._priority = priority
+
+  @property
+  def docker_image(self) -> str:
+    r"""
+    Which docker image to run with. This must be one of the Kaggle-provided,
+    known images. It should look something like:
+    gcr.io/kaggle-images/python@sha256:f4b6dd72d4ac48c76fbb02bce0798b80b284102886ad37e6041e9ab721dc8873
+    """
+    return self._docker_image or ""
+
+  @docker_image.setter
+  def docker_image(self, docker_image: Optional[str]):
+    if docker_image is None:
+      del self.docker_image
+      return
+    if not isinstance(docker_image, str):
+      raise TypeError('docker_image must be of type str')
+    self._docker_image = docker_image
+
+  @property
+  def kernel_version_type(self) -> 'KernelVersionType':
+    """Which kernel version type to use."""
+    return self._kernel_version_type or KernelVersionType.KERNEL_VERSION_TYPE_UNSPECIFIED
+
+  @kernel_version_type.setter
+  def kernel_version_type(self, kernel_version_type: Optional['KernelVersionType']):
+    if kernel_version_type is None:
+      del self.kernel_version_type
+      return
+    if not isinstance(kernel_version_type, KernelVersionType):
+      raise TypeError('kernel_version_type must be of type KernelVersionType')
+    self._kernel_version_type = kernel_version_type
 
   def endpoint(self):
     path = '/api/v1/kernels/push'
@@ -1588,7 +1741,7 @@ class ApiSaveKernelResponse(KaggleObject):
     return self._version_number or 0
 
   @version_number.setter
-  def version_number(self, version_number: int):
+  def version_number(self, version_number: Optional[int]):
     if version_number is None:
       del self.version_number
       return
@@ -1601,7 +1754,7 @@ class ApiSaveKernelResponse(KaggleObject):
     return self._error or ""
 
   @error.setter
-  def error(self, error: str):
+  def error(self, error: Optional[str]):
     if error is None:
       del self.error
       return
@@ -1726,7 +1879,7 @@ class ApiKernelSessionOutputFile(KaggleObject):
     return self._url or ""
 
   @url.setter
-  def url(self, url: str):
+  def url(self, url: Optional[str]):
     if url is None:
       del self.url
       return
@@ -1739,7 +1892,7 @@ class ApiKernelSessionOutputFile(KaggleObject):
     return self._file_name or ""
 
   @file_name.setter
-  def file_name(self, file_name: str):
+  def file_name(self, file_name: Optional[str]):
     if file_name is None:
       del self.file_name
       return
@@ -1802,6 +1955,15 @@ class ApiListKernelFilesItem(KaggleObject):
     self._creation_date = creation_date
 
 
+ApiDeleteKernelRequest._fields = [
+  FieldMetadata("userName", "user_name", "_user_name", str, "", PredefinedSerializer()),
+  FieldMetadata("kernelSlug", "kernel_slug", "_kernel_slug", str, "", PredefinedSerializer()),
+]
+
+ApiDeleteKernelResponse._fields = [
+  FieldMetadata("errorMessage", "error_message", "_error_message", str, None, PredefinedSerializer(), optional=True),
+]
+
 ApiDownloadKernelOutputRequest._fields = [
   FieldMetadata("ownerSlug", "owner_slug", "_owner_slug", str, "", PredefinedSerializer()),
   FieldMetadata("kernelSlug", "kernel_slug", "_kernel_slug", str, "", PredefinedSerializer()),
@@ -1860,6 +2022,7 @@ ApiKernelMetadata._fields = [
   FieldMetadata("modelDataSources", "model_data_sources", "_model_data_sources", str, [], ListSerializer(PredefinedSerializer())),
   FieldMetadata("totalVotes", "total_votes", "_total_votes", int, 0, PredefinedSerializer()),
   FieldMetadata("currentVersionNumber", "current_version_number", "_current_version_number", int, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("dockerImage", "docker_image", "_docker_image", str, None, PredefinedSerializer(), optional=True),
 ]
 
 ApiListKernelFilesRequest._fields = [
@@ -1924,6 +2087,9 @@ ApiSaveKernelRequest._fields = [
   FieldMetadata("dockerImagePinningType", "docker_image_pinning_type", "_docker_image_pinning_type", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("modelDataSources", "model_data_sources", "_model_data_sources", str, [], ListSerializer(PredefinedSerializer())),
   FieldMetadata("sessionTimeoutSeconds", "session_timeout_seconds", "_session_timeout_seconds", int, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("priority", "priority", "_priority", int, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("dockerImage", "docker_image", "_docker_image", str, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("kernelVersionType", "kernel_version_type", "_kernel_version_type", KernelVersionType, None, EnumSerializer(), optional=True),
 ]
 
 ApiSaveKernelResponse._fields = [

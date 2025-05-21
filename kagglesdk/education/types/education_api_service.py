@@ -159,7 +159,7 @@ class ApiTrackExerciseInteractionRequest(KaggleObject):
     return self._value_towards_completion or 0.0
 
   @value_towards_completion.setter
-  def value_towards_completion(self, value_towards_completion: float):
+  def value_towards_completion(self, value_towards_completion: Optional[float]):
     if value_towards_completion is None:
       del self.value_towards_completion
       return

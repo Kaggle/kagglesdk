@@ -18,7 +18,7 @@ class CompetitionApiClient(object):
     if request is None:
       request = ApiListCompetitionsRequest()
 
-    return self._client.call("competitions.CompetitionApiService", "ApiListCompetitions", request, ApiListCompetitionsResponse)
+    return self._client.call("competitions.CompetitionApiService", "ListCompetitions", request, ApiListCompetitionsResponse)
 
   def list_submissions(self, request: ApiListSubmissionsRequest = None) -> ApiListSubmissionsResponse:
     r"""
@@ -30,7 +30,7 @@ class CompetitionApiClient(object):
     if request is None:
       request = ApiListSubmissionsRequest()
 
-    return self._client.call("competitions.CompetitionApiService", "ApiListSubmissions", request, ApiListSubmissionsResponse)
+    return self._client.call("competitions.CompetitionApiService", "ListSubmissions", request, ApiListSubmissionsResponse)
 
   def list_data_files(self, request: ApiListDataFilesRequest = None) -> ApiListDataFilesResponse:
     r"""
@@ -42,7 +42,7 @@ class CompetitionApiClient(object):
     if request is None:
       request = ApiListDataFilesRequest()
 
-    return self._client.call("competitions.CompetitionApiService", "ApiListDataFiles", request, ApiListDataFilesResponse)
+    return self._client.call("competitions.CompetitionApiService", "ListDataFiles", request, ApiListDataFilesResponse)
 
   def get_leaderboard(self, request: ApiGetLeaderboardRequest = None) -> ApiGetLeaderboardResponse:
     r"""
@@ -54,7 +54,7 @@ class CompetitionApiClient(object):
     if request is None:
       request = ApiGetLeaderboardRequest()
 
-    return self._client.call("competitions.CompetitionApiService", "ApiGetLeaderboard", request, ApiGetLeaderboardResponse)
+    return self._client.call("competitions.CompetitionApiService", "GetLeaderboard", request, ApiGetLeaderboardResponse)
 
   def download_leaderboard(self, request: ApiDownloadLeaderboardRequest = None) -> FileDownload:
     r"""
@@ -66,7 +66,7 @@ class CompetitionApiClient(object):
     if request is None:
       request = ApiDownloadLeaderboardRequest()
 
-    return self._client.call("competitions.CompetitionApiService", "ApiDownloadLeaderboard", request, FileDownload)
+    return self._client.call("competitions.CompetitionApiService", "DownloadLeaderboard", request, FileDownload)
 
   def create_submission(self, request: ApiCreateSubmissionRequest = None) -> ApiCreateSubmissionResponse:
     r"""
@@ -78,7 +78,7 @@ class CompetitionApiClient(object):
     if request is None:
       request = ApiCreateSubmissionRequest()
 
-    return self._client.call("competitions.CompetitionApiService", "ApiCreateSubmission", request, ApiCreateSubmissionResponse)
+    return self._client.call("competitions.CompetitionApiService", "CreateSubmission", request, ApiCreateSubmissionResponse)
 
   def create_code_submission(self, request: ApiCreateCodeSubmissionRequest = None) -> ApiCreateCodeSubmissionResponse:
     r"""
@@ -90,7 +90,7 @@ class CompetitionApiClient(object):
     if request is None:
       request = ApiCreateCodeSubmissionRequest()
 
-    return self._client.call("competitions.CompetitionApiService", "ApiCreateCodeSubmission", request, ApiCreateCodeSubmissionResponse)
+    return self._client.call("competitions.CompetitionApiService", "CreateCodeSubmission", request, ApiCreateCodeSubmissionResponse)
 
   def get_submission(self, request: ApiGetSubmissionRequest = None) -> ApiSubmission:
     r"""
@@ -102,7 +102,7 @@ class CompetitionApiClient(object):
     if request is None:
       request = ApiGetSubmissionRequest()
 
-    return self._client.call("competitions.CompetitionApiService", "ApiGetSubmission", request, ApiSubmission)
+    return self._client.call("competitions.CompetitionApiService", "GetSubmission", request, ApiSubmission)
 
   def start_submission_upload(self, request: ApiStartSubmissionUploadRequest = None) -> ApiStartSubmissionUploadResponse:
     r"""
@@ -114,7 +114,7 @@ class CompetitionApiClient(object):
     if request is None:
       request = ApiStartSubmissionUploadRequest()
 
-    return self._client.call("competitions.CompetitionApiService", "ApiStartSubmissionUpload", request, ApiStartSubmissionUploadResponse)
+    return self._client.call("competitions.CompetitionApiService", "StartSubmissionUpload", request, ApiStartSubmissionUploadResponse)
 
   def download_data_files(self, request: ApiDownloadDataFilesRequest = None) -> HttpRedirect:
     r"""
@@ -126,7 +126,7 @@ class CompetitionApiClient(object):
     if request is None:
       request = ApiDownloadDataFilesRequest()
 
-    return self._client.call("competitions.CompetitionApiService", "ApiDownloadDataFiles", request, HttpRedirect)
+    return self._client.call("competitions.CompetitionApiService", "DownloadDataFiles", request, HttpRedirect)
 
   def download_data_file(self, request: ApiDownloadDataFileRequest = None) -> HttpRedirect:
     r"""
@@ -138,4 +138,4 @@ class CompetitionApiClient(object):
     if request is None:
       request = ApiDownloadDataFileRequest()
 
-    return self._client.call("competitions.CompetitionApiService", "ApiDownloadDataFile", request, HttpRedirect)
+    return self._client.call("competitions.CompetitionApiService", "DownloadDataFile", request, HttpRedirect)

@@ -520,6 +520,7 @@ class ApiDataset(KaggleObject):
     tags (ApiCategory)
     files (ApiDatasetFile)
     versions (ApiDatasetVersion)
+    thumbnail_image_url (str)
   """
 
   def __init__(self):
@@ -548,6 +549,7 @@ class ApiDataset(KaggleObject):
     self._tags = []
     self._files = []
     self._versions = []
+    self._thumbnail_image_url = None
     self._freeze()
 
   @property
@@ -880,6 +882,19 @@ class ApiDataset(KaggleObject):
     if not all([isinstance(t, ApiDatasetVersion) for t in versions]):
       raise TypeError('versions must contain only items of type ApiDatasetVersion')
     self._versions = versions
+
+  @property
+  def thumbnail_image_url(self) -> str:
+    return self._thumbnail_image_url or ""
+
+  @thumbnail_image_url.setter
+  def thumbnail_image_url(self, thumbnail_image_url: Optional[str]):
+    if thumbnail_image_url is None:
+      del self.thumbnail_image_url
+      return
+    if not isinstance(thumbnail_image_url, str):
+      raise TypeError('thumbnail_image_url must be of type str')
+    self._thumbnail_image_url = thumbnail_image_url
 
 
 class ApiDatasetFile(KaggleObject):
@@ -2062,10 +2077,12 @@ class ApiListDatasetsResponse(KaggleObject):
   r"""
   Attributes:
     datasets (ApiDataset)
+    next_page_token (str)
   """
 
   def __init__(self):
     self._datasets = []
+    self._next_page_token = ""
     self._freeze()
 
   @property
@@ -2083,9 +2100,26 @@ class ApiListDatasetsResponse(KaggleObject):
       raise TypeError('datasets must contain only items of type ApiDataset')
     self._datasets = datasets
 
+  @property
+  def next_page_token(self) -> str:
+    return self._next_page_token
+
+  @next_page_token.setter
+  def next_page_token(self, next_page_token: str):
+    if next_page_token is None:
+      del self.next_page_token
+      return
+    if not isinstance(next_page_token, str):
+      raise TypeError('next_page_token must be of type str')
+    self._next_page_token = next_page_token
+
   @classmethod
   def prepare_from(cls, http_response):
     return cls.from_dict({'datasets': json.loads(http_response.text)})
+
+  @property
+  def nextPageToken(self):
+    return self.next_page_token
 
 
 class ApiUpdateDatasetMetadataRequest(KaggleObject):
@@ -2631,6 +2665,7 @@ ApiDataset._fields = [
   FieldMetadata("tags", "tags", "_tags", ApiCategory, [], ListSerializer(KaggleObjectSerializer())),
   FieldMetadata("files", "files", "_files", ApiDatasetFile, [], ListSerializer(KaggleObjectSerializer())),
   FieldMetadata("versions", "versions", "_versions", ApiDatasetVersion, [], ListSerializer(KaggleObjectSerializer())),
+  FieldMetadata("thumbnailImageUrl", "thumbnail_image_url", "_thumbnail_image_url", str, None, PredefinedSerializer(), optional=True),
 ]
 
 ApiDatasetFile._fields = [
@@ -2743,6 +2778,7 @@ ApiListDatasetsRequest._fields = [
 
 ApiListDatasetsResponse._fields = [
   FieldMetadata("datasets", "datasets", "_datasets", ApiDataset, [], ListSerializer(KaggleObjectSerializer())),
+  FieldMetadata("nextPageToken", "next_page_token", "_next_page_token", str, "", PredefinedSerializer()),
 ]
 
 ApiUpdateDatasetMetadataRequest._fields = [

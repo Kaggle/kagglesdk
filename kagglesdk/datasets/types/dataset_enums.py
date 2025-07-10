@@ -21,6 +21,7 @@ class DatasetFileTypeGroup(enum.Enum):
   DATASET_FILE_TYPE_GROUP_SQLITE = 2
   DATASET_FILE_TYPE_GROUP_JSON = 3
   DATASET_FILE_TYPE_GROUP_BIG_QUERY = 4
+  DATASET_FILE_TYPE_GROUP_PARQUET = 5
 
 class DatasetLicenseGroup(enum.Enum):
   r"""
@@ -79,4 +80,11 @@ class DatasetSortBy(enum.Enum):
 class DatasetViewedGroup(enum.Enum):
   DATASET_VIEWED_GROUP_UNSPECIFIED = 0
   DATASET_VIEWED_GROUP_VIEWED = 1
+
+class DatasetFileType(enum.Enum):
+  DATASET_FILE_TYPE_UNSPECIFIED = 0
+  DATASET_FILE_TYPE_CSV = 1
+  DATASET_FILE_TYPE_JSON = 2
+  DATASET_FILE_TYPE_SQLITE = 3
+  DATASET_FILE_TYPE_OTHER = 4
 

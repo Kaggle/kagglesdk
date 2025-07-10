@@ -16,4 +16,4 @@ class EducationApiClient(object):
     if request is None:
       request = ApiTrackExerciseInteractionRequest()
 
-    return self._client.call("education.EducationApiService", "ApiTrackExerciseInteraction", request, ApiTrackExerciseInteractionResponse)
+    return self._client.call("education.EducationApiService", "TrackExerciseInteraction", request, ApiTrackExerciseInteractionResponse)

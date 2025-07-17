@@ -298,7 +298,6 @@ class KaggleObject(object):
         kv_pairs = [(field.json_name, field.get_as_dict_item(self, ignore_defaults)) for field in self._fields]
         return {k: v for (k, v) in kv_pairs if not ignore_defaults or v is not None}
 
-    @staticmethod
     def to_field_map(self, ignore_defaults=True):
         kv_pairs = [(field.field_name, field.get_as_dict_item(self, ignore_defaults)) for field in self._fields]
         return {k: v for (k, v) in kv_pairs if not ignore_defaults or v is not None}
@@ -314,15 +313,14 @@ class KaggleObject(object):
     def from_json(cls, json_str):
         return cls.from_dict(json.loads(json_str))
 
-    @staticmethod
     def to_json(self, ignore_defaults=True):
-        return json.dumps(KaggleObject.to_dict(self, ignore_defaults))
+        return json.dumps(self.to_dict(ignore_defaults))
 
     def __str__(self):
-        return KaggleObject.to_json(self, ignore_defaults=False)
+        return self.to_json(ignore_defaults=False)
 
     def __repr__(self):
-        return KaggleObject.to_json(self, ignore_defaults=False)
+        return self.to_json(ignore_defaults=False)
 
     def __contains__(self, field_name):
         try:

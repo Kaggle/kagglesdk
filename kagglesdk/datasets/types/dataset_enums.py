@@ -76,6 +76,7 @@ class DatasetSortBy(enum.Enum):
   """Old world"""
   DATASET_SORT_BY_LAST_VIEWED = 6
   DATASET_SORT_BY_USABILITY = 7
+  DATASET_SORT_BY_DOWNLOAD_COUNT = 8
 
 class DatasetViewedGroup(enum.Enum):
   DATASET_VIEWED_GROUP_UNSPECIFIED = 0

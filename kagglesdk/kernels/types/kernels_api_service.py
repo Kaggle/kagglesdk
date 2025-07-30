@@ -1328,8 +1328,10 @@ class ApiSaveKernelRequest(KaggleObject):
       Whether or not the kernel should be private.
     enable_gpu (bool)
       Whether or not the kernel should run on a GPU.
+      DEPRECATED: use `machine_shape` instead
     enable_tpu (bool)
       Whether or not the kernel should run on a TPU.
+      DEPRECATED: use `machine_shape` instead
     enable_internet (bool)
       Whether or not the kernel should be able to access the internet.
     docker_image_pinning_type (str)
@@ -1353,6 +1355,11 @@ class ApiSaveKernelRequest(KaggleObject):
       gcr.io/kaggle-images/python@sha256:f4b6dd72d4ac48c76fbb02bce0798b80b284102886ad37e6041e9ab721dc8873
     kernel_execution_type (KernelExecutionType)
       Which kernel version type to use.
+    machine_shape (str)
+      The machine shape to use for this session. Currently supported options:
+         * NvidiaTeslaT4
+         * NvidiaTeslaP100
+         * Tpu1VmV38
   """
 
   def __init__(self):
@@ -1376,6 +1383,7 @@ class ApiSaveKernelRequest(KaggleObject):
     self._priority = None
     self._docker_image = None
     self._kernel_execution_type = None
+    self._machine_shape = None
     self._freeze()
 
   @property
@@ -1561,7 +1569,10 @@ class ApiSaveKernelRequest(KaggleObject):
 
   @property
   def enable_gpu(self) -> bool:
-    """Whether or not the kernel should run on a GPU."""
+    r"""
+    Whether or not the kernel should run on a GPU.
+    DEPRECATED: use `machine_shape` instead
+    """
     return self._enable_gpu or False
 
   @enable_gpu.setter
@@ -1575,7 +1586,10 @@ class ApiSaveKernelRequest(KaggleObject):
 
   @property
   def enable_tpu(self) -> bool:
-    """Whether or not the kernel should run on a TPU."""
+    r"""
+    Whether or not the kernel should run on a TPU.
+    DEPRECATED: use `machine_shape` instead
+    """
     return self._enable_tpu or False
 
   @enable_tpu.setter
@@ -1703,6 +1717,25 @@ class ApiSaveKernelRequest(KaggleObject):
     if not isinstance(kernel_execution_type, KernelExecutionType):
       raise TypeError('kernel_execution_type must be of type KernelExecutionType')
     self._kernel_execution_type = kernel_execution_type
+
+  @property
+  def machine_shape(self) -> str:
+    r"""
+    The machine shape to use for this session. Currently supported options:
+       * NvidiaTeslaT4
+       * NvidiaTeslaP100
+       * Tpu1VmV38
+    """
+    return self._machine_shape or ""
+
+  @machine_shape.setter
+  def machine_shape(self, machine_shape: Optional[str]):
+    if machine_shape is None:
+      del self.machine_shape
+      return
+    if not isinstance(machine_shape, str):
+      raise TypeError('machine_shape must be of type str')
+    self._machine_shape = machine_shape
 
   def endpoint(self):
     path = '/api/v1/kernels/push'
@@ -2126,6 +2159,7 @@ ApiSaveKernelRequest._fields = [
   FieldMetadata("priority", "priority", "_priority", int, None, PredefinedSerializer(), optional=True),
   FieldMetadata("dockerImage", "docker_image", "_docker_image", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("kernelExecutionType", "kernel_execution_type", "_kernel_execution_type", KernelExecutionType, None, EnumSerializer(), optional=True),
+  FieldMetadata("machineShape", "machine_shape", "_machine_shape", str, None, PredefinedSerializer(), optional=True),
 ]
 
 ApiSaveKernelResponse._fields = [

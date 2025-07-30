@@ -5,13 +5,14 @@ from kagglesdk.competitions.types.competition_enums import HostSegment
 from kagglesdk.competitions.types.search_competitions import SearchCompetitionsOrderBy, SearchCompetitionsProfileVisibility, SearchCompetitionsRole, SearchCompetitionsStatus
 from kagglesdk.datasets.types.dataset_enums import DatasetFileType, DatasetFileTypeGroup, DatasetLicenseGroup, DatasetSizeGroup
 from kagglesdk.datasets.types.search_datasets import SearchDatasetsOrderBy
-from kagglesdk.discussions.types.search_discussions import SearchDiscussionsDocumentType, SearchDiscussionsOrderBy, SearchDiscussionsSourceType, SearchDiscussionsTopicType, SearchDiscussionsWriteUpMetadata, WriteUpInclusionType
+from kagglesdk.discussions.types.search_discussions import SearchDiscussionsDocumentType, SearchDiscussionsOrderBy, SearchDiscussionsSourceType, SearchDiscussionsTopicType, WriteUpInclusionType
 from kagglesdk.discussions.types.writeup_enums import WriteUpType
 from kagglesdk.kaggle_object import *
 from kagglesdk.kernels.types.search_kernels import SearchKernelsOrderBy
 from kagglesdk.models.types.search_models import SearchModelsOrderBy
 from kagglesdk.search.types.search_content_shared import ListSearchContentRangeFilter
 from kagglesdk.search.types.search_enums import DocumentType, ListSearchContentOrderBy, OwnerType, PrivacyFilter
+from kagglesdk.search.types.search_service import WriteUpItemInfo
 from kagglesdk.users.types.progression_service import UserAchievementType
 from kagglesdk.users.types.search_users import SearchUsersOrderBy
 from kagglesdk.users.types.users_enums import UserAchievementTier
@@ -1390,7 +1391,7 @@ class ApiSearchDiscussionsDocument(KaggleObject):
       The type of topic returned
     type (SearchDiscussionsDocumentType)
       The type of document returned
-    write_up_metadata (SearchDiscussionsWriteUpMetadata)
+    write_up_metadata (WriteUpItemInfo)
       If the document is a WriteUp, extra WriteUp-specific data
       is provided
   """
@@ -1519,7 +1520,7 @@ class ApiSearchDiscussionsDocument(KaggleObject):
     self._type = type
 
   @property
-  def write_up_metadata(self) -> Optional['SearchDiscussionsWriteUpMetadata']:
+  def write_up_metadata(self) -> Optional['WriteUpItemInfo']:
     r"""
     If the document is a WriteUp, extra WriteUp-specific data
     is provided
@@ -1527,12 +1528,12 @@ class ApiSearchDiscussionsDocument(KaggleObject):
     return self._write_up_metadata or None
 
   @write_up_metadata.setter
-  def write_up_metadata(self, write_up_metadata: Optional[Optional['SearchDiscussionsWriteUpMetadata']]):
+  def write_up_metadata(self, write_up_metadata: Optional[Optional['WriteUpItemInfo']]):
     if write_up_metadata is None:
       del self.write_up_metadata
       return
-    if not isinstance(write_up_metadata, SearchDiscussionsWriteUpMetadata):
-      raise TypeError('write_up_metadata must be of type SearchDiscussionsWriteUpMetadata')
+    if not isinstance(write_up_metadata, WriteUpItemInfo):
+      raise TypeError('write_up_metadata must be of type WriteUpItemInfo')
     self._write_up_metadata = write_up_metadata
 
 
@@ -2369,7 +2370,7 @@ ApiSearchDiscussionsDocument._fields = [
   FieldMetadata("sourceType", "source_type", "_source_type", SearchDiscussionsSourceType, SearchDiscussionsSourceType.SEARCH_DISCUSSIONS_SOURCE_TYPE_UNSPECIFIED, EnumSerializer()),
   FieldMetadata("topicType", "topic_type", "_topic_type", SearchDiscussionsTopicType, SearchDiscussionsTopicType.SEARCH_DISCUSSIONS_TOPIC_TYPE_UNSPECIFIED, EnumSerializer()),
   FieldMetadata("type", "type", "_type", SearchDiscussionsDocumentType, SearchDiscussionsDocumentType.SEARCH_DISCUSSIONS_DOCUMENT_TYPE_UNSPECIFIED, EnumSerializer()),
-  FieldMetadata("writeUpMetadata", "write_up_metadata", "_write_up_metadata", SearchDiscussionsWriteUpMetadata, None, KaggleObjectSerializer(), optional=True),
+  FieldMetadata("writeUpMetadata", "write_up_metadata", "_write_up_metadata", WriteUpItemInfo, None, KaggleObjectSerializer(), optional=True),
 ]
 
 ApiSearchDiscussionsFilters._fields = [

@@ -1,8 +1,4 @@
 import enum
-from kagglesdk.community.types.content_enums import ContentState
-from kagglesdk.discussions.types.writeup_enums import WriteUpType
-from kagglesdk.kaggle_object import *
-from typing import Optional
 
 class SearchDiscussionsOrderBy(enum.Enum):
   SEARCH_DISCUSSIONS_ORDER_BY_UNSPECIFIED = 0
@@ -43,52 +39,4 @@ class WriteUpInclusionType(enum.Enum):
   Only WriteUps will be included, while
   ForumTopics will be excluded
   """
-
-class SearchDiscussionsWriteUpMetadata(KaggleObject):
-  r"""
-  Attributes:
-    type (WriteUpType)
-      Type of the WriteUp
-    content_state (ContentState)
-      Content state of the WriteUp
-  """
-
-  def __init__(self):
-    self._type = WriteUpType.WRITE_UP_TYPE_UNSPECIFIED
-    self._content_state = ContentState.CONTENT_STATE_UNSPECIFIED
-    self._freeze()
-
-  @property
-  def type(self) -> 'WriteUpType':
-    """Type of the WriteUp"""
-    return self._type
-
-  @type.setter
-  def type(self, type: 'WriteUpType'):
-    if type is None:
-      del self.type
-      return
-    if not isinstance(type, WriteUpType):
-      raise TypeError('type must be of type WriteUpType')
-    self._type = type
-
-  @property
-  def content_state(self) -> 'ContentState':
-    """Content state of the WriteUp"""
-    return self._content_state
-
-  @content_state.setter
-  def content_state(self, content_state: 'ContentState'):
-    if content_state is None:
-      del self.content_state
-      return
-    if not isinstance(content_state, ContentState):
-      raise TypeError('content_state must be of type ContentState')
-    self._content_state = content_state
-
-
-SearchDiscussionsWriteUpMetadata._fields = [
-  FieldMetadata("type", "type", "_type", WriteUpType, WriteUpType.WRITE_UP_TYPE_UNSPECIFIED, EnumSerializer()),
-  FieldMetadata("contentState", "content_state", "_content_state", ContentState, ContentState.CONTENT_STATE_UNSPECIFIED, EnumSerializer()),
-]
 

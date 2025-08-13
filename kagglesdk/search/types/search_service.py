@@ -20,6 +20,8 @@ class WriteUpItemInfo(KaggleObject):
       Content State of WriteUp
     team_name (str)
       Name of the team that owns the WriteUp
+    id (int)
+      Id of the WriteUp
   """
 
   def __init__(self):
@@ -29,6 +31,7 @@ class WriteUpItemInfo(KaggleObject):
     self._competition_info = None
     self._content_state = ContentState.CONTENT_STATE_UNSPECIFIED
     self._team_name = None
+    self._id = 0
     self._freeze()
 
   @property
@@ -116,6 +119,20 @@ class WriteUpItemInfo(KaggleObject):
     if not isinstance(team_name, str):
       raise TypeError('team_name must be of type str')
     self._team_name = team_name
+
+  @property
+  def id(self) -> int:
+    """Id of the WriteUp"""
+    return self._id
+
+  @id.setter
+  def id(self, id: int):
+    if id is None:
+      del self.id
+      return
+    if not isinstance(id, int):
+      raise TypeError('id must be of type int')
+    self._id = id
 
 
 class WriteUpCompetitionInfo(KaggleObject):
@@ -270,6 +287,7 @@ WriteUpItemInfo._fields = [
   FieldMetadata("competitionInfo", "competition_info", "_competition_info", WriteUpCompetitionInfo, None, KaggleObjectSerializer(), optional=True),
   FieldMetadata("contentState", "content_state", "_content_state", ContentState, ContentState.CONTENT_STATE_UNSPECIFIED, EnumSerializer()),
   FieldMetadata("teamName", "team_name", "_team_name", str, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("id", "id", "_id", int, 0, PredefinedSerializer()),
 ]
 
 WriteUpCompetitionInfo._fields = [

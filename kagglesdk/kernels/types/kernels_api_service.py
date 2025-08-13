@@ -3,6 +3,66 @@ from kagglesdk.kaggle_object import *
 from kagglesdk.kernels.types.kernels_enums import KernelExecutionType, KernelsListSortType, KernelsListViewType, KernelWorkerStatus
 from typing import Optional, List
 
+class ApiCancelKernelSessionRequest(KaggleObject):
+  r"""
+  Attributes:
+    kernel_session_id (int)
+  """
+
+  def __init__(self):
+    self._kernel_session_id = 0
+    self._freeze()
+
+  @property
+  def kernel_session_id(self) -> int:
+    return self._kernel_session_id
+
+  @kernel_session_id.setter
+  def kernel_session_id(self, kernel_session_id: int):
+    if kernel_session_id is None:
+      del self.kernel_session_id
+      return
+    if not isinstance(kernel_session_id, int):
+      raise TypeError('kernel_session_id must be of type int')
+    self._kernel_session_id = kernel_session_id
+
+  def endpoint(self):
+    path = '/api/v1/kernels/cancel-session/{kernel_session_id}'
+    return path.format_map(self.to_field_map(self))
+
+  @staticmethod
+  def endpoint_path():
+    return '/api/v1/kernels/cancel-session/{kernel_session_id}'
+
+
+class ApiCancelKernelSessionResponse(KaggleObject):
+  r"""
+  Attributes:
+    error_message (str)
+  """
+
+  def __init__(self):
+    self._error_message = None
+    self._freeze()
+
+  @property
+  def error_message(self) -> str:
+    return self._error_message or ""
+
+  @error_message.setter
+  def error_message(self, error_message: Optional[str]):
+    if error_message is None:
+      del self.error_message
+      return
+    if not isinstance(error_message, str):
+      raise TypeError('error_message must be of type str')
+    self._error_message = error_message
+
+  @property
+  def errorMessage(self):
+    return self.error_message
+
+
 class ApiDeleteKernelRequest(KaggleObject):
   r"""
   Attributes:
@@ -2021,6 +2081,14 @@ class ApiListKernelFilesItem(KaggleObject):
       raise TypeError('creation_date must be of type str')
     self._creation_date = creation_date
 
+
+ApiCancelKernelSessionRequest._fields = [
+  FieldMetadata("kernelSessionId", "kernel_session_id", "_kernel_session_id", int, 0, PredefinedSerializer()),
+]
+
+ApiCancelKernelSessionResponse._fields = [
+  FieldMetadata("errorMessage", "error_message", "_error_message", str, None, PredefinedSerializer(), optional=True),
+]
 
 ApiDeleteKernelRequest._fields = [
   FieldMetadata("userName", "user_name", "_user_name", str, "", PredefinedSerializer()),

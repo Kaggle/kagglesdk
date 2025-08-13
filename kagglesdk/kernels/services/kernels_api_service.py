@@ -1,7 +1,7 @@
 from kagglesdk.common.types.file_download import FileDownload
 from kagglesdk.common.types.http_redirect import HttpRedirect
 from kagglesdk.kaggle_http_client import KaggleHttpClient
-from kagglesdk.kernels.types.kernels_api_service import ApiDeleteKernelRequest, ApiDeleteKernelResponse, ApiDownloadKernelOutputRequest, ApiDownloadKernelOutputZipRequest, ApiGetKernelRequest, ApiGetKernelResponse, ApiGetKernelSessionStatusRequest, ApiGetKernelSessionStatusResponse, ApiListKernelFilesRequest, ApiListKernelFilesResponse, ApiListKernelSessionOutputRequest, ApiListKernelSessionOutputResponse, ApiListKernelsRequest, ApiListKernelsResponse, ApiSaveKernelRequest, ApiSaveKernelResponse
+from kagglesdk.kernels.types.kernels_api_service import ApiCancelKernelSessionRequest, ApiCancelKernelSessionResponse, ApiDeleteKernelRequest, ApiDeleteKernelResponse, ApiDownloadKernelOutputRequest, ApiDownloadKernelOutputZipRequest, ApiGetKernelRequest, ApiGetKernelResponse, ApiGetKernelSessionStatusRequest, ApiGetKernelSessionStatusResponse, ApiListKernelFilesRequest, ApiListKernelFilesResponse, ApiListKernelSessionOutputRequest, ApiListKernelSessionOutputResponse, ApiListKernelsRequest, ApiListKernelsResponse, ApiSaveKernelRequest, ApiSaveKernelResponse
 
 class KernelsApiClient(object):
 
@@ -119,3 +119,15 @@ class KernelsApiClient(object):
       request = ApiDeleteKernelRequest()
 
     return self._client.call("kernels.KernelsApiService", "DeleteKernel", request, ApiDeleteKernelResponse)
+
+  def cancel_kernel_session(self, request: ApiCancelKernelSessionRequest = None) -> ApiCancelKernelSessionResponse:
+    r"""
+    Args:
+      request (ApiCancelKernelSessionRequest):
+        The request object; initialized to empty instance if not specified.
+    """
+
+    if request is None:
+      request = ApiCancelKernelSessionRequest()
+
+    return self._client.call("kernels.KernelsApiService", "CancelKernelSession", request, ApiCancelKernelSessionResponse)

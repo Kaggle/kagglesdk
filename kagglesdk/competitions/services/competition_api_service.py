@@ -1,6 +1,6 @@
 from kagglesdk.common.types.file_download import FileDownload
 from kagglesdk.common.types.http_redirect import HttpRedirect
-from kagglesdk.competitions.types.competition_api_service import ApiCreateCodeSubmissionRequest, ApiCreateCodeSubmissionResponse, ApiCreateSubmissionRequest, ApiCreateSubmissionResponse, ApiDownloadDataFileRequest, ApiDownloadDataFilesRequest, ApiDownloadLeaderboardRequest, ApiGetLeaderboardRequest, ApiGetLeaderboardResponse, ApiGetSubmissionRequest, ApiListCompetitionsRequest, ApiListCompetitionsResponse, ApiListDataFilesRequest, ApiListDataFilesResponse, ApiListSubmissionsRequest, ApiListSubmissionsResponse, ApiStartSubmissionUploadRequest, ApiStartSubmissionUploadResponse, ApiSubmission
+from kagglesdk.competitions.types.competition_api_service import ApiCompetition, ApiCreateCodeSubmissionRequest, ApiCreateCodeSubmissionResponse, ApiCreateSubmissionRequest, ApiCreateSubmissionResponse, ApiDownloadDataFileRequest, ApiDownloadDataFilesRequest, ApiDownloadLeaderboardRequest, ApiGetCompetitionRequest, ApiGetLeaderboardRequest, ApiGetLeaderboardResponse, ApiGetSubmissionRequest, ApiListCompetitionsRequest, ApiListCompetitionsResponse, ApiListDataFilesRequest, ApiListDataFilesResponse, ApiListSubmissionsRequest, ApiListSubmissionsResponse, ApiStartSubmissionUploadRequest, ApiStartSubmissionUploadResponse, ApiSubmission
 from kagglesdk.kaggle_http_client import KaggleHttpClient
 
 class CompetitionApiClient(object):
@@ -139,3 +139,15 @@ class CompetitionApiClient(object):
       request = ApiDownloadDataFileRequest()
 
     return self._client.call("competitions.CompetitionApiService", "DownloadDataFile", request, HttpRedirect)
+
+  def get_competition(self, request: ApiGetCompetitionRequest = None) -> ApiCompetition:
+    r"""
+    Args:
+      request (ApiGetCompetitionRequest):
+        The request object; initialized to empty instance if not specified.
+    """
+
+    if request is None:
+      request = ApiGetCompetitionRequest()
+
+    return self._client.call("competitions.CompetitionApiService", "GetCompetition", request, ApiCompetition)

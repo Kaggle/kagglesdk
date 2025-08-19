@@ -1,6 +1,6 @@
 from kagglesdk.common.types.http_redirect import HttpRedirect
 from kagglesdk.kaggle_http_client import KaggleHttpClient
-from kagglesdk.models.types.model_api_service import ApiCreateModelInstanceRequest, ApiCreateModelInstanceVersionRequest, ApiCreateModelRequest, ApiCreateModelResponse, ApiDeleteModelInstanceRequest, ApiDeleteModelInstanceVersionRequest, ApiDeleteModelRequest, ApiDeleteModelResponse, ApiDownloadModelInstanceVersionRequest, ApiGetModelInstanceRequest, ApiGetModelRequest, ApiListModelGatingUserConsentsRequest, ApiListModelGatingUserConsentsResponse, ApiListModelInstanceVersionFilesRequest, ApiListModelInstanceVersionFilesResponse, ApiListModelsRequest, ApiListModelsResponse, ApiModel, ApiModelInstance, ApiReviewModelGatingUserConsentRequest, ApiUpdateModelInstanceRequest, ApiUpdateModelRequest, ApiUpdateModelResponse, ApiUploadModelFileRequest, ApiUploadModelFileResponse, CreateModelSigningTokenRequest, CreateModelSigningTokenResponse, KeysRequest, KeysResponse, WellKnowEndpointRequest, WellKnowEndpointResponse
+from kagglesdk.models.types.model_api_service import ApiCreateModelInstanceRequest, ApiCreateModelInstanceVersionRequest, ApiCreateModelRequest, ApiCreateModelResponse, ApiDeleteModelInstanceRequest, ApiDeleteModelInstanceVersionRequest, ApiDeleteModelRequest, ApiDeleteModelResponse, ApiDownloadModelInstanceVersionRequest, ApiGetModelInstanceRequest, ApiGetModelRequest, ApiListModelGatingUserConsentsRequest, ApiListModelGatingUserConsentsResponse, ApiListModelInstancesRequest, ApiListModelInstancesResponse, ApiListModelInstanceVersionFilesRequest, ApiListModelInstanceVersionFilesResponse, ApiListModelInstanceVersionsRequest, ApiListModelInstanceVersionsResponse, ApiListModelsRequest, ApiListModelsResponse, ApiModel, ApiModelInstance, ApiReviewModelGatingUserConsentRequest, ApiUpdateModelInstanceRequest, ApiUpdateModelRequest, ApiUpdateModelResponse, ApiUploadModelFileRequest, ApiUploadModelFileResponse, CreateModelSigningTokenRequest, CreateModelSigningTokenResponse, KeysRequest, KeysResponse, WellKnowEndpointRequest, WellKnowEndpointResponse
 
 class ModelApiClient(object):
 
@@ -126,6 +126,30 @@ class ModelApiClient(object):
       request = ApiListModelsRequest()
 
     return self._client.call("models.ModelApiService", "ListModels", request, ApiListModelsResponse)
+
+  def list_model_instances(self, request: ApiListModelInstancesRequest = None) -> ApiListModelInstancesResponse:
+    r"""
+    Args:
+      request (ApiListModelInstancesRequest):
+        The request object; initialized to empty instance if not specified.
+    """
+
+    if request is None:
+      request = ApiListModelInstancesRequest()
+
+    return self._client.call("models.ModelApiService", "ListModelInstances", request, ApiListModelInstancesResponse)
+
+  def list_model_instance_versions(self, request: ApiListModelInstanceVersionsRequest = None) -> ApiListModelInstanceVersionsResponse:
+    r"""
+    Args:
+      request (ApiListModelInstanceVersionsRequest):
+        The request object; initialized to empty instance if not specified.
+    """
+
+    if request is None:
+      request = ApiListModelInstanceVersionsRequest()
+
+    return self._client.call("models.ModelApiService", "ListModelInstanceVersions", request, ApiListModelInstanceVersionsResponse)
 
   def list_model_instance_version_files(self, request: ApiListModelInstanceVersionFilesRequest = None) -> ApiListModelInstanceVersionFilesResponse:
     r"""

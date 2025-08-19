@@ -512,6 +512,10 @@ class ApiKernelMetadata(KaggleObject):
     total_votes (int)
     current_version_number (int)
     docker_image (str)
+    machine_shape (str)
+      The machine shape that was used in the last session. Largely, this
+      indicates the type of accelerator, but it may include other attributes
+      about the hardware configuration.
   """
 
   def __init__(self):
@@ -535,6 +539,7 @@ class ApiKernelMetadata(KaggleObject):
     self._total_votes = 0
     self._current_version_number = None
     self._docker_image = None
+    self._machine_shape = None
     self._freeze()
 
   @property
@@ -806,6 +811,24 @@ class ApiKernelMetadata(KaggleObject):
     if not isinstance(docker_image, str):
       raise TypeError('docker_image must be of type str')
     self._docker_image = docker_image
+
+  @property
+  def machine_shape(self) -> str:
+    r"""
+    The machine shape that was used in the last session. Largely, this
+    indicates the type of accelerator, but it may include other attributes
+    about the hardware configuration.
+    """
+    return self._machine_shape or ""
+
+  @machine_shape.setter
+  def machine_shape(self, machine_shape: Optional[str]):
+    if machine_shape is None:
+      del self.machine_shape
+      return
+    if not isinstance(machine_shape, str):
+      raise TypeError('machine_shape must be of type str')
+    self._machine_shape = machine_shape
 
 
 class ApiListKernelFilesRequest(KaggleObject):
@@ -2158,6 +2181,7 @@ ApiKernelMetadata._fields = [
   FieldMetadata("totalVotes", "total_votes", "_total_votes", int, 0, PredefinedSerializer()),
   FieldMetadata("currentVersionNumber", "current_version_number", "_current_version_number", int, None, PredefinedSerializer(), optional=True),
   FieldMetadata("dockerImage", "docker_image", "_docker_image", str, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("machineShape", "machine_shape", "_machine_shape", str, None, PredefinedSerializer(), optional=True),
 ]
 
 ApiListKernelFilesRequest._fields = [

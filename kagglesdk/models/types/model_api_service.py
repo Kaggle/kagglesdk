@@ -3,7 +3,7 @@ from google.protobuf.field_mask_pb2 import FieldMask
 from kagglesdk.datasets.types.dataset_api_service import ApiCategory, ApiDatasetNewFile, ApiUploadDirectoryInfo
 from kagglesdk.kaggle_object import *
 from kagglesdk.models.types.model_enums import GatingAgreementRequestsExpiryStatus, GatingAgreementRequestsReviewStatus, ListModelsOrderBy, ModelFramework, ModelInstanceType
-from kagglesdk.models.types.model_types import BaseModelInstanceInformation, ModelLink
+from kagglesdk.models.types.model_types import BaseModelInstanceInformation, ModelInstance, ModelInstanceVersionList, ModelLink
 from typing import Optional, List
 
 class ApiCreateModelInstanceRequest(KaggleObject):
@@ -1341,6 +1341,128 @@ class ApiListModelGatingUserConsentsResponse(KaggleObject):
     return self.next_page_token
 
 
+class ApiListModelInstancesRequest(KaggleObject):
+  r"""
+  Attributes:
+    owner_slug (str)
+    model_slug (str)
+    page_size (int)
+    page_token (str)
+  """
+
+  def __init__(self):
+    self._owner_slug = ""
+    self._model_slug = ""
+    self._page_size = None
+    self._page_token = None
+    self._freeze()
+
+  @property
+  def owner_slug(self) -> str:
+    return self._owner_slug
+
+  @owner_slug.setter
+  def owner_slug(self, owner_slug: str):
+    if owner_slug is None:
+      del self.owner_slug
+      return
+    if not isinstance(owner_slug, str):
+      raise TypeError('owner_slug must be of type str')
+    self._owner_slug = owner_slug
+
+  @property
+  def model_slug(self) -> str:
+    return self._model_slug
+
+  @model_slug.setter
+  def model_slug(self, model_slug: str):
+    if model_slug is None:
+      del self.model_slug
+      return
+    if not isinstance(model_slug, str):
+      raise TypeError('model_slug must be of type str')
+    self._model_slug = model_slug
+
+  @property
+  def page_size(self) -> int:
+    return self._page_size or 0
+
+  @page_size.setter
+  def page_size(self, page_size: Optional[int]):
+    if page_size is None:
+      del self.page_size
+      return
+    if not isinstance(page_size, int):
+      raise TypeError('page_size must be of type int')
+    self._page_size = page_size
+
+  @property
+  def page_token(self) -> str:
+    return self._page_token or ""
+
+  @page_token.setter
+  def page_token(self, page_token: Optional[str]):
+    if page_token is None:
+      del self.page_token
+      return
+    if not isinstance(page_token, str):
+      raise TypeError('page_token must be of type str')
+    self._page_token = page_token
+
+  def endpoint(self):
+    path = '/api/v1/models/{owner_slug}/{model_slug}/list'
+    return path.format_map(self.to_field_map(self))
+
+  @staticmethod
+  def endpoint_path():
+    return '/api/v1/models/{owner_slug}/{model_slug}/list'
+
+
+class ApiListModelInstancesResponse(KaggleObject):
+  r"""
+  Attributes:
+    instances (ModelInstance)
+    next_page_token (str)
+  """
+
+  def __init__(self):
+    self._instances = []
+    self._next_page_token = ""
+    self._freeze()
+
+  @property
+  def instances(self) -> Optional[List[Optional['ModelInstance']]]:
+    return self._instances
+
+  @instances.setter
+  def instances(self, instances: Optional[List[Optional['ModelInstance']]]):
+    if instances is None:
+      del self.instances
+      return
+    if not isinstance(instances, list):
+      raise TypeError('instances must be of type list')
+    if not all([isinstance(t, ModelInstance) for t in instances]):
+      raise TypeError('instances must contain only items of type ModelInstance')
+    self._instances = instances
+
+  @property
+  def next_page_token(self) -> str:
+    return self._next_page_token
+
+  @next_page_token.setter
+  def next_page_token(self, next_page_token: str):
+    if next_page_token is None:
+      del self.next_page_token
+      return
+    if not isinstance(next_page_token, str):
+      raise TypeError('next_page_token must be of type str')
+    self._next_page_token = next_page_token
+
+  @property
+  def nextPageToken(self):
+    return self.next_page_token
+
+
 class ApiListModelInstanceVersionFilesRequest(KaggleObject):
   r"""
   Attributes:
@@ -1505,6 +1627,160 @@ class ApiListModelInstanceVersionFilesResponse(KaggleObject):
     if not isinstance(next_page_token, str):
       raise TypeError('next_page_token must be of type str')
     self._next_page_token = next_page_token
+
+  @property
+  def nextPageToken(self):
+    return self.next_page_token
+
+
+class ApiListModelInstanceVersionsRequest(KaggleObject):
+  r"""
+  Attributes:
+    owner_slug (str)
+    model_slug (str)
+    instance_slug (str)
+    framework (ModelFramework)
+    page_size (int)
+    page_token (str)
+  """
+
+  def __init__(self):
+    self._owner_slug = ""
+    self._model_slug = ""
+    self._instance_slug = ""
+    self._framework = ModelFramework.MODEL_FRAMEWORK_UNSPECIFIED
+    self._page_size = None
+    self._page_token = None
+    self._freeze()
+
+  @property
+  def owner_slug(self) -> str:
+    return self._owner_slug
+
+  @owner_slug.setter
+  def owner_slug(self, owner_slug: str):
+    if owner_slug is None:
+      del self.owner_slug
+      return
+    if not isinstance(owner_slug, str):
+      raise TypeError('owner_slug must be of type str')
+    self._owner_slug = owner_slug
+
+  @property
+  def model_slug(self) -> str:
+    return self._model_slug
+
+  @model_slug.setter
+  def model_slug(self, model_slug: str):
+    if model_slug is None:
+      del self.model_slug
+      return
+    if not isinstance(model_slug, str):
+      raise TypeError('model_slug must be of type str')
+    self._model_slug = model_slug
+
+  @property
+  def instance_slug(self) -> str:
+    return self._instance_slug
+
+  @instance_slug.setter
+  def instance_slug(self, instance_slug: str):
+    if instance_slug is None:
+      del self.instance_slug
+      return
+    if not isinstance(instance_slug, str):
+      raise TypeError('instance_slug must be of type str')
+    self._instance_slug = instance_slug
+
+  @property
+  def framework(self) -> 'ModelFramework':
+    return self._framework
+
+  @framework.setter
+  def framework(self, framework: 'ModelFramework'):
+    if framework is None:
+      del self.framework
+      return
+    if not isinstance(framework, ModelFramework):
+      raise TypeError('framework must be of type ModelFramework')
+    self._framework = framework
+
+  @property
+  def page_size(self) -> int:
+    return self._page_size or 0
+
+  @page_size.setter
+  def page_size(self, page_size: Optional[int]):
+    if page_size is None:
+      del self.page_size
+      return
+    if not isinstance(page_size, int):
+      raise TypeError('page_size must be of type int')
+    self._page_size = page_size
+
+  @property
+  def page_token(self) -> str:
+    return self._page_token or ""
+
+  @page_token.setter
+  def page_token(self, page_token: Optional[str]):
+    if page_token is None:
+      del self.page_token
+      return
+    if not isinstance(page_token, str):
+      raise TypeError('page_token must be of type str')
+    self._page_token = page_token
+
+  def endpoint(self):
+    path = '/api/v1/models/{owner_slug}/{model_slug}/{framework}/{instance_slug}/list'
+    return path.format_map(self.to_field_map(self))
+
+  @staticmethod
+  def endpoint_path():
+    return '/api/v1/models/{owner_slug}/{model_slug}/{framework}/{instance_slug}/list'
+
+
+class ApiListModelInstanceVersionsResponse(KaggleObject):
+  r"""
+  Attributes:
+    version_list (ModelInstanceVersionList)
+    next_page_token (str)
+  """
+
+  def __init__(self):
+    self._version_list = None
+    self._next_page_token = ""
+    self._freeze()
+
+  @property
+  def version_list(self) -> Optional['ModelInstanceVersionList']:
+    return self._version_list
+
+  @version_list.setter
+  def version_list(self, version_list: Optional['ModelInstanceVersionList']):
+    if version_list is None:
+      del self.version_list
+      return
+    if not isinstance(version_list, ModelInstanceVersionList):
+      raise TypeError('version_list must be of type ModelInstanceVersionList')
+    self._version_list = version_list
+
+  @property
+  def next_page_token(self) -> str:
+    return self._next_page_token
+
+  @next_page_token.setter
+  def next_page_token(self, next_page_token: str):
+    if next_page_token is None:
+      del self.next_page_token
+      return
+    if not isinstance(next_page_token, str):
+      raise TypeError('next_page_token must be of type str')
+    self._next_page_token = next_page_token
+
+  @property
+  def versionList(self):
+    return self.version_list
 
   @property
   def nextPageToken(self):
@@ -3572,6 +3848,18 @@ ApiListModelGatingUserConsentsResponse._fields = [
   FieldMetadata("nextPageToken", "next_page_token", "_next_page_token", str, "", PredefinedSerializer()),
 ]
 
+ApiListModelInstancesRequest._fields = [
+  FieldMetadata("ownerSlug", "owner_slug", "_owner_slug", str, "", PredefinedSerializer()),
+  FieldMetadata("modelSlug", "model_slug", "_model_slug", str, "", PredefinedSerializer()),
+  FieldMetadata("pageSize", "page_size", "_page_size", int, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("pageToken", "page_token", "_page_token", str, None, PredefinedSerializer(), optional=True),
+]
+
+ApiListModelInstancesResponse._fields = [
+  FieldMetadata("instances", "instances", "_instances", ModelInstance, [], ListSerializer(KaggleObjectSerializer())),
+  FieldMetadata("nextPageToken", "next_page_token", "_next_page_token", str, "", PredefinedSerializer()),
+]
+
 ApiListModelInstanceVersionFilesRequest._fields = [
   FieldMetadata("ownerSlug", "owner_slug", "_owner_slug", str, "", PredefinedSerializer()),
   FieldMetadata("modelSlug", "model_slug", "_model_slug", str, "", PredefinedSerializer()),
@@ -3584,6 +3872,20 @@ ApiListModelInstanceVersionFilesRequest._fields = [
 
 ApiListModelInstanceVersionFilesResponse._fields = [
   FieldMetadata("files", "files", "_files", ApiModelFile, [], ListSerializer(KaggleObjectSerializer())),
+  FieldMetadata("nextPageToken", "next_page_token", "_next_page_token", str, "", PredefinedSerializer()),
+]
+
+ApiListModelInstanceVersionsRequest._fields = [
+  FieldMetadata("ownerSlug", "owner_slug", "_owner_slug", str, "", PredefinedSerializer()),
+  FieldMetadata("modelSlug", "model_slug", "_model_slug", str, "", PredefinedSerializer()),
+  FieldMetadata("instanceSlug", "instance_slug", "_instance_slug", str, "", PredefinedSerializer()),
+  FieldMetadata("framework", "framework", "_framework", ModelFramework, ModelFramework.MODEL_FRAMEWORK_UNSPECIFIED, EnumSerializer()),
+  FieldMetadata("pageSize", "page_size", "_page_size", int, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("pageToken", "page_token", "_page_token", str, None, PredefinedSerializer(), optional=True),
+]
+
+ApiListModelInstanceVersionsResponse._fields = [
+  FieldMetadata("versionList", "version_list", "_version_list", ModelInstanceVersionList, None, KaggleObjectSerializer()),
   FieldMetadata("nextPageToken", "next_page_token", "_next_page_token", str, "", PredefinedSerializer()),
 ]
 

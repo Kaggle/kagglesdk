@@ -286,6 +286,10 @@ class KaggleObject(object):
     def method():
         return "GET"
 
+    @staticmethod
+    def stream():
+        return False
+
     def _freeze(self):
         self._is_frozen = True
 

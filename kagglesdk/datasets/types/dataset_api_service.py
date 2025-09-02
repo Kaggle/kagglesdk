@@ -1622,6 +1622,10 @@ class ApiDownloadDatasetRequest(KaggleObject):
   def endpoint_path():
     return '/api/v1/datasets/download/{owner_slug}/{dataset_slug}'
 
+  @staticmethod
+  def stream():
+    return True
+
 
 class ApiGetDatasetMetadataRequest(KaggleObject):
   r"""
@@ -3054,4 +3058,3 @@ ApiUploadDirectoryInfo._fields = [
   FieldMetadata("directories", "directories", "_directories", ApiUploadDirectoryInfo, [], ListSerializer(KaggleObjectSerializer())),
   FieldMetadata("files", "files", "_files", ApiDatasetNewFile, [], ListSerializer(KaggleObjectSerializer())),
 ]
-

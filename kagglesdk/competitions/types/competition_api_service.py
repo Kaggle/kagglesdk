@@ -680,6 +680,10 @@ class ApiDownloadDataFileRequest(KaggleObject):
   def endpoint_path():
     return '/api/v1/competitions/data/download/{competition_name}/{file_name}'
 
+  @staticmethod
+  def stream():
+    return True
+
 
 class ApiDownloadDataFilesRequest(KaggleObject):
   r"""
@@ -713,6 +717,10 @@ class ApiDownloadDataFilesRequest(KaggleObject):
   @staticmethod
   def endpoint_path():
     return '/api/v1/competitions/data/download-all/{competition_name}'
+
+  @staticmethod
+  def stream():
+    return True
 
 
 class ApiDownloadLeaderboardRequest(KaggleObject):
@@ -2238,4 +2246,3 @@ ApiDataFile._fields = [
   FieldMetadata("url", "url", "_url", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("creationDate", "creation_date", "_creation_date", datetime, None, DateTimeSerializer()),
 ]
-

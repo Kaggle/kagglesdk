@@ -17,6 +17,7 @@ class ApiCreateDatasetRequest(KaggleObject):
     subtitle (str)
     description (str)
     category_ids (str)
+    directories (ApiUploadDirectoryInfo)
   """
 
   def __init__(self):
@@ -30,6 +31,7 @@ class ApiCreateDatasetRequest(KaggleObject):
     self._subtitle = None
     self._description = None
     self._category_ids = []
+    self._directories = []
     self._freeze()
 
   @property
@@ -165,6 +167,21 @@ class ApiCreateDatasetRequest(KaggleObject):
     if not all([isinstance(t, str) for t in category_ids]):
       raise TypeError('category_ids must contain only items of type str')
     self._category_ids = category_ids
+
+  @property
+  def directories(self) -> Optional[List[Optional['ApiUploadDirectoryInfo']]]:
+    return self._directories
+
+  @directories.setter
+  def directories(self, directories: Optional[List[Optional['ApiUploadDirectoryInfo']]]):
+    if directories is None:
+      del self.directories
+      return
+    if not isinstance(directories, list):
+      raise TypeError('directories must be of type list')
+    if not all([isinstance(t, ApiUploadDirectoryInfo) for t in directories]):
+      raise TypeError('directories must contain only items of type ApiUploadDirectoryInfo')
+    self._directories = directories
 
   def endpoint(self):
     path = '/api/v1/datasets/create/new'
@@ -398,6 +415,7 @@ class ApiCreateDatasetVersionRequestBody(KaggleObject):
     subtitle (str)
     description (str)
     category_ids (str)
+    directories (ApiUploadDirectoryInfo)
   """
 
   def __init__(self):
@@ -407,6 +425,7 @@ class ApiCreateDatasetVersionRequestBody(KaggleObject):
     self._subtitle = None
     self._description = None
     self._category_ids = []
+    self._directories = []
     self._freeze()
 
   @property
@@ -491,6 +510,21 @@ class ApiCreateDatasetVersionRequestBody(KaggleObject):
       raise TypeError('category_ids must contain only items of type str')
     self._category_ids = category_ids
 
+  @property
+  def directories(self) -> Optional[List[Optional['ApiUploadDirectoryInfo']]]:
+    return self._directories
+
+  @directories.setter
+  def directories(self, directories: Optional[List[Optional['ApiUploadDirectoryInfo']]]):
+    if directories is None:
+      del self.directories
+      return
+    if not isinstance(directories, list):
+      raise TypeError('directories must be of type list')
+    if not all([isinstance(t, ApiUploadDirectoryInfo) for t in directories]):
+      raise TypeError('directories must contain only items of type ApiUploadDirectoryInfo')
+    self._directories = directories
+
 
 class ApiDataset(KaggleObject):
   r"""
@@ -521,8 +555,6 @@ class ApiDataset(KaggleObject):
     files (ApiDatasetFile)
     versions (ApiDatasetVersion)
     thumbnail_image_url (str)
-    file_summary_info (ApiDatasetFileSummaryInfo)
-    column_summary_info (ApiDatasetColumnSummaryInfo)
   """
 
   def __init__(self):
@@ -552,8 +584,6 @@ class ApiDataset(KaggleObject):
     self._files = []
     self._versions = []
     self._thumbnail_image_url = None
-    self._file_summary_info = None
-    self._column_summary_info = None
     self._freeze()
 
   @property
@@ -900,112 +930,6 @@ class ApiDataset(KaggleObject):
       raise TypeError('thumbnail_image_url must be of type str')
     self._thumbnail_image_url = thumbnail_image_url
 
-  @property
-  def file_summary_info(self) -> Optional['ApiDatasetFileSummaryInfo']:
-    return self._file_summary_info or None
-
-  @file_summary_info.setter
-  def file_summary_info(self, file_summary_info: Optional[Optional['ApiDatasetFileSummaryInfo']]):
-    if file_summary_info is None:
-      del self.file_summary_info
-      return
-    if not isinstance(file_summary_info, ApiDatasetFileSummaryInfo):
-      raise TypeError('file_summary_info must be of type ApiDatasetFileSummaryInfo')
-    self._file_summary_info = file_summary_info
-
-  @property
-  def column_summary_info(self) -> Optional['ApiDatasetColumnSummaryInfo']:
-    return self._column_summary_info or None
-
-  @column_summary_info.setter
-  def column_summary_info(self, column_summary_info: Optional[Optional['ApiDatasetColumnSummaryInfo']]):
-    if column_summary_info is None:
-      del self.column_summary_info
-      return
-    if not isinstance(column_summary_info, ApiDatasetColumnSummaryInfo):
-      raise TypeError('column_summary_info must be of type ApiDatasetColumnSummaryInfo')
-    self._column_summary_info = column_summary_info
-
-
-class ApiDatasetColumnSummaryInfo(KaggleObject):
-  r"""
-  Attributes:
-    total_column_count (int)
-    column_types (ApiDatasetColumnTypeSummaryInfo)
-  """
-
-  def __init__(self):
-    self._total_column_count = 0
-    self._column_types = []
-    self._freeze()
-
-  @property
-  def total_column_count(self) -> int:
-    return self._total_column_count
-
-  @total_column_count.setter
-  def total_column_count(self, total_column_count: int):
-    if total_column_count is None:
-      del self.total_column_count
-      return
-    if not isinstance(total_column_count, int):
-      raise TypeError('total_column_count must be of type int')
-    self._total_column_count = total_column_count
-
-  @property
-  def column_types(self) -> Optional[List[Optional['ApiDatasetColumnTypeSummaryInfo']]]:
-    return self._column_types
-
-  @column_types.setter
-  def column_types(self, column_types: Optional[List[Optional['ApiDatasetColumnTypeSummaryInfo']]]):
-    if column_types is None:
-      del self.column_types
-      return
-    if not isinstance(column_types, list):
-      raise TypeError('column_types must be of type list')
-    if not all([isinstance(t, ApiDatasetColumnTypeSummaryInfo) for t in column_types]):
-      raise TypeError('column_types must contain only items of type ApiDatasetColumnTypeSummaryInfo')
-    self._column_types = column_types
-
-
-class ApiDatasetColumnTypeSummaryInfo(KaggleObject):
-  r"""
-  Attributes:
-    column_type (str)
-    column_count (int)
-  """
-
-  def __init__(self):
-    self._column_type = None
-    self._column_count = 0
-    self._freeze()
-
-  @property
-  def column_type(self) -> str:
-    return self._column_type or ""
-
-  @column_type.setter
-  def column_type(self, column_type: Optional[str]):
-    if column_type is None:
-      del self.column_type
-      return
-    if not isinstance(column_type, str):
-      raise TypeError('column_type must be of type str')
-    self._column_type = column_type
-
-  @property
-  def column_count(self) -> int:
-    return self._column_count
-
-  @column_count.setter
-  def column_count(self, column_count: int):
-    if column_count is None:
-      del self.column_count
-      return
-    if not isinstance(column_count, int):
-      raise TypeError('column_count must be of type int')
-    self._column_count = column_count
-
 
 class ApiDatasetFile(KaggleObject):
   r"""
@@ -1166,47 +1090,6 @@ class ApiDatasetFile(KaggleObject):
     if not all([isinstance(t, ApiDatasetColumn) for t in columns]):
       raise TypeError('columns must contain only items of type ApiDatasetColumn')
     self._columns = columns
-
-
-class ApiDatasetFileSummaryInfo(KaggleObject):
-  r"""
-  Attributes:
-    total_file_count (int)
-    file_types (ApiDatasetFileExtensionSummaryInfo)
-  """
-
-  def __init__(self):
-    self._total_file_count = 0
-    self._file_types = []
-    self._freeze()
-
-  @property
-  def total_file_count(self) -> int:
-    return self._total_file_count
-
-  @total_file_count.setter
-  def total_file_count(self, total_file_count: int):
-    if total_file_count is None:
-      del self.total_file_count
-      return
-    if not isinstance(total_file_count, int):
-      raise TypeError('total_file_count must be of type int')
-    self._total_file_count = total_file_count
-
-  @property
-  def file_types(self) -> Optional[List[Optional['ApiDatasetFileExtensionSummaryInfo']]]:
-    return self._file_types
-
-  @file_types.setter
-  def file_types(self, file_types: Optional[List[Optional['ApiDatasetFileExtensionSummaryInfo']]]):
-    if file_types is None:
-      del self.file_types
-      return
-    if not isinstance(file_types, list):
-      raise TypeError('file_types must be of type list')
-    if not all([isinstance(t, ApiDatasetFileExtensionSummaryInfo) for t in file_types]):
-      raise TypeError('file_types must contain only items of type ApiDatasetFileExtensionSummaryInfo')
-    self._file_types = file_types
 
 
 class ApiDatasetNewFile(KaggleObject):
@@ -1621,6 +1504,68 @@ class ApiDownloadDatasetRequest(KaggleObject):
   @staticmethod
   def endpoint_path():
     return '/api/v1/datasets/download/{owner_slug}/{dataset_slug}'
+
+
+class ApiGetDatasetFilesSummaryRequest(KaggleObject):
+  r"""
+  Attributes:
+    owner_slug (str)
+    dataset_slug (str)
+    dataset_version_number (int)
+  """
+
+  def __init__(self):
+    self._owner_slug = ""
+    self._dataset_slug = ""
+    self._dataset_version_number = None
+    self._freeze()
+
+  @property
+  def owner_slug(self) -> str:
+    return self._owner_slug
+
+  @owner_slug.setter
+  def owner_slug(self, owner_slug: str):
+    if owner_slug is None:
+      del self.owner_slug
+      return
+    if not isinstance(owner_slug, str):
+      raise TypeError('owner_slug must be of type str')
+    self._owner_slug = owner_slug
+
+  @property
+  def dataset_slug(self) -> str:
+    return self._dataset_slug
+
+  @dataset_slug.setter
+  def dataset_slug(self, dataset_slug: str):
+    if dataset_slug is None:
+      del self.dataset_slug
+      return
+    if not isinstance(dataset_slug, str):
+      raise TypeError('dataset_slug must be of type str')
+    self._dataset_slug = dataset_slug
+
+  @property
+  def dataset_version_number(self) -> int:
+    return self._dataset_version_number or 0
+
+  @dataset_version_number.setter
+  def dataset_version_number(self, dataset_version_number: Optional[int]):
+    if dataset_version_number is None:
+      del self.dataset_version_number
+      return
+    if not isinstance(dataset_version_number, int):
+      raise TypeError('dataset_version_number must be of type int')
+    self._dataset_version_number = dataset_version_number
+
+  def endpoint(self):
+    path = '/api/v1/datasets/files/summary/{owner_slug}/{dataset_slug}'
+    return path.format_map(self.to_field_map(self))
+
+  @staticmethod
+  def endpoint_path():
+    return '/api/v1/datasets/files/summary/{owner_slug}/{dataset_slug}'
 
 
 class ApiGetDatasetMetadataRequest(KaggleObject):
@@ -2273,6 +2218,119 @@ class ApiListDatasetsResponse(KaggleObject):
     return self.next_page_token
 
 
+class ApiListTreeDatasetFilesRequest(KaggleObject):
+  r"""
+  Attributes:
+    owner_slug (str)
+    dataset_slug (str)
+    dataset_version_number (int)
+    path (str)
+      The path of the directory to list files from. If not provided, the root
+      directory will be listed.
+    page_token (str)
+    page_size (int)
+  """
+
+  def __init__(self):
+    self._owner_slug = ""
+    self._dataset_slug = ""
+    self._dataset_version_number = None
+    self._path = None
+    self._page_token = None
+    self._page_size = None
+    self._freeze()
+
+  @property
+  def owner_slug(self) -> str:
+    return self._owner_slug
+
+  @owner_slug.setter
+  def owner_slug(self, owner_slug: str):
+    if owner_slug is None:
+      del self.owner_slug
+      return
+    if not isinstance(owner_slug, str):
+      raise TypeError('owner_slug must be of type str')
+    self._owner_slug = owner_slug
+
+  @property
+  def dataset_slug(self) -> str:
+    return self._dataset_slug
+
+  @dataset_slug.setter
+  def dataset_slug(self, dataset_slug: str):
+    if dataset_slug is None:
+      del self.dataset_slug
+      return
+    if not isinstance(dataset_slug, str):
+      raise TypeError('dataset_slug must be of type str')
+    self._dataset_slug = dataset_slug
+
+  @property
+  def dataset_version_number(self) -> int:
+    return self._dataset_version_number or 0
+
+  @dataset_version_number.setter
+  def dataset_version_number(self, dataset_version_number: Optional[int]):
+    if dataset_version_number is None:
+      del self.dataset_version_number
+      return
+    if not isinstance(dataset_version_number, int):
+      raise TypeError('dataset_version_number must be of type int')
+    self._dataset_version_number = dataset_version_number
+
+  @property
+  def path(self) -> str:
+    r"""
+    The path of the directory to list files from. If not provided, the root
+    directory will be listed.
+    """
+    return self._path or ""
+
+  @path.setter
+  def path(self, path: Optional[str]):
+    if path is None:
+      del self.path
+      return
+    if not isinstance(path, str):
+      raise TypeError('path must be of type str')
+    self._path = path
+
+  @property
+  def page_token(self) -> str:
+    return self._page_token or ""
+
+  @page_token.setter
+  def page_token(self, page_token: Optional[str]):
+    if page_token is None:
+      del self.page_token
+      return
+    if not isinstance(page_token, str):
+      raise TypeError('page_token must be of type str')
+    self._page_token = page_token
+
+  @property
+  def page_size(self) -> int:
+    return self._page_size or 0
+
+  @page_size.setter
+  def page_size(self, page_size: Optional[int]):
+    if page_size is None:
+      del self.page_size
+      return
+    if not isinstance(page_size, int):
+      raise TypeError('page_size must be of type int')
+    self._page_size = page_size
+
+  def endpoint(self):
+    path = '/api/v1/datasets/list-tree/{owner_slug}/{dataset_slug}'
+    return path.format_map(self.to_field_map(self))
+
+  @staticmethod
+  def endpoint_path():
+    return '/api/v1/datasets/list-tree/{owner_slug}/{dataset_slug}'
+
+
 class ApiUpdateDatasetMetadataRequest(KaggleObject):
   r"""
   Attributes:
@@ -2476,6 +2534,64 @@ class ApiUploadDatasetFileResponse(KaggleObject):
   @property
   def createUrl(self):
     return self.create_url
+
+
+class ApiUploadDirectoryInfo(KaggleObject):
+  r"""
+  Attributes:
+    name (str)
+    directories (ApiUploadDirectoryInfo)
+    files (ApiDatasetNewFile)
+  """
+
+  def __init__(self):
+    self._name = ""
+    self._directories = []
+    self._files = []
+    self._freeze()
+
+  @property
+  def name(self) -> str:
+    return self._name
+
+  @name.setter
+  def name(self, name: str):
+    if name is None:
+      del self.name
+      return
+    if not isinstance(name, str):
+      raise TypeError('name must be of type str')
+    self._name = name
+
+  @property
+  def directories(self) -> Optional[List[Optional['ApiUploadDirectoryInfo']]]:
+    return self._directories
+
+  @directories.setter
+  def directories(self, directories: Optional[List[Optional['ApiUploadDirectoryInfo']]]):
+    if directories is None:
+      del self.directories
+      return
+    if not isinstance(directories, list):
+      raise TypeError('directories must be of type list')
+    if not all([isinstance(t, ApiUploadDirectoryInfo) for t in directories]):
+      raise TypeError('directories must contain only items of type ApiUploadDirectoryInfo')
+    self._directories = directories
+
+  @property
+  def files(self) -> Optional[List[Optional['ApiDatasetNewFile']]]:
+    return self._files
+
+  @files.setter
+  def files(self, files: Optional[List[Optional['ApiDatasetNewFile']]]):
+    if files is None:
+      del self.files
+      return
+    if not isinstance(files, list):
+      raise TypeError('files must be of type list')
+    if not all([isinstance(t, ApiDatasetNewFile) for t in files]):
+      raise TypeError('files must contain only items of type ApiDatasetNewFile')
+    self._files = files
 
 
 class ApiCategory(KaggleObject):
@@ -2691,118 +2807,6 @@ class ApiDatasetColumn(KaggleObject):
     self._description = description
 
 
-class ApiDatasetFileExtensionSummaryInfo(KaggleObject):
-  r"""
-  Attributes:
-    extension (str)
-    file_count (int)
-    total_size (int)
-  """
-
-  def __init__(self):
-    self._extension = ""
-    self._file_count = 0
-    self._total_size = 0
-    self._freeze()
-
-  @property
-  def extension(self) -> str:
-    return self._extension
-
-  @extension.setter
-  def extension(self, extension: str):
-    if extension is None:
-      del self.extension
-      return
-    if not isinstance(extension, str):
-      raise TypeError('extension must be of type str')
-    self._extension = extension
-
-  @property
-  def file_count(self) -> int:
-    return self._file_count
-
-  @file_count.setter
-  def file_count(self, file_count: int):
-    if file_count is None:
-      del self.file_count
-      return
-    if not isinstance(file_count, int):
-      raise TypeError('file_count must be of type int')
-    self._file_count = file_count
-
-  @property
-  def total_size(self) -> int:
-    return self._total_size
-
-  @total_size.setter
-  def total_size(self, total_size: int):
-    if total_size is None:
-      del self.total_size
-      return
-    if not isinstance(total_size, int):
-      raise TypeError('total_size must be of type int')
-    self._total_size = total_size
-
-
-class ApiUploadDirectoryInfo(KaggleObject):
-  r"""
-  Attributes:
-    name (str)
-    directories (ApiUploadDirectoryInfo)
-    files (ApiDatasetNewFile)
-  """
-
-  def __init__(self):
-    self._name = ""
-    self._directories = []
-    self._files = []
-    self._freeze()
-
-  @property
-  def name(self) -> str:
-    return self._name
-
-  @name.setter
-  def name(self, name: str):
-    if name is None:
-      del self.name
-      return
-    if not isinstance(name, str):
-      raise TypeError('name must be of type str')
-    self._name = name
-
-  @property
-  def directories(self) -> Optional[List[Optional['ApiUploadDirectoryInfo']]]:
-    return self._directories
-
-  @directories.setter
-  def directories(self, directories: Optional[List[Optional['ApiUploadDirectoryInfo']]]):
-    if directories is None:
-      del self.directories
-      return
-    if not isinstance(directories, list):
-      raise TypeError('directories must be of type list')
-    if not all([isinstance(t, ApiUploadDirectoryInfo) for t in directories]):
-      raise TypeError('directories must contain only items of type ApiUploadDirectoryInfo')
-    self._directories = directories
-
-  @property
-  def files(self) -> Optional[List[Optional['ApiDatasetNewFile']]]:
-    return self._files
-
-  @files.setter
-  def files(self, files: Optional[List[Optional['ApiDatasetNewFile']]]):
-    if files is None:
-      del self.files
-      return
-    if not isinstance(files, list):
-      raise TypeError('files must be of type list')
-    if not all([isinstance(t, ApiDatasetNewFile) for t in files]):
-      raise TypeError('files must contain only items of type ApiDatasetNewFile')
-    self._files = files
-
-
 ApiCreateDatasetRequest._fields = [
   FieldMetadata("id", "id", "_id", int, None, PredefinedSerializer(), optional=True),
   FieldMetadata("ownerSlug", "owner_slug", "_owner_slug", str, None, PredefinedSerializer(), optional=True),
@@ -2814,6 +2818,7 @@ ApiCreateDatasetRequest._fields = [
   FieldMetadata("subtitle", "subtitle", "_subtitle", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("description", "description", "_description", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("categoryIds", "category_ids", "_category_ids", str, [], ListSerializer(PredefinedSerializer())),
+  FieldMetadata("directories", "directories", "_directories", ApiUploadDirectoryInfo, [], ListSerializer(KaggleObjectSerializer())),
 ]
 
 ApiCreateDatasetResponse._fields = [
@@ -2842,6 +2847,7 @@ ApiCreateDatasetVersionRequestBody._fields = [
   FieldMetadata("subtitle", "subtitle", "_subtitle", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("description", "description", "_description", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("categoryIds", "category_ids", "_category_ids", str, [], ListSerializer(PredefinedSerializer())),
+  FieldMetadata("directories", "directories", "_directories", ApiUploadDirectoryInfo, [], ListSerializer(KaggleObjectSerializer())),
 ]
 
 ApiDataset._fields = [
@@ -2871,18 +2877,6 @@ ApiDataset._fields = [
   FieldMetadata("files", "files", "_files", ApiDatasetFile, [], ListSerializer(KaggleObjectSerializer())),
   FieldMetadata("versions", "versions", "_versions", ApiDatasetVersion, [], ListSerializer(KaggleObjectSerializer())),
   FieldMetadata("thumbnailImageUrl", "thumbnail_image_url", "_thumbnail_image_url", str, None, PredefinedSerializer(), optional=True),
-  FieldMetadata("fileSummaryInfo", "file_summary_info", "_file_summary_info", ApiDatasetFileSummaryInfo, None, KaggleObjectSerializer(), optional=True),
-  FieldMetadata("columnSummaryInfo", "column_summary_info", "_column_summary_info", ApiDatasetColumnSummaryInfo, None, KaggleObjectSerializer(), optional=True),
-]
-
-ApiDatasetColumnSummaryInfo._fields = [
-  FieldMetadata("totalColumnCount", "total_column_count", "_total_column_count", int, 0, PredefinedSerializer()),
-  FieldMetadata("columnTypes", "column_types", "_column_types", ApiDatasetColumnTypeSummaryInfo, [], ListSerializer(KaggleObjectSerializer())),
-]
-
-ApiDatasetColumnTypeSummaryInfo._fields = [
-  FieldMetadata("columnType", "column_type", "_column_type", str, None, PredefinedSerializer(), optional=True),
-  FieldMetadata("columnCount", "column_count", "_column_count", int, 0, PredefinedSerializer()),
 ]
 
 ApiDatasetFile._fields = [
@@ -2896,11 +2890,6 @@ ApiDatasetFile._fields = [
   FieldMetadata("url", "url", "_url", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("totalBytes", "total_bytes", "_total_bytes", int, 0, PredefinedSerializer()),
   FieldMetadata("columns", "columns", "_columns", ApiDatasetColumn, [], ListSerializer(KaggleObjectSerializer())),
-]
-
-ApiDatasetFileSummaryInfo._fields = [
-  FieldMetadata("totalFileCount", "total_file_count", "_total_file_count", int, 0, PredefinedSerializer()),
-  FieldMetadata("fileTypes", "file_types", "_file_types", ApiDatasetFileExtensionSummaryInfo, [], ListSerializer(KaggleObjectSerializer())),
 ]
 
 ApiDatasetNewFile._fields = [
@@ -2941,6 +2930,12 @@ ApiDownloadDatasetRequest._fields = [
   FieldMetadata("datasetVersionNumber", "dataset_version_number", "_dataset_version_number", int, None, PredefinedSerializer(), optional=True),
   FieldMetadata("raw", "raw", "_raw", bool, False, PredefinedSerializer()),
   FieldMetadata("hashLink", "hash_link", "_hash_link", str, None, PredefinedSerializer(), optional=True),
+]
+
+ApiGetDatasetFilesSummaryRequest._fields = [
+  FieldMetadata("ownerSlug", "owner_slug", "_owner_slug", str, "", PredefinedSerializer()),
+  FieldMetadata("datasetSlug", "dataset_slug", "_dataset_slug", str, "", PredefinedSerializer()),
+  FieldMetadata("datasetVersionNumber", "dataset_version_number", "_dataset_version_number", int, None, PredefinedSerializer(), optional=True),
 ]
 
 ApiGetDatasetMetadataRequest._fields = [
@@ -3003,6 +2998,15 @@ ApiListDatasetsResponse._fields = [
   FieldMetadata("nextPageToken", "next_page_token", "_next_page_token", str, "", PredefinedSerializer()),
 ]
 
+ApiListTreeDatasetFilesRequest._fields = [
+  FieldMetadata("ownerSlug", "owner_slug", "_owner_slug", str, "", PredefinedSerializer()),
+  FieldMetadata("datasetSlug", "dataset_slug", "_dataset_slug", str, "", PredefinedSerializer()),
+  FieldMetadata("datasetVersionNumber", "dataset_version_number", "_dataset_version_number", int, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("path", "path", "_path", str, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("pageToken", "page_token", "_page_token", str, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("pageSize", "page_size", "_page_size", int, None, PredefinedSerializer(), optional=True),
+]
+
 ApiUpdateDatasetMetadataRequest._fields = [
   FieldMetadata("ownerSlug", "owner_slug", "_owner_slug", str, "", PredefinedSerializer()),
   FieldMetadata("datasetSlug", "dataset_slug", "_dataset_slug", str, "", PredefinedSerializer()),
@@ -3024,6 +3028,12 @@ ApiUploadDatasetFileResponse._fields = [
   FieldMetadata("createUrl", "create_url", "_create_url", str, "", PredefinedSerializer()),
 ]
 
+ApiUploadDirectoryInfo._fields = [
+  FieldMetadata("name", "name", "_name", str, "", PredefinedSerializer()),
+  FieldMetadata("directories", "directories", "_directories", ApiUploadDirectoryInfo, [], ListSerializer(KaggleObjectSerializer())),
+  FieldMetadata("files", "files", "_files", ApiDatasetNewFile, [], ListSerializer(KaggleObjectSerializer())),
+]
+
 ApiCategory._fields = [
   FieldMetadata("ref", "ref", "_ref", str, "", PredefinedSerializer()),
   FieldMetadata("name", "name", "_name", str, None, PredefinedSerializer(), optional=True),
@@ -3041,17 +3051,5 @@ ApiDatasetColumn._fields = [
   FieldMetadata("type", "type", "_type", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("originalType", "original_type", "_original_type", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("description", "description", "_description", str, None, PredefinedSerializer(), optional=True),
-]
-
-ApiDatasetFileExtensionSummaryInfo._fields = [
-  FieldMetadata("extension", "extension", "_extension", str, "", PredefinedSerializer()),
-  FieldMetadata("fileCount", "file_count", "_file_count", int, 0, PredefinedSerializer()),
-  FieldMetadata("totalSize", "total_size", "_total_size", int, 0, PredefinedSerializer()),
-]
-
-ApiUploadDirectoryInfo._fields = [
-  FieldMetadata("name", "name", "_name", str, "", PredefinedSerializer()),
-  FieldMetadata("directories", "directories", "_directories", ApiUploadDirectoryInfo, [], ListSerializer(KaggleObjectSerializer())),
-  FieldMetadata("files", "files", "_files", ApiDatasetNewFile, [], ListSerializer(KaggleObjectSerializer())),
 ]
 

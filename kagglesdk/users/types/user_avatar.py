@@ -28,6 +28,8 @@ class UserAvatar(KaggleObject):
       TODO(http://b/402224065) remove once clients have migrated from this.
     progression_opt_out (bool)
       True if the user is opted out of the progression system.
+    is_phone_verified (bool)
+      True if the user is phone verified
   """
 
   def __init__(self):
@@ -41,6 +43,7 @@ class UserAvatar(KaggleObject):
     self._id = 0
     self._user_id = None
     self._progression_opt_out = None
+    self._is_phone_verified = None
     self._freeze()
 
   @property
@@ -192,6 +195,20 @@ class UserAvatar(KaggleObject):
       raise TypeError('progression_opt_out must be of type bool')
     self._progression_opt_out = progression_opt_out
 
+  @property
+  def is_phone_verified(self) -> bool:
+    """True if the user is phone verified"""
+    return self._is_phone_verified or False
+
+  @is_phone_verified.setter
+  def is_phone_verified(self, is_phone_verified: Optional[bool]):
+    if is_phone_verified is None:
+      del self.is_phone_verified
+      return
+    if not isinstance(is_phone_verified, bool):
+      raise TypeError('is_phone_verified must be of type bool')
+    self._is_phone_verified = is_phone_verified
+
 
 UserAvatar._fields = [
   FieldMetadata("displayName", "display_name", "_display_name", str, None, PredefinedSerializer(), optional=True),
@@ -204,5 +221,6 @@ UserAvatar._fields = [
   FieldMetadata("id", "id", "_id", int, 0, PredefinedSerializer()),
   FieldMetadata("userId", "user_id", "_user_id", int, None, PredefinedSerializer(), optional=True),
   FieldMetadata("progressionOptOut", "progression_opt_out", "_progression_opt_out", bool, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("isPhoneVerified", "is_phone_verified", "_is_phone_verified", bool, None, PredefinedSerializer(), optional=True),
 ]
 

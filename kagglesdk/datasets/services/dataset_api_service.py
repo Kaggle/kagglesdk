@@ -1,5 +1,6 @@
 from kagglesdk.common.types.http_redirect import HttpRedirect
-from kagglesdk.datasets.types.dataset_api_service import ApiCreateDatasetRequest, ApiCreateDatasetResponse, ApiCreateDatasetVersionByIdRequest, ApiCreateDatasetVersionRequest, ApiDataset, ApiDeleteDatasetRequest, ApiDeleteDatasetResponse, ApiDownloadDatasetRawRequest, ApiDownloadDatasetRequest, ApiGetDatasetMetadataRequest, ApiGetDatasetMetadataResponse, ApiGetDatasetRequest, ApiGetDatasetStatusRequest, ApiGetDatasetStatusResponse, ApiListDatasetFilesRequest, ApiListDatasetFilesResponse, ApiListDatasetsRequest, ApiListDatasetsResponse, ApiUpdateDatasetMetadataRequest, ApiUpdateDatasetMetadataResponse, ApiUploadDatasetFileRequest, ApiUploadDatasetFileResponse
+from kagglesdk.datasets.databundles.types.databundle_api_types import ApiDirectoryContent, ApiFilesSummary
+from kagglesdk.datasets.types.dataset_api_service import ApiCreateDatasetRequest, ApiCreateDatasetResponse, ApiCreateDatasetVersionByIdRequest, ApiCreateDatasetVersionRequest, ApiDataset, ApiDeleteDatasetRequest, ApiDeleteDatasetResponse, ApiDownloadDatasetRawRequest, ApiDownloadDatasetRequest, ApiGetDatasetFilesSummaryRequest, ApiGetDatasetMetadataRequest, ApiGetDatasetMetadataResponse, ApiGetDatasetRequest, ApiGetDatasetStatusRequest, ApiGetDatasetStatusResponse, ApiListDatasetFilesRequest, ApiListDatasetFilesResponse, ApiListDatasetsRequest, ApiListDatasetsResponse, ApiListTreeDatasetFilesRequest, ApiUpdateDatasetMetadataRequest, ApiUpdateDatasetMetadataResponse, ApiUploadDatasetFileRequest, ApiUploadDatasetFileResponse
 from kagglesdk.kaggle_http_client import KaggleHttpClient
 
 class DatasetApiClient(object):
@@ -42,6 +43,18 @@ class DatasetApiClient(object):
       request = ApiListDatasetFilesRequest()
 
     return self._client.call("datasets.DatasetApiService", "ListDatasetFiles", request, ApiListDatasetFilesResponse)
+
+  def list_tree_dataset_files(self, request: ApiListTreeDatasetFilesRequest = None) -> ApiDirectoryContent:
+    r"""
+    Args:
+      request (ApiListTreeDatasetFilesRequest):
+        The request object; initialized to empty instance if not specified.
+    """
+
+    if request is None:
+      request = ApiListTreeDatasetFilesRequest()
+
+    return self._client.call("datasets.DatasetApiService", "ListTreeDatasetFiles", request, ApiDirectoryContent)
 
   def get_dataset_metadata(self, request: ApiGetDatasetMetadataRequest = None) -> ApiGetDatasetMetadataResponse:
     r"""
@@ -142,6 +155,18 @@ class DatasetApiClient(object):
       request = ApiGetDatasetStatusRequest()
 
     return self._client.call("datasets.DatasetApiService", "GetDatasetStatus", request, ApiGetDatasetStatusResponse)
+
+  def get_dataset_files_summary(self, request: ApiGetDatasetFilesSummaryRequest = None) -> ApiFilesSummary:
+    r"""
+    Args:
+      request (ApiGetDatasetFilesSummaryRequest):
+        The request object; initialized to empty instance if not specified.
+    """
+
+    if request is None:
+      request = ApiGetDatasetFilesSummaryRequest()
+
+    return self._client.call("datasets.DatasetApiService", "GetDatasetFilesSummary", request, ApiFilesSummary)
 
   def upload_dataset_file(self, request: ApiUploadDatasetFileRequest = None) -> ApiUploadDatasetFileResponse:
     r"""

@@ -63,6 +63,153 @@ class ApiCancelKernelSessionResponse(KaggleObject):
     return self.error_message
 
 
+class ApiCreateKernelSessionRequest(KaggleObject):
+  r"""
+  Attributes:
+    slug (str)
+      The full slug of the kernel to create an interactive session for, in the
+      format `{username}/{kernel-slug}`. The kernel slug must be the title
+      lowercased with dashes (`-`) replacing spaces.
+    language (str)
+      The language that the kernel is written in. One of 'python', 'r' and
+      'rmarkdown'.
+    kernel_type (str)
+      The type of kernel. Options are 'notebook' or 'script'.
+    docker_image (str)
+      Which docker image to run with. This must be one of the Kaggle-provided,
+      known images. It should look something like:
+      gcr.io/kaggle-images/python@sha256:f4b6dd72d4ac48c76fbb02bce0798b80b284102886ad37e6041e9ab721dc8873
+    machine_shape (str)
+      The machine shape to use for this session. Currently supported options:
+         * NvidiaTeslaT4
+         * NvidiaTeslaP100
+         * Tpu1VmV38
+    enable_internet (bool)
+      Whether or not the kernel should be able to access the internet in this
+      session.
+  """
+
+  def __init__(self):
+    self._slug = ""
+    self._language = None
+    self._kernel_type = None
+    self._docker_image = None
+    self._machine_shape = None
+    self._enable_internet = None
+    self._freeze()
+
+  @property
+  def slug(self) -> str:
+    r"""
+    The full slug of the kernel to create an interactive session for, in the
+    format `{username}/{kernel-slug}`. The kernel slug must be the title
+    lowercased with dashes (`-`) replacing spaces.
+    """
+    return self._slug
+
+  @slug.setter
+  def slug(self, slug: str):
+    if slug is None:
+      del self.slug
+      return
+    if not isinstance(slug, str):
+      raise TypeError('slug must be of type str')
+    self._slug = slug
+
+  @property
+  def language(self) -> str:
+    r"""
+    The language that the kernel is written in. One of 'python', 'r' and
+    'rmarkdown'.
+    """
+    return self._language or ""
+
+  @language.setter
+  def language(self, language: Optional[str]):
+    if language is None:
+      del self.language
+      return
+    if not isinstance(language, str):
+      raise TypeError('language must be of type str')
+    self._language = language
+
+  @property
+  def kernel_type(self) -> str:
+    """The type of kernel. Options are 'notebook' or 'script'."""
+    return self._kernel_type or ""
+
+  @kernel_type.setter
+  def kernel_type(self, kernel_type: Optional[str]):
+    if kernel_type is None:
+      del self.kernel_type
+      return
+    if not isinstance(kernel_type, str):
+      raise TypeError('kernel_type must be of type str')
+    self._kernel_type = kernel_type
+
+  @property
+  def docker_image(self) -> str:
+    r"""
+    Which docker image to run with. This must be one of the Kaggle-provided,
+    known images. It should look something like:
+    gcr.io/kaggle-images/python@sha256:f4b6dd72d4ac48c76fbb02bce0798b80b284102886ad37e6041e9ab721dc8873
+    """
+    return self._docker_image or ""
+
+  @docker_image.setter
+  def docker_image(self, docker_image: Optional[str]):
+    if docker_image is None:
+      del self.docker_image
+      return
+    if not isinstance(docker_image, str):
+      raise TypeError('docker_image must be of type str')
+    self._docker_image = docker_image
+
+  @property
+  def machine_shape(self) -> str:
+    r"""
+    The machine shape to use for this session. Currently supported options:
+       * NvidiaTeslaT4
+       * NvidiaTeslaP100
+       * Tpu1VmV38
+    """
+    return self._machine_shape or ""
+
+  @machine_shape.setter
+  def machine_shape(self, machine_shape: Optional[str]):
+    if machine_shape is None:
+      del self.machine_shape
+      return
+    if not isinstance(machine_shape, str):
+      raise TypeError('machine_shape must be of type str')
+    self._machine_shape = machine_shape
+
+  @property
+  def enable_internet(self) -> bool:
+    r"""
+    Whether or not the kernel should be able to access the internet in this
+    session.
+    """
+    return self._enable_internet or False
+
+  @enable_internet.setter
+  def enable_internet(self, enable_internet: Optional[bool]):
+    if enable_internet is None:
+      del self.enable_internet
+      return
+    if not isinstance(enable_internet, bool):
+      raise TypeError('enable_internet must be of type bool')
+    self._enable_internet = enable_internet
+
+  def endpoint(self):
+    path = '/api/v1/kernels/create-session/{slug}'
+    return path.format_map(self.to_field_map(self))
+
+  @staticmethod
+  def endpoint_path():
+    return '/api/v1/kernels/create-session/{slug}'
+
+
 class ApiDeleteKernelRequest(KaggleObject):
   r"""
   Attributes:
@@ -2111,6 +2258,15 @@ ApiCancelKernelSessionRequest._fields = [
 
 ApiCancelKernelSessionResponse._fields = [
   FieldMetadata("errorMessage", "error_message", "_error_message", str, None, PredefinedSerializer(), optional=True),
+]
+
+ApiCreateKernelSessionRequest._fields = [
+  FieldMetadata("slug", "slug", "_slug", str, "", PredefinedSerializer()),
+  FieldMetadata("language", "language", "_language", str, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("kernelType", "kernel_type", "_kernel_type", str, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("dockerImage", "docker_image", "_docker_image", str, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("machineShape", "machine_shape", "_machine_shape", str, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("enableInternet", "enable_internet", "_enable_internet", bool, None, PredefinedSerializer(), optional=True),
 ]
 
 ApiDeleteKernelRequest._fields = [

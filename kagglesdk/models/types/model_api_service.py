@@ -1990,6 +1990,7 @@ class ApiModel(KaggleObject):
     model_version_links (ModelLink)
     vote_count (int)
     author_image_url (str)
+    update_time (datetime)
   """
 
   def __init__(self):
@@ -2009,6 +2010,7 @@ class ApiModel(KaggleObject):
     self._model_version_links = []
     self._vote_count = None
     self._author_image_url = None
+    self._update_time = None
     self._freeze()
 
   @property
@@ -2225,6 +2227,19 @@ class ApiModel(KaggleObject):
     if not isinstance(author_image_url, str):
       raise TypeError('author_image_url must be of type str')
     self._author_image_url = author_image_url
+
+  @property
+  def update_time(self) -> datetime:
+    return self._update_time
+
+  @update_time.setter
+  def update_time(self, update_time: datetime):
+    if update_time is None:
+      del self.update_time
+      return
+    if not isinstance(update_time, datetime):
+      raise TypeError('update_time must be of type datetime')
+    self._update_time = update_time
 
 
 class ApiModelFile(KaggleObject):
@@ -3921,6 +3936,7 @@ ApiModel._fields = [
   FieldMetadata("modelVersionLinks", "model_version_links", "_model_version_links", ModelLink, [], ListSerializer(KaggleObjectSerializer())),
   FieldMetadata("voteCount", "vote_count", "_vote_count", int, None, PredefinedSerializer(), optional=True),
   FieldMetadata("authorImageUrl", "author_image_url", "_author_image_url", str, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("updateTime", "update_time", "_update_time", datetime, None, DateTimeSerializer()),
 ]
 
 ApiModelFile._fields = [

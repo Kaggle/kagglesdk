@@ -22,8 +22,8 @@ class DocumentType(enum.Enum):
   TUTORIAL = 11
   MODEL = 12
   RESOURCEREFERENCE = 13
-  BENCHMARK = 14
-  BENCHMARKTASK = 15
+  BENCHMARKTASK = 14
+  BENCHMARK = 15
 
 class OwnerType(enum.Enum):
   OWNER_TYPE_UNSPECIFIED = 0

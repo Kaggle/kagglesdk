@@ -104,12 +104,12 @@ class KaggleHttpClient(object):
         """Extract the kaggle response and raise an exception if it is an error."""
         self._print_response(http_response)
         try:
-          if "application/json" in http_response.headers["Content-Type"]:
-            resp = http_response.json()
-            if "code" in resp and resp["code"] >= 400:
-              raise requests.exceptions.HTTPError(resp["message"], response=http_response)
+            if "application/json" in http_response.headers["Content-Type"]:
+                resp = http_response.json()
+                if "code" in resp and resp["code"] >= 400:
+                    raise requests.exceptions.HTTPError(resp["message"], response=http_response)
         except KeyError:
-          pass
+            pass
         http_response.raise_for_status()
         if response_type is None:  # Method doesn't have a return type
             return None
@@ -212,12 +212,15 @@ class KaggleHttpClient(object):
             "response_type": "code",
             "response_mode": "query",
         }
-        auth_url = f"{self._endpoint}/api/v1/oauth2/authorize"
+        auth_url = f"{self.get_non_api_endpoint()}/api/v1/oauth2/authorize"
         query_string = urllib.parse.urlencode(params, quote_via=urllib.parse.quote_plus)
         return f"{auth_url}?{query_string}"
 
     def get_oauth_default_redirect_url(self) -> str:
-        return f"{self._endpoint}/account/api/oauth/token"
+        return f"{self.get_non_api_endpoint()}/account/api/oauth/token"
+
+    def get_non_api_endpoint(self) -> str:
+        return "https://www.kaggle.com" if self._env == KaggleEnv.PROD else self._endpoint
 
     class BearerAuth(requests.auth.AuthBase):
 

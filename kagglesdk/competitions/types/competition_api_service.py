@@ -747,6 +747,38 @@ class ApiDownloadLeaderboardRequest(KaggleObject):
     return '/api/v1/competitions/{competition_name}/leaderboard/download'
 
 
+class ApiGetCompetitionDataFilesSummaryRequest(KaggleObject):
+  r"""
+  Attributes:
+    competition_name (str)
+  """
+
+  def __init__(self):
+    self._competition_name = ""
+    self._freeze()
+
+  @property
+  def competition_name(self) -> str:
+    return self._competition_name
+
+  @competition_name.setter
+  def competition_name(self, competition_name: str):
+    if competition_name is None:
+      del self.competition_name
+      return
+    if not isinstance(competition_name, str):
+      raise TypeError('competition_name must be of type str')
+    self._competition_name = competition_name
+
+  def endpoint(self):
+    path = '/api/v1/competitions/data/summary/{competition_name}'
+    return path.format_map(self.to_field_map(self))
+
+  @staticmethod
+  def endpoint_path():
+    return '/api/v1/competitions/data/summary/{competition_name}'
+
+
 class ApiGetCompetitionRequest(KaggleObject):
   r"""
   Attributes:
@@ -1334,6 +1366,91 @@ class ApiListDataFilesResponse(KaggleObject):
   @property
   def childrenFetchTimeMs(self):
     return self.children_fetch_time_ms
+
+
+class ApiListDataTreeFilesRequest(KaggleObject):
+  r"""
+  Attributes:
+    competition_name (str)
+      Competition name. Example: 'titanic'.
+    path (str)
+      The path of the directory to list files from. If not provided, the root
+      directory will be listed.
+    page_size (int)
+    page_token (str)
+  """
+
+  def __init__(self):
+    self._competition_name = ""
+    self._path = None
+    self._page_size = None
+    self._page_token = None
+    self._freeze()
+
+  @property
+  def competition_name(self) -> str:
+    """Competition name. Example: 'titanic'."""
+    return self._competition_name
+
+  @competition_name.setter
+  def competition_name(self, competition_name: str):
+    if competition_name is None:
+      del self.competition_name
+      return
+    if not isinstance(competition_name, str):
+      raise TypeError('competition_name must be of type str')
+    self._competition_name = competition_name
+
+  @property
+  def path(self) -> str:
+    r"""
+    The path of the directory to list files from. If not provided, the root
+    directory will be listed.
+    """
+    return self._path or ""
+
+  @path.setter
+  def path(self, path: Optional[str]):
+    if path is None:
+      del self.path
+      return
+    if not isinstance(path, str):
+      raise TypeError('path must be of type str')
+    self._path = path
+
+  @property
+  def page_size(self) -> int:
+    return self._page_size or 0
+
+  @page_size.setter
+  def page_size(self, page_size: Optional[int]):
+    if page_size is None:
+      del self.page_size
+      return
+    if not isinstance(page_size, int):
+      raise TypeError('page_size must be of type int')
+    self._page_size = page_size
+
+  @property
+  def page_token(self) -> str:
+    return self._page_token or ""
+
+  @page_token.setter
+  def page_token(self, page_token: Optional[str]):
+    if page_token is None:
+      del self.page_token
+      return
+    if not isinstance(page_token, str):
+      raise TypeError('page_token must be of type str')
+    self._page_token = page_token
+
+  def endpoint(self):
+    path = '/api/v1/competitions/{competition_name}/data-tree/list/'
+    return path.format_map(self.to_field_map(self))
+
+  @staticmethod
+  def endpoint_path():
+    return '/api/v1/competitions/{competition_name}/data-tree/list/'
 
 
 class ApiListSubmissionsRequest(KaggleObject):
@@ -2123,6 +2240,10 @@ ApiDownloadLeaderboardRequest._fields = [
   FieldMetadata("competitionName", "competition_name", "_competition_name", str, "", PredefinedSerializer()),
 ]
 
+ApiGetCompetitionDataFilesSummaryRequest._fields = [
+  FieldMetadata("competitionName", "competition_name", "_competition_name", str, "", PredefinedSerializer()),
+]
+
 ApiGetCompetitionRequest._fields = [
   FieldMetadata("competitionName", "competition_name", "_competition_name", str, "", PredefinedSerializer()),
 ]
@@ -2175,6 +2296,13 @@ ApiListDataFilesResponse._fields = [
   FieldMetadata("files", "files", "_files", ApiDataFile, [], ListSerializer(KaggleObjectSerializer())),
   FieldMetadata("nextPageToken", "next_page_token", "_next_page_token", str, "", PredefinedSerializer()),
   FieldMetadata("childrenFetchTimeMs", "children_fetch_time_ms", "_children_fetch_time_ms", int, 0, PredefinedSerializer()),
+]
+
+ApiListDataTreeFilesRequest._fields = [
+  FieldMetadata("competitionName", "competition_name", "_competition_name", str, "", PredefinedSerializer()),
+  FieldMetadata("path", "path", "_path", str, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("pageSize", "page_size", "_page_size", int, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("pageToken", "page_token", "_page_token", str, None, PredefinedSerializer(), optional=True),
 ]
 
 ApiListSubmissionsRequest._fields = [

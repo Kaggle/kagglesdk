@@ -1,3 +1,4 @@
+from kagglesdk.security.services.iam_service import IamClient
 from kagglesdk.security.services.oauth_service import OAuthClient
 from kagglesdk.models.services.model_api_service import ModelApiClient
 from kagglesdk.models.services.model_service import ModelClient
@@ -17,6 +18,7 @@ from kagglesdk.kaggle_http_client import KaggleHttpClient
 class KaggleClient(object):
   class Security(object):
     def __init__(self, http_client: KaggleHttpClient):
+      self.iam_client = IamClient(http_client)
       self.oauth_client = OAuthClient(http_client)
 
   class Models(object):

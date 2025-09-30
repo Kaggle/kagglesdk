@@ -31,6 +31,8 @@ class ApiCompetition(KaggleObject):
     awards_points (bool)
     is_kernels_submissions_only (bool)
     submissions_disabled (bool)
+    thumbnail_image_url (str)
+    host_name (str)
   """
 
   def __init__(self):
@@ -58,6 +60,8 @@ class ApiCompetition(KaggleObject):
     self._awards_points = False
     self._is_kernels_submissions_only = False
     self._submissions_disabled = False
+    self._thumbnail_image_url = None
+    self._host_name = ""
     self._freeze()
 
   @property
@@ -373,6 +377,32 @@ class ApiCompetition(KaggleObject):
     if not isinstance(submissions_disabled, bool):
       raise TypeError('submissions_disabled must be of type bool')
     self._submissions_disabled = submissions_disabled
+
+  @property
+  def thumbnail_image_url(self) -> str:
+    return self._thumbnail_image_url or ""
+
+  @thumbnail_image_url.setter
+  def thumbnail_image_url(self, thumbnail_image_url: Optional[str]):
+    if thumbnail_image_url is None:
+      del self.thumbnail_image_url
+      return
+    if not isinstance(thumbnail_image_url, str):
+      raise TypeError('thumbnail_image_url must be of type str')
+    self._thumbnail_image_url = thumbnail_image_url
+
+  @property
+  def host_name(self) -> str:
+    return self._host_name
+
+  @host_name.setter
+  def host_name(self, host_name: str):
+    if host_name is None:
+      del self.host_name
+      return
+    if not isinstance(host_name, str):
+      raise TypeError('host_name must be of type str')
+    self._host_name = host_name
 
 
 class ApiCreateCodeSubmissionRequest(KaggleObject):
@@ -2200,6 +2230,8 @@ ApiCompetition._fields = [
   FieldMetadata("awardsPoints", "awards_points", "_awards_points", bool, False, PredefinedSerializer()),
   FieldMetadata("isKernelsSubmissionsOnly", "is_kernels_submissions_only", "_is_kernels_submissions_only", bool, False, PredefinedSerializer()),
   FieldMetadata("submissionsDisabled", "submissions_disabled", "_submissions_disabled", bool, False, PredefinedSerializer()),
+  FieldMetadata("thumbnailImageUrl", "thumbnail_image_url", "_thumbnail_image_url", str, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("hostName", "host_name", "_host_name", str, "", PredefinedSerializer()),
 ]
 
 ApiCreateCodeSubmissionRequest._fields = [

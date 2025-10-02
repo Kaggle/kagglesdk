@@ -11,6 +11,36 @@ class ApiVersion(enum.Enum):
   API_VERSION_V2 = 2
   """Experimental, admin-only, internal ('/api/i' endpoints)."""
 
+class AuthorizationContext(KaggleObject):
+  r"""
+  Attributes:
+    kernel_session_id (int)
+      If set, access token is restricted to be used only from the specified
+      notebook session.
+  """
+
+  def __init__(self):
+    self._kernel_session_id = None
+    self._freeze()
+
+  @property
+  def kernel_session_id(self) -> int:
+    r"""
+    If set, access token is restricted to be used only from the specified
+    notebook session.
+    """
+    return self._kernel_session_id or 0
+
+  @kernel_session_id.setter
+  def kernel_session_id(self, kernel_session_id: Optional[int]):
+    if kernel_session_id is None:
+      del self.kernel_session_id
+      return
+    if not isinstance(kernel_session_id, int):
+      raise TypeError('kernel_session_id must be of type int')
+    self._kernel_session_id = kernel_session_id
+
+
 class ExpireApiTokenRequest(KaggleObject):
   r"""
   Attributes:
@@ -250,35 +280,9 @@ class GenerateAccessTokenResponse(KaggleObject):
     return self.expires_in
 
 
-class AuthorizationContext(KaggleObject):
-  r"""
-  Attributes:
-    kernel_session_id (int)
-      If set, access token is restricted to be used only from the specified
-      notebook session.
-  """
-
-  def __init__(self):
-    self._kernel_session_id = None
-    self._freeze()
-
-  @property
-  def kernel_session_id(self) -> int:
-    r"""
-    If set, access token is restricted to be used only from the specified
-    notebook session.
-    """
-    return self._kernel_session_id or 0
-
-  @kernel_session_id.setter
-  def kernel_session_id(self, kernel_session_id: Optional[int]):
-    if kernel_session_id is None:
-      del self.kernel_session_id
-      return
-    if not isinstance(kernel_session_id, int):
-      raise TypeError('kernel_session_id must be of type int')
-    self._kernel_session_id = kernel_session_id
-
+AuthorizationContext._fields = [
+  FieldMetadata("kernelSessionId", "kernel_session_id", "_kernel_session_id", int, None, PredefinedSerializer(), optional=True),
+]
 
 ExpireApiTokenRequest._fields = [
   FieldMetadata("tokenId", "token_id", "_token_id", int, None, PredefinedSerializer(), optional=True),
@@ -297,9 +301,5 @@ GenerateAccessTokenRequest._fields = [
 GenerateAccessTokenResponse._fields = [
   FieldMetadata("token", "token", "_token", str, "", PredefinedSerializer()),
   FieldMetadata("expiresIn", "expires_in", "_expires_in", int, 0, PredefinedSerializer()),
-]
-
-AuthorizationContext._fields = [
-  FieldMetadata("kernelSessionId", "kernel_session_id", "_kernel_session_id", int, None, PredefinedSerializer(), optional=True),
 ]
 

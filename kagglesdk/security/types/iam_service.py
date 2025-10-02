@@ -42,6 +42,45 @@ class GetIamPolicyRequest(KaggleObject):
     return '/api/v1/iam/get/{resource_id}'
 
 
+class GroupPrincipal(KaggleObject):
+  r"""
+  Attributes:
+    id (int)
+    avatar (UserManagedGroup)
+  """
+
+  def __init__(self):
+    self._id = 0
+    self._avatar = None
+    self._freeze()
+
+  @property
+  def id(self) -> int:
+    return self._id
+
+  @id.setter
+  def id(self, id: int):
+    if id is None:
+      del self.id
+      return
+    if not isinstance(id, int):
+      raise TypeError('id must be of type int')
+    self._id = id
+
+  @property
+  def avatar(self) -> Optional['UserManagedGroup']:
+    return self._avatar
+
+  @avatar.setter
+  def avatar(self, avatar: Optional['UserManagedGroup']):
+    if avatar is None:
+      del self.avatar
+      return
+    if not isinstance(avatar, UserManagedGroup):
+      raise TypeError('avatar must be of type UserManagedGroup')
+    self._avatar = avatar
+
+
 class IamPolicy(KaggleObject):
   r"""
   Defines an Identity and Access Management (IAM) policy. It is used to
@@ -163,6 +202,45 @@ class IamPolicyBinding(KaggleObject):
     if not all([isinstance(t, Principal) for t in members]):
       raise TypeError('members must contain only items of type Principal')
     self._members = members
+
+
+class OrganizationPrincipal(KaggleObject):
+  r"""
+  Attributes:
+    id (int)
+    avatar (Organization)
+  """
+
+  def __init__(self):
+    self._id = 0
+    self._avatar = None
+    self._freeze()
+
+  @property
+  def id(self) -> int:
+    return self._id
+
+  @id.setter
+  def id(self, id: int):
+    if id is None:
+      del self.id
+      return
+    if not isinstance(id, int):
+      raise TypeError('id must be of type int')
+    self._id = id
+
+  @property
+  def avatar(self) -> Optional['Organization']:
+    return self._avatar
+
+  @avatar.setter
+  def avatar(self, avatar: Optional['Organization']):
+    if avatar is None:
+      del self.avatar
+      return
+    if not isinstance(avatar, Organization):
+      raise TypeError('avatar must be of type Organization')
+    self._avatar = avatar
 
 
 class Principal(KaggleObject):
@@ -339,86 +417,13 @@ class UserPrincipal(KaggleObject):
     self._avatar = avatar
 
 
-class GroupPrincipal(KaggleObject):
-  r"""
-  Attributes:
-    id (int)
-    avatar (UserManagedGroup)
-  """
-
-  def __init__(self):
-    self._id = 0
-    self._avatar = None
-    self._freeze()
-
-  @property
-  def id(self) -> int:
-    return self._id
-
-  @id.setter
-  def id(self, id: int):
-    if id is None:
-      del self.id
-      return
-    if not isinstance(id, int):
-      raise TypeError('id must be of type int')
-    self._id = id
-
-  @property
-  def avatar(self) -> Optional['UserManagedGroup']:
-    return self._avatar
-
-  @avatar.setter
-  def avatar(self, avatar: Optional['UserManagedGroup']):
-    if avatar is None:
-      del self.avatar
-      return
-    if not isinstance(avatar, UserManagedGroup):
-      raise TypeError('avatar must be of type UserManagedGroup')
-    self._avatar = avatar
-
-
-class OrganizationPrincipal(KaggleObject):
-  r"""
-  Attributes:
-    id (int)
-    avatar (Organization)
-  """
-
-  def __init__(self):
-    self._id = 0
-    self._avatar = None
-    self._freeze()
-
-  @property
-  def id(self) -> int:
-    return self._id
-
-  @id.setter
-  def id(self, id: int):
-    if id is None:
-      del self.id
-      return
-    if not isinstance(id, int):
-      raise TypeError('id must be of type int')
-    self._id = id
-
-  @property
-  def avatar(self) -> Optional['Organization']:
-    return self._avatar
-
-  @avatar.setter
-  def avatar(self, avatar: Optional['Organization']):
-    if avatar is None:
-      del self.avatar
-      return
-    if not isinstance(avatar, Organization):
-      raise TypeError('avatar must be of type Organization')
-    self._avatar = avatar
-
-
 GetIamPolicyRequest._fields = [
   FieldMetadata("resourceId", "resource_id", "_resource_id", KaggleResourceId, None, KaggleObjectSerializer()),
+]
+
+GroupPrincipal._fields = [
+  FieldMetadata("id", "id", "_id", int, 0, PredefinedSerializer()),
+  FieldMetadata("avatar", "avatar", "_avatar", UserManagedGroup, None, KaggleObjectSerializer()),
 ]
 
 IamPolicy._fields = [
@@ -429,6 +434,11 @@ IamPolicy._fields = [
 IamPolicyBinding._fields = [
   FieldMetadata("role", "role", "_role", CanonicalRole, CanonicalRole.CANONICAL_ROLE_UNSPECIFIED, EnumSerializer()),
   FieldMetadata("members", "members", "_members", Principal, [], ListSerializer(KaggleObjectSerializer())),
+]
+
+OrganizationPrincipal._fields = [
+  FieldMetadata("id", "id", "_id", int, 0, PredefinedSerializer()),
+  FieldMetadata("avatar", "avatar", "_avatar", Organization, None, KaggleObjectSerializer()),
 ]
 
 Principal._fields = [
@@ -446,15 +456,5 @@ SetIamPolicyRequest._fields = [
 UserPrincipal._fields = [
   FieldMetadata("id", "id", "_id", int, 0, PredefinedSerializer()),
   FieldMetadata("avatar", "avatar", "_avatar", UserAvatar, None, KaggleObjectSerializer()),
-]
-
-GroupPrincipal._fields = [
-  FieldMetadata("id", "id", "_id", int, 0, PredefinedSerializer()),
-  FieldMetadata("avatar", "avatar", "_avatar", UserManagedGroup, None, KaggleObjectSerializer()),
-]
-
-OrganizationPrincipal._fields = [
-  FieldMetadata("id", "id", "_id", int, 0, PredefinedSerializer()),
-  FieldMetadata("avatar", "avatar", "_avatar", Organization, None, KaggleObjectSerializer()),
 ]
 

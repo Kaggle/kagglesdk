@@ -8,8 +8,6 @@ class BenchmarkResult(KaggleObject):
   Represents the outcome of a benchmark run. All fields are immutable.
 
   Attributes:
-    task_version_id (int)
-      Convenience fields for this result (for the frontend):
     numeric_result (NumericResult)
     boolean_result (bool)
     custom_additional_results (CustomResult)
@@ -20,16 +18,18 @@ class BenchmarkResult(KaggleObject):
       Numeric result on the public set of the benchmark version.
     evaluation_date (datetime)
       The date on which evaluation was performed.
+    task_version_id (int)
+      Convenience fields for this result (for the frontend):
   """
 
   def __init__(self):
-    self._task_version_id = None
     self._numeric_result = None
     self._boolean_result = None
     self._custom_additional_results = []
     self._numeric_result_private = None
     self._numeric_result_public = None
     self._evaluation_date = None
+    self._task_version_id = None
     self._freeze()
 
   @property
@@ -280,13 +280,13 @@ class UnevenConfidenceInterval(KaggleObject):
 
 
 BenchmarkResult._fields = [
-  FieldMetadata("taskVersionId", "task_version_id", "_task_version_id", int, None, PredefinedSerializer(), optional=True),
   FieldMetadata("numericResult", "numeric_result", "_numeric_result", NumericResult, None, KaggleObjectSerializer(), optional=True),
   FieldMetadata("booleanResult", "boolean_result", "_boolean_result", bool, None, PredefinedSerializer(), optional=True),
   FieldMetadata("customAdditionalResults", "custom_additional_results", "_custom_additional_results", CustomResult, [], ListSerializer(KaggleObjectSerializer())),
   FieldMetadata("numericResultPrivate", "numeric_result_private", "_numeric_result_private", NumericResult, None, KaggleObjectSerializer(), optional=True),
   FieldMetadata("numericResultPublic", "numeric_result_public", "_numeric_result_public", NumericResult, None, KaggleObjectSerializer(), optional=True),
   FieldMetadata("evaluationDate", "evaluation_date", "_evaluation_date", datetime, None, DateTimeSerializer(), optional=True),
+  FieldMetadata("taskVersionId", "task_version_id", "_task_version_id", int, None, PredefinedSerializer(), optional=True),
 ]
 
 CustomResult._fields = [

@@ -12,6 +12,7 @@ from kagglesdk.search.services.search_api_service import SearchApiClient
 from kagglesdk.security.services.iam_service import IamClient
 from kagglesdk.security.services.oauth_service import OAuthClient
 from kagglesdk.users.services.account_service import AccountClient
+from kagglesdk.users.services.group_api_service import GroupApiClient
 from kagglesdk.kaggle_env import KaggleEnv
 from kagglesdk.kaggle_http_client import KaggleHttpClient
 
@@ -66,6 +67,7 @@ class KaggleClient(object):
   class Users(object):
     def __init__(self, http_client: KaggleHttpClient):
       self.account_client = AccountClient(http_client)
+      self.group_api_client = GroupApiClient(http_client)
 
   def __init__(self, env: KaggleEnv = None, verbose: bool = False, username: str = None, password: str = None, api_token: str = None):
     self._http_client = http_client = KaggleHttpClient(env, verbose, username=username, password=password, api_token=api_token)

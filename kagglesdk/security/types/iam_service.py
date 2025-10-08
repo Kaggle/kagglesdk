@@ -46,17 +46,19 @@ class GroupPrincipal(KaggleObject):
   r"""
   Attributes:
     id (int)
+    slug (str)
     avatar (UserManagedGroup)
   """
 
   def __init__(self):
-    self._id = 0
+    self._id = None
+    self._slug = None
     self._avatar = None
     self._freeze()
 
   @property
   def id(self) -> int:
-    return self._id
+    return self._id or 0
 
   @id.setter
   def id(self, id: int):
@@ -65,7 +67,22 @@ class GroupPrincipal(KaggleObject):
       return
     if not isinstance(id, int):
       raise TypeError('id must be of type int')
+    del self.slug
     self._id = id
+
+  @property
+  def slug(self) -> str:
+    return self._slug or ""
+
+  @slug.setter
+  def slug(self, slug: str):
+    if slug is None:
+      del self.slug
+      return
+    if not isinstance(slug, str):
+      raise TypeError('slug must be of type str')
+    del self.id
+    self._slug = slug
 
   @property
   def avatar(self) -> Optional['UserManagedGroup']:
@@ -382,17 +399,19 @@ class UserPrincipal(KaggleObject):
   r"""
   Attributes:
     id (int)
+    user_name (str)
     avatar (UserAvatar)
   """
 
   def __init__(self):
-    self._id = 0
+    self._id = None
+    self._user_name = None
     self._avatar = None
     self._freeze()
 
   @property
   def id(self) -> int:
-    return self._id
+    return self._id or 0
 
   @id.setter
   def id(self, id: int):
@@ -401,7 +420,22 @@ class UserPrincipal(KaggleObject):
       return
     if not isinstance(id, int):
       raise TypeError('id must be of type int')
+    del self.user_name
     self._id = id
+
+  @property
+  def user_name(self) -> str:
+    return self._user_name or ""
+
+  @user_name.setter
+  def user_name(self, user_name: str):
+    if user_name is None:
+      del self.user_name
+      return
+    if not isinstance(user_name, str):
+      raise TypeError('user_name must be of type str')
+    del self.id
+    self._user_name = user_name
 
   @property
   def avatar(self) -> Optional['UserAvatar']:
@@ -422,7 +456,8 @@ GetIamPolicyRequest._fields = [
 ]
 
 GroupPrincipal._fields = [
-  FieldMetadata("id", "id", "_id", int, 0, PredefinedSerializer()),
+  FieldMetadata("id", "id", "_id", int, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("slug", "slug", "_slug", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("avatar", "avatar", "_avatar", UserManagedGroup, None, KaggleObjectSerializer()),
 ]
 
@@ -454,7 +489,8 @@ SetIamPolicyRequest._fields = [
 ]
 
 UserPrincipal._fields = [
-  FieldMetadata("id", "id", "_id", int, 0, PredefinedSerializer()),
+  FieldMetadata("id", "id", "_id", int, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("userName", "user_name", "_user_name", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("avatar", "avatar", "_avatar", UserAvatar, None, KaggleObjectSerializer()),
 ]
 

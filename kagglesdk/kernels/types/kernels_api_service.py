@@ -2086,6 +2086,7 @@ class ApiSaveKernelResponse(KaggleObject):
     invalid_competition_sources (str)
     invalid_kernel_sources (str)
     invalid_model_sources (str)
+    kernel_id (int)
   """
 
   def __init__(self):
@@ -2098,6 +2099,7 @@ class ApiSaveKernelResponse(KaggleObject):
     self._invalid_competition_sources = []
     self._invalid_kernel_sources = []
     self._invalid_model_sources = []
+    self._kernel_id = 0
     self._freeze()
 
   @property
@@ -2228,6 +2230,19 @@ class ApiSaveKernelResponse(KaggleObject):
     self._invalid_model_sources = invalid_model_sources
 
   @property
+  def kernel_id(self) -> int:
+    return self._kernel_id
+
+  @kernel_id.setter
+  def kernel_id(self, kernel_id: int):
+    if kernel_id is None:
+      del self.kernel_id
+      return
+    if not isinstance(kernel_id, int):
+      raise TypeError('kernel_id must be of type int')
+    self._kernel_id = kernel_id
+
+  @property
   def versionNumber(self):
     return self.version_number
 
@@ -2250,6 +2265,10 @@ class ApiSaveKernelResponse(KaggleObject):
   @property
   def invalidModelSources(self):
     return self.invalid_model_sources
+
+  @property
+  def kernelId(self):
+    return self.kernel_id
 
 
 ApiCancelKernelSessionRequest._fields = [
@@ -2431,5 +2450,6 @@ ApiSaveKernelResponse._fields = [
   FieldMetadata("invalidCompetitionSources", "invalid_competition_sources", "_invalid_competition_sources", str, [], ListSerializer(PredefinedSerializer())),
   FieldMetadata("invalidKernelSources", "invalid_kernel_sources", "_invalid_kernel_sources", str, [], ListSerializer(PredefinedSerializer())),
   FieldMetadata("invalidModelSources", "invalid_model_sources", "_invalid_model_sources", str, [], ListSerializer(PredefinedSerializer())),
+  FieldMetadata("kernelId", "kernel_id", "_kernel_id", int, 0, PredefinedSerializer()),
 ]
 

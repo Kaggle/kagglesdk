@@ -242,11 +242,15 @@ class GenerateAccessTokenResponse(KaggleObject):
   Attributes:
     token (str)
     expires_in (int)
+    user_name (str)
+    user_id (int)
   """
 
   def __init__(self):
     self._token = ""
     self._expires_in = 0
+    self._user_name = ""
+    self._user_id = 0
     self._freeze()
 
   @property
@@ -276,8 +280,42 @@ class GenerateAccessTokenResponse(KaggleObject):
     self._expires_in = expires_in
 
   @property
+  def user_name(self) -> str:
+    return self._user_name
+
+  @user_name.setter
+  def user_name(self, user_name: str):
+    if user_name is None:
+      del self.user_name
+      return
+    if not isinstance(user_name, str):
+      raise TypeError('user_name must be of type str')
+    self._user_name = user_name
+
+  @property
+  def user_id(self) -> int:
+    return self._user_id
+
+  @user_id.setter
+  def user_id(self, user_id: int):
+    if user_id is None:
+      del self.user_id
+      return
+    if not isinstance(user_id, int):
+      raise TypeError('user_id must be of type int')
+    self._user_id = user_id
+
+  @property
   def expiresIn(self):
     return self.expires_in
+
+  @property
+  def userName(self):
+    return self.user_name
+
+  @property
+  def userId(self):
+    return self.user_id
 
 
 AuthorizationContext._fields = [
@@ -301,5 +339,7 @@ GenerateAccessTokenRequest._fields = [
 GenerateAccessTokenResponse._fields = [
   FieldMetadata("token", "token", "_token", str, "", PredefinedSerializer()),
   FieldMetadata("expiresIn", "expires_in", "_expires_in", int, 0, PredefinedSerializer()),
+  FieldMetadata("userName", "user_name", "_user_name", str, "", PredefinedSerializer()),
+  FieldMetadata("userId", "user_id", "_user_id", int, 0, PredefinedSerializer()),
 ]
 

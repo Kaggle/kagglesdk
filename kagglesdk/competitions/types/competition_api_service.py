@@ -1491,10 +1491,6 @@ class ApiListCompetitionsResponse(KaggleObject):
       raise TypeError('next_page_token must be of type str')
     self._next_page_token = next_page_token
 
-  @classmethod
-  def prepare_from(cls, http_response):
-    return cls.from_dict({'competitions': json.loads(http_response.text)})
-
   @property
   def nextPageToken(self):
     return self.next_page_token
@@ -1859,10 +1855,6 @@ class ApiListSubmissionsResponse(KaggleObject):
     if not isinstance(next_page_token, str):
       raise TypeError('next_page_token must be of type str')
     self._next_page_token = next_page_token
-
-  @classmethod
-  def prepare_from(cls, http_response):
-    return cls.from_dict({'submissions': json.loads(http_response.text)})
 
   @property
   def nextPageToken(self):

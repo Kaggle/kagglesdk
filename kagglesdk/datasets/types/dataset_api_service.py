@@ -1994,10 +1994,6 @@ class ApiGetDatasetStatusResponse(KaggleObject):
       raise TypeError('status must be of type DatabundleVersionStatus')
     self._status = status
 
-  @classmethod
-  def prepare_from(cls, http_response):
-    return cls.from_dict({'status': json.loads(http_response.text)})
-
 
 class ApiListDatasetFilesRequest(KaggleObject):
   r"""
@@ -2421,10 +2417,6 @@ class ApiListDatasetsResponse(KaggleObject):
     if not isinstance(next_page_token, str):
       raise TypeError('next_page_token must be of type str')
     self._next_page_token = next_page_token
-
-  @classmethod
-  def prepare_from(cls, http_response):
-    return cls.from_dict({'datasets': json.loads(http_response.text)})
 
   @property
   def nextPageToken(self):

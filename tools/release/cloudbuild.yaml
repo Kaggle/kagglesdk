@@ -1,0 +1,102 @@
+# To run, follow instructions at: https://g3doc.corp.google.com/cloud/kaggle/apis/g3doc/kagglesdk.md#how-to-push-to-pypi
+steps:
+
+# Get the GitHub access token from Secret Manager.
+# The token is used to talk to GitHub API, specifically to create a release.
+- name: gcr.io/cloud-builders/gcloud
+  id: 'github-token'
+  entrypoint: 'bash'
+  args: 
+  - '-c'
+  - 'gcloud secrets versions access latest --secret=kaggleteam-github-access-token > /root/github_token'
+  volumes:
+  - name: 'root'
+    path: /root
+
+# Get the pypi password from Secret Manager, and create the ~/.pypirc file.
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: create-credentials-pypirc
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      token_test=$(gcloud secrets versions access latest --secret=test-pypi-token)
+      token=$(gcloud secrets versions access latest --secret=pypi-token)
+      cat >~/.pypirc <<EOL
+      [distutils]
+      index-servers =
+        pypi
+        pypitest
+      [pypi]
+      repository: https://upload.pypi.org/legacy/
+      username=__token__
+      password=${token}
+      [pypitest]
+      repository: https://test.pypi.org/legacy/
+      username=__token__
+      password=${token_test}
+      EOL
+  volumes:
+  - name: 'root'
+    path: /root
+
+# The kagglesdk-cicd Docker image is built from the tools/cicd/cloudbuild.yaml build.
+- name: us-docker.pkg.dev/$PROJECT_ID/tools/kagglesdk-cicd:${_PYTHON_VERSION}
+  id: build
+  waitFor: ['-']  # The '-' indicates that this step begins immediately.
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    python3 -m build --sdist
+    python3 -m build --wheel
+
+# Create a release on GitHub.
+# The `hub` image has been built previously in the project:
+# $ git clone https://github.com/GoogleCloudPlatform/cloud-builders-community.git
+# $ cd cloud-builders-community/hub
+# $ gcloud builds submit
+- name: 'us-docker.pkg.dev/$PROJECT_ID/tools/hub'
+  id: 'release'
+  waitFor: ['build']
+  entrypoint: 'bash'
+  env:
+  - GITHUB_USER=kaggle
+  - GITHUB_REPOSITORY=kagglesdk
+  - HUB_PROTOCOL=https
+  args:
+  - '-c'
+  # $$RELEASE_VERSION (two '$') is not a typo. This is to avoid conflicts with Google Cloud Build substitutions.
+  - |
+    export RELEASE_VERSION=`grep __version__ kagglesdk/__init__.py | sed -E "s/.*['\"]([^'\"]+)['\"].*/\1/"`
+    echo "Preparing release for version $$RELEASE_VERSION"
+    export GITHUB_TOKEN=$(</root/github_token)
+    if [ "${_PYPY_REPOSITORY}" = "pypi" ]; then
+      echo "Creating a release on GitHub..."
+      git clone https://github.com/kaggle/kagglesdk.git release-repo
+      cd release-repo
+      hub release create -m "release v$$RELEASE_VERSION" "v$$RELEASE_VERSION"
+    else
+      echo "Skipping GitHub release, this is a release to pypitest"
+    fi
+  volumes:
+  - name: 'root'
+    path: /root
+
+# Release package to pypi.
+- name: us-docker.pkg.dev/$PROJECT_ID/tools/kagglesdk-cicd:${_PYTHON_VERSION}
+  id: release-pypi
+  waitFor: ['build']
+  entrypoint: bash 
+  args:
+  - '-c'
+  - |
+    twine upload dist/* --repository ${_PYPY_REPOSITORY}
+  volumes:
+  - name: 'root'
+    path: /root
+
+substitutions:
+  _PYPY_REPOSITORY: pypitest
+  # Before changing this, ensure there's a matching tag for our bre-built image. See tools/cicd/cloudbuild.yaml in this repo.
+  _PYTHON_VERSION: 3.10.13

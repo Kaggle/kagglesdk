@@ -1,0 +1,36 @@
+# To create a new cicd Docker image: 
+# cd path/to/kagglesdk
+# gcloud builds submit --project=kaggle-cicd --config=tools/cicd/cloudbuild.yaml .
+steps:
+
+# Import builder if exists.
+# Note: the reason to use bash is to be able to return an exit code 0 even if
+# the docker image doesn't exist yet.
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'pull-image'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    docker pull us-docker.pkg.dev/$PROJECT_ID/tools/kagglesdk-cicd:${_PYTHON_VERSION} || exit 0
+
+# Build an image for our release pipeline.
+# Use the previous built image as cache.
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'build-image'
+  args:
+  - build
+  - -f
+  - Dockerfile
+  - -t
+  - us-docker.pkg.dev/$PROJECT_ID/tools/kagglesdk-cicd:${_PYTHON_VERSION}
+  - --cache-from
+  - us-docker.pkg.dev/$PROJECT_ID/tools/kagglesdk-cicd:${_PYTHON_VERSION}
+  - --build-arg
+  - PYTHON_VERSION=${_PYTHON_VERSION}
+  - .
+
+images: ['us-docker.pkg.dev/$PROJECT_ID/tools/kagglesdk-cicd']
+
+substitutions:
+  _PYTHON_VERSION: 3.10.13

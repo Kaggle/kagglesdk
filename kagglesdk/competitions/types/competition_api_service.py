@@ -1570,7 +1570,7 @@ class ApiListDataFilesResponse(KaggleObject):
 
   def __init__(self):
     self._files = []
-    self._next_page_token = ""
+    self._next_page_token = None
     self._children_fetch_time_ms = 0
     self._freeze()
 
@@ -1591,10 +1591,10 @@ class ApiListDataFilesResponse(KaggleObject):
 
   @property
   def next_page_token(self) -> str:
-    return self._next_page_token
+    return self._next_page_token or ""
 
   @next_page_token.setter
-  def next_page_token(self, next_page_token: str):
+  def next_page_token(self, next_page_token: Optional[str]):
     if next_page_token is None:
       del self.next_page_token
       return
@@ -2338,7 +2338,7 @@ ApiListDataFilesRequest._fields = [
 
 ApiListDataFilesResponse._fields = [
   FieldMetadata("files", "files", "_files", ApiDataFile, [], ListSerializer(KaggleObjectSerializer())),
-  FieldMetadata("nextPageToken", "next_page_token", "_next_page_token", str, "", PredefinedSerializer()),
+  FieldMetadata("nextPageToken", "next_page_token", "_next_page_token", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("childrenFetchTimeMs", "children_fetch_time_ms", "_children_fetch_time_ms", int, 0, PredefinedSerializer()),
 ]
 

@@ -1,4 +1,4 @@
-__version__ = "0.1.12"
+__version__ = "0.1.13"
 
 from kagglesdk.kaggle_client import KaggleClient
 from kagglesdk.kaggle_creds import KaggleCredentials

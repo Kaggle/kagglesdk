@@ -59,6 +59,7 @@ class KaggleHttpClient(object):
         username: str = None,
         password: str = None,
         api_token: str = None,
+        user_agent: str = "kaggle-api/v1.7.0", # Was: V2
     ):
         self._env = env or get_env()
         self._signed_in = None
@@ -68,6 +69,7 @@ class KaggleHttpClient(object):
         self._username = username
         self._password = password
         self._api_token = api_token
+        self._user_agent = user_agent
 
     def call(
         self,
@@ -147,7 +149,7 @@ class KaggleHttpClient(object):
             return self._session
 
         self._session = requests.Session()
-        self._session.headers.update({"User-Agent": "kaggle-api/v1.7.0", "Content-Type": "application/json"})  # Was: V2
+        self._session.headers.update({"User-Agent": self._user_agent, "Content-Type": "application/json"})
 
         iap_token = self._get_iap_token_if_required()
         if iap_token is not None:

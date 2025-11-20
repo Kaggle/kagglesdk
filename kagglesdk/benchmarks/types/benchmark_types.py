@@ -182,7 +182,7 @@ class NumericResult(KaggleObject):
       as a +- value.
     uneven_confidence_interval (UnevenConfidenceInterval)
       For asymmetric confidence intervals in which the +/- values differ
-      If set, prioritized over confidence_interval
+      If set, prioritized over confidence_interval (if both are set)
   """
 
   def __init__(self):
@@ -226,7 +226,7 @@ class NumericResult(KaggleObject):
   def uneven_confidence_interval(self) -> Optional['UnevenConfidenceInterval']:
     r"""
     For asymmetric confidence intervals in which the +/- values differ
-    If set, prioritized over confidence_interval
+    If set, prioritized over confidence_interval (if both are set)
     """
     return self._uneven_confidence_interval or None
 

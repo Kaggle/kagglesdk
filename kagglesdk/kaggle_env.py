@@ -18,6 +18,7 @@ class KaggleEnv(Enum):
     ADMIN = 2  # admin.kaggle.com
     QA = 3  # qa.kaggle.com
     PROD = 4  # api.kaggle.com
+    TEST = 5 # localhost:7777
 
 
 _env_to_endpoint = {
@@ -26,6 +27,7 @@ _env_to_endpoint = {
     KaggleEnv.ADMIN: "https://admin.kaggle.com",
     KaggleEnv.QA: "https://qa.kaggle.com",
     KaggleEnv.PROD: "https://api.kaggle.com",
+    KaggleEnv.TEST: "http://localhost:7777"
 }
 
 
@@ -45,6 +47,8 @@ def get_env():
         return KaggleEnv.STAGING
     if env == "QA":
         return KaggleEnv.QA
+    if env == "TEST":
+        return KaggleEnv.TEST
     raise Exception(f'Unrecognized value in KAGGLE_API_ENVIRONMENT: "{env}"')
 
 

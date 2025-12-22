@@ -167,6 +167,8 @@ class WriteUpItemInfo(KaggleObject):
       Name of the team that owns the WriteUp
     id (int)
       Id of the WriteUp
+    hackathon_track_ids (int)
+      The track ids of the Hackathon
   """
 
   def __init__(self):
@@ -177,6 +179,7 @@ class WriteUpItemInfo(KaggleObject):
     self._content_state = ContentState.CONTENT_STATE_UNSPECIFIED
     self._team_name = None
     self._id = 0
+    self._hackathon_track_ids = []
     self._freeze()
 
   @property
@@ -279,6 +282,22 @@ class WriteUpItemInfo(KaggleObject):
       raise TypeError('id must be of type int')
     self._id = id
 
+  @property
+  def hackathon_track_ids(self) -> Optional[List[int]]:
+    """The track ids of the Hackathon"""
+    return self._hackathon_track_ids
+
+  @hackathon_track_ids.setter
+  def hackathon_track_ids(self, hackathon_track_ids: Optional[List[int]]):
+    if hackathon_track_ids is None:
+      del self.hackathon_track_ids
+      return
+    if not isinstance(hackathon_track_ids, list):
+      raise TypeError('hackathon_track_ids must be of type list')
+    if not all([isinstance(t, int) for t in hackathon_track_ids]):
+      raise TypeError('hackathon_track_ids must contain only items of type int')
+    self._hackathon_track_ids = hackathon_track_ids
+
 
 WriteUpCompetitionInfo._fields = [
   FieldMetadata("competitionTitle", "competition_title", "_competition_title", str, "", PredefinedSerializer()),
@@ -299,5 +318,6 @@ WriteUpItemInfo._fields = [
   FieldMetadata("contentState", "content_state", "_content_state", ContentState, ContentState.CONTENT_STATE_UNSPECIFIED, EnumSerializer()),
   FieldMetadata("teamName", "team_name", "_team_name", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("id", "id", "_id", int, 0, PredefinedSerializer()),
+  FieldMetadata("hackathonTrackIds", "hackathon_track_ids", "_hackathon_track_ids", int, [], ListSerializer(PredefinedSerializer())),
 ]
 

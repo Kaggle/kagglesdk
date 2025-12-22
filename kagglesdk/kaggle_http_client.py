@@ -16,6 +16,8 @@ from kagglesdk.kaggle_env import (
     KaggleEnv,
 )
 from kagglesdk.kaggle_object import KaggleObject
+from kagglesdk.common.types.file_download import FileDownload
+from kagglesdk.common.types.http_redirect import HttpRedirect
 from typing import Type
 
 # TODO (http://b/354237483) Generate the client from the existing one.
@@ -59,7 +61,8 @@ class KaggleHttpClient(object):
         username: str = None,
         password: str = None,
         api_token: str = None,
-        user_agent: str = "kaggle-api/v1.7.0", # Was: V2
+        user_agent: str = "kaggle-api/v1.7.0",  # Was: V2
+        response_processor=None,
     ):
         self._env = env or get_env()
         self._signed_in = None
@@ -70,6 +73,7 @@ class KaggleHttpClient(object):
         self._password = password
         self._api_token = api_token
         self._user_agent = user_agent
+        self._response_processor = response_processor
 
     def call(
         self,
@@ -83,6 +87,12 @@ class KaggleHttpClient(object):
 
         # Merge environment settings into session
         settings = self._session.merge_environment_settings(http_request.url, {}, None, None, None)
+
+        # Use stream=True for file downloads to avoid loading entire file into memory
+        # See: https://github.com/Kaggle/kaggle-api/issues/754
+        if response_type is not None and (response_type == FileDownload or response_type == HttpRedirect):
+            settings["stream"] = True
+
         http_response = self._session.send(http_request, **settings)
 
         response = self._prepare_response(response_type, http_response)
@@ -112,6 +122,9 @@ class KaggleHttpClient(object):
         except KeyError:
             pass
         http_response.raise_for_status()
+        # Allow client to check header content.
+        if self._response_processor:
+            self._response_processor(http_response)
         if response_type is None:  # Method doesn't have a return type
             return None
         return response_type.prepare_from(http_response)

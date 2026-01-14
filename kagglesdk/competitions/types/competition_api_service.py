@@ -164,6 +164,7 @@ class ApiCompetition(KaggleObject):
     submissions_disabled (bool)
     thumbnail_image_url (str)
     host_name (str)
+    date_created (datetime)
   """
 
   def __init__(self):
@@ -193,6 +194,7 @@ class ApiCompetition(KaggleObject):
     self._submissions_disabled = False
     self._thumbnail_image_url = None
     self._host_name = ""
+    self._date_created = None
     self._freeze()
 
   @property
@@ -535,6 +537,19 @@ class ApiCompetition(KaggleObject):
       raise TypeError('host_name must be of type str')
     self._host_name = host_name
 
+  @property
+  def date_created(self) -> datetime:
+    return self._date_created
+
+  @date_created.setter
+  def date_created(self, date_created: datetime):
+    if date_created is None:
+      del self.date_created
+      return
+    if not isinstance(date_created, datetime):
+      raise TypeError('date_created must be of type datetime')
+    self._date_created = date_created
+
 
 class ApiCreateCodeSubmissionRequest(KaggleObject):
   r"""
@@ -692,12 +707,18 @@ class ApiCreateSubmissionRequest(KaggleObject):
       Token identifying location of uploaded submission file.
     submission_description (str)
       Description of competition submission.
+    benchmark_model_version_id (int)
+      Admin-only (see checker at
+      https://github.com/Kaggle/kaggleazure/blob/9c4bea5548c50844a257f26a10c6c9ae9aaf486b/Kaggle.Services.Competitions/Iam/Competitions/CompetitionsSubmitChecker.cs#L78).
+      If specified, submit on behalf of this model team instead of
+      the current user.
   """
 
   def __init__(self):
     self._competition_name = ""
     self._blob_file_tokens = ""
     self._submission_description = None
+    self._benchmark_model_version_id = None
     self._freeze()
 
   @property
@@ -741,6 +762,25 @@ class ApiCreateSubmissionRequest(KaggleObject):
     if not isinstance(submission_description, str):
       raise TypeError('submission_description must be of type str')
     self._submission_description = submission_description
+
+  @property
+  def benchmark_model_version_id(self) -> int:
+    r"""
+    Admin-only (see checker at
+    https://github.com/Kaggle/kaggleazure/blob/9c4bea5548c50844a257f26a10c6c9ae9aaf486b/Kaggle.Services.Competitions/Iam/Competitions/CompetitionsSubmitChecker.cs#L78).
+    If specified, submit on behalf of this model team instead of
+    the current user.
+    """
+    return self._benchmark_model_version_id or 0
+
+  @benchmark_model_version_id.setter
+  def benchmark_model_version_id(self, benchmark_model_version_id: Optional[int]):
+    if benchmark_model_version_id is None:
+      del self.benchmark_model_version_id
+      return
+    if not isinstance(benchmark_model_version_id, int):
+      raise TypeError('benchmark_model_version_id must be of type int')
+    self._benchmark_model_version_id = benchmark_model_version_id
 
   def endpoint(self):
     path = '/api/v1/competitions/submissions/submit/{competition_name}'
@@ -2235,6 +2275,7 @@ ApiCompetition._fields = [
   FieldMetadata("submissionsDisabled", "submissions_disabled", "_submissions_disabled", bool, False, PredefinedSerializer()),
   FieldMetadata("thumbnailImageUrl", "thumbnail_image_url", "_thumbnail_image_url", str, None, PredefinedSerializer(), optional=True),
   FieldMetadata("hostName", "host_name", "_host_name", str, "", PredefinedSerializer()),
+  FieldMetadata("dateCreated", "date_created", "_date_created", datetime, None, DateTimeSerializer()),
 ]
 
 ApiCreateCodeSubmissionRequest._fields = [
@@ -2255,6 +2296,7 @@ ApiCreateSubmissionRequest._fields = [
   FieldMetadata("competitionName", "competition_name", "_competition_name", str, "", PredefinedSerializer()),
   FieldMetadata("blobFileTokens", "blob_file_tokens", "_blob_file_tokens", str, "", PredefinedSerializer()),
   FieldMetadata("submissionDescription", "submission_description", "_submission_description", str, None, PredefinedSerializer(), optional=True),
+  FieldMetadata("benchmarkModelVersionId", "benchmark_model_version_id", "_benchmark_model_version_id", int, None, PredefinedSerializer(), optional=True),
 ]
 
 ApiCreateSubmissionResponse._fields = [
